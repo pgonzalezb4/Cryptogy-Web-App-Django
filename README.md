@@ -1,1 +1,1 @@
-# Cryptogy-Web-App-Django
+# Cryptogy Web App Django
