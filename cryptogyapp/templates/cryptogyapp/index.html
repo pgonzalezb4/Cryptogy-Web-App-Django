@@ -1,0 +1,9 @@
+{% if cryptosystem_list %}
+    <ul>
+    {% for cryptosystem in cryptosystem_list %}
+        <li><a href="/{{ cryptosystem.name }}/">{{ cryptosystem.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No cryptosystems are available.</p>
+{% endif %}
