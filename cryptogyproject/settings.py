@@ -123,3 +123,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/staticfiles/'
+STATIC_ROOT = '/home/Pablo/Documents/GitHub/Cryptogy-Web-App-Django/staticfiles/'
