@@ -15,11 +15,17 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def rsaView(request):
+    thisCryptosystem = Cryptosystem.objects.get(name="RSA")
     template = loader.get_template('cryptogyapp/rsa.html')
-    context = {}
+    context = {
+        'thisCryptosystem': thisCryptosystem,
+    }
     return HttpResponse(template.render(context, request))
 
 def rabinView(request):
+    thisCryptosystem = Cryptosystem.objects.get(name="Rabin")
     template = loader.get_template('cryptogyapp/rabin.html')
-    context = {}
+    context = {
+        'thisCryptosystem': thisCryptosystem,
+    }
     return HttpResponse(template.render(context, request))
