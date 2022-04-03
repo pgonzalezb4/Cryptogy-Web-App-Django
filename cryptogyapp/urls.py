@@ -7,3 +7,4 @@ urlpatterns = [
     path('RSA/', views.rsaView, name='rsacryptosystem'),
     path('Rabin/', views.rabinView, name='rabincryptosystem'),
 ]
+
