@@ -15,7 +15,11 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def rsaView(request):
-    return HttpResponse("RSA cryptosystem view.")
+    template = loader.get_template('cryptogyapp/rsa.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 def rabinView(request):
-    return HttpResponse("Rabin cryptosystem view.")
+    template = loader.get_template('cryptogyapp/rabin.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
