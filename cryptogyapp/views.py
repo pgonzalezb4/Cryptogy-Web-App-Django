@@ -5,6 +5,12 @@ from django.template import loader
 from .models import Cryptosystem
 from .forms import RsaForm, RabinForm
 
+def encryptRsa(cleartext):
+    return 'ciphertext sample.'
+
+def decryptRsa(ciphertext):
+    return 'cleartext sample.'
+
 # Create your views here.
 def index(request):
     cryptosystem_list = Cryptosystem.objects.all()
@@ -25,20 +31,21 @@ def rsaView(request):
             print("Debug.")
             # process the data in form.cleaned_data as required
             cd = form.cleaned_data
-            p = cd['primeP']
-            q = cd['primeQ']
-            cleartext = cd['clearText']
-            ciphertext = cd['cipherText']
+            pParam = cd['primeP']
+            qParam = cd['primeQ']
+            cleartextParam = cd['clearText']
+            ciphertextParam = cd['cipherText']
             print(cd)
             # Encriptacion RSA
             if 'encrypt' in request.POST:
-                pass # Codigo para encriptar...
+                ciphertext = encryptRsa(cleartextParam)
+                
             # Desencriptacion RSA
             elif 'decrypt' in request.POST:
-                pass # Codigo para desencriptar...
+                cleartext = decryptRsa(ciphertextParam)
             return HttpResponse('/RSA/')
         else:
-            print("Form invalido.")
+            print("Invalid form.")
 
 
     # if a GET (or any other method) we'll create a blank form
@@ -75,6 +82,8 @@ def rabinView(request):
             elif 'decrypt' in request.POST:
                 pass # Codigo para desencriptar...
             return HttpResponse('/Rabin/')
+        else:
+            print('Invalid form.')
 
 
     # if a GET (or any other method) we'll create a blank form
