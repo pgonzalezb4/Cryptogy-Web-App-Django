@@ -3,7 +3,7 @@
 {% block title-header %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
 {% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
 {% block content %}
-<form id="contactForm" method="post">
+<form id="rsaForm" method="POST">
     {% csrf_token %}
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-6">

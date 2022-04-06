@@ -43,7 +43,7 @@ def rsaView(request):
             # Desencriptacion RSA
             elif 'decrypt' in request.POST:
                 cleartext = decryptRsa(ciphertextParam)
-            return HttpResponse('/RSA/')
+            return render(request, 'cryptogyapp/rsa.html', {"form": form})
         else:
             print("Invalid form.")
 
@@ -81,7 +81,7 @@ def rabinView(request):
             # Desencriptacion Rabin
             elif 'decrypt' in request.POST:
                 pass # Codigo para desencriptar...
-            return HttpResponse('/Rabin/')
+            return render(request, 'cryptogyapp/rabin.html', {"form": form})
         else:
             print('Invalid form.')
 
