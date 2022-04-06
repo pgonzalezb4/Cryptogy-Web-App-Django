@@ -34,6 +34,7 @@ def rsaView(request):
             qParam = form.cleaned_data['primeQ']
             cleartextParam = form.cleaned_data['clearText']
             ciphertextParam = form.cleaned_data['cipherText']
+            print(request.POST)
             if request.POST.get('encrypt'):
                 # Encriptacion RSA
                 print('Encriptado.')
@@ -44,6 +45,7 @@ def rsaView(request):
                 print('Desencriptado.')
                 cleartext = decryptRsa(pParam, qParam, ciphertextParam)
 
+            ciphertext = "Sample cipher text."
             return JsonResponse({"ciphertext": ciphertext}, status=200)
         else:
             print("Invalid form.")

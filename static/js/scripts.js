@@ -19,8 +19,9 @@ $("#rsaForm").submit(function (e) {
         success: function (response) {
             // on successfull creating object
             // display the info from backend.
+            ciphertext = response['ciphertext']
+            $('#ciphertext').val(ciphertext);
             console.log(response['ciphertext'])
-
         },
         error: function (response) {
             // alert the error if any error occured

@@ -1,5 +1,4 @@
 from django import forms
-from cryptogyapp.models import RSAInput
 
 class RsaForm(forms.Form):
     primeP = forms.IntegerField(label='Prime number (p)', required=True)
