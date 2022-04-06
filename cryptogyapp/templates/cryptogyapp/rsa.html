@@ -8,23 +8,23 @@
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-6">
             <div class="form-floating mb-3">
-                <input name="{{form.primeP.name}}" class="form-control" id="email" type="text" placeholder="Enter a prime number...">
+                <input name="{{form.primeP.name}}" class="form-control" id="primeq" type="text" placeholder="Enter a prime number...">
                 <label name="primeP">Prime number (p)</label>
             </div>
             <div class="form-floating mb-3">
-                <input name="{{form.primeQ.name}}" class="form-control" id="email" type="text" placeholder="Enter a prime number...">
+                <input name="{{form.primeQ.name}}" class="form-control" id="primep" type="text" placeholder="Enter a prime number...">
                 <label name="primeQ">Prime number (q)</label>
             </div>
             <div class="form-floating mb-3">
-                <textarea name="{{form.clearText.name}}" class="form-control" id="email" type="text" placeholder="Enter a cleartext..."></textarea>
+                <textarea name="{{form.clearText.name}}" class="form-control" id="cleartext" type="text" placeholder="Enter a cleartext..."></textarea>
                 <label name="primeP">Cleartext</label>
             </div>
             <div class="form-floating mb-3">
-                <textarea name="{{form.cipherText.name}}" class="form-control" id="email" type="text" placeholder="Enter a ciphertext..."></textarea>
+                <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertext" type="text" placeholder="Enter a ciphertext..."></textarea>
                 <label name="primeP">Ciphertext</label>
             </div>
-            <input class="btn btn-primary" id="submitButton" type="submit" name="encrypt" value="Encrypt">
-            <input class="btn btn-primary" id="submitButton" type="submit" name="decrypt" value="Decrypt">
+            <input class="btn btn-primary" id="encrypt" type="submit" name="encrypt" value="Encrypt">
+            <input class="btn btn-primary" id="decrypt" type="submit" name="decrypt" value="Decrypt">
         </div>
     </div>
 </form>

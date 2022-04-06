@@ -1,14 +1,16 @@
+import json
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.core import serializers
 from django.template import loader
 
 from .models import Cryptosystem
 from .forms import RsaForm, RabinForm
 
-def encryptRsa(cleartext):
+def encryptRsa(p, q, cleartext):
     return 'ciphertext sample.'
 
-def decryptRsa(ciphertext):
+def decryptRsa(p, q, ciphertext):
     return 'cleartext sample.'
 
 # Create your views here.
@@ -22,28 +24,30 @@ def index(request):
 
 def rsaView(request):
     # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        print("POST request.")
+    if request.is_ajax and request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = RsaForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            print("Debug.")
             # process the data in form.cleaned_data as required
-            cd = form.cleaned_data
-            pParam = cd['primeP']
-            qParam = cd['primeQ']
-            cleartextParam = cd['clearText']
-            ciphertextParam = cd['cipherText']
-            print(cd)
-            # Encriptacion RSA
-            if 'encrypt' in request.POST:
-                ciphertext = encryptRsa(cleartextParam)
-                
-            # Desencriptacion RSA
-            elif 'decrypt' in request.POST:
-                cleartext = decryptRsa(ciphertextParam)
-            return render(request, 'cryptogyapp/rsa.html', {"form": form})
+            pParam = form.cleaned_data['primeP']
+            qParam = form.cleaned_data['primeQ']
+            cleartextParam = form.cleaned_data['clearText']
+            ciphertextParam = form.cleaned_data['cipherText']
+            print(request.POST)
+            print(request.POST.get('encrypt'))
+            print(request.POST.get('decrypt'))
+            if request.POST.get('encrypt'):
+                # Encriptacion RSA
+                print('Encriptado.')
+                ciphertext = encryptRsa(pParam, qParam, cleartextParam)
+
+            elif request.POST.get('decrypt'):
+                # Desencriptacion RSA
+                print('Desencriptado.')
+                cleartext = decryptRsa(pParam, qParam, ciphertextParam)
+
+            return JsonResponse({"ciphertext": ciphertext}, status=200)
         else:
             print("Invalid form.")
 
