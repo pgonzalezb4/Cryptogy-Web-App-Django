@@ -22,6 +22,7 @@ def rsaView(request):
         form = RsaForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            print("Debug.")
             # process the data in form.cleaned_data as required
             cd = form.cleaned_data
             p = cd['primeP']
@@ -36,6 +37,8 @@ def rsaView(request):
             elif 'decrypt' in request.POST:
                 pass # Codigo para desencriptar...
             return HttpResponse('/RSA/')
+        else:
+            print("Form invalido.")
 
 
     # if a GET (or any other method) we'll create a blank form
@@ -82,6 +85,7 @@ def rabinView(request):
     template = loader.get_template('cryptogyapp/rabin.html')
     context = {
         'thisCryptosystem': thisCryptosystem,
+        'form': form
     }
     return HttpResponse(template.render(context, request))
 

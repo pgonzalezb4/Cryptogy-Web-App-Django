@@ -7,53 +7,25 @@
     {% csrf_token %}
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-6">
-            <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                <!-- Name input-->
-                <div class="form-floating mb-3">
-                    <input class="form-control" id="name" type="text" placeholder="Enter a prime number..." data-sb-validations="required" data-sb-can-submit="no">
-                    <label name="primeP">Prime number (p):</label>
-                    <div class="invalid-feedback" data-sb-feedback="primeP:required">A prime number is required.</div>
-                </div>
-                <!-- Email address input-->
-                <div class="form-floating mb-3">
-                    <input class="form-control" id="email" type="text" placeholder="Enter a prime number..." data-sb-validations="required" data-sb-can-submit="no">
-                    <label name="primeQ">Prime number (q):</label>
-                    <div class="invalid-feedback" data-sb-feedback="primeQ:required">A prime number is required.</div>
-                </div>
-                <!-- Phone number input-->
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" id="message" type="text" placeholder="Enter a cleartext..." style="height: 10rem"></textarea>
-                    <label name="clearText">Cleartext</label>
-                    <div class="invalid-feedback"></div>
-                </div>
-                <!-- Message input-->
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" id="message" type="text" placeholder="Enter a ciphertext..." style="height: 10rem"></textarea>
-                    <label name="cipherText">Ciphertext</label>
-                    <div class="invalid-feedback"></div>
-                </div>
-                <!-- Submit success message-->
-                <!---->
-                <!-- This is what your users will see when the form-->
-                <!-- has successfully submitted-->
-                <div class="d-none" id="submitSuccessMessage">
-                    <div class="text-center mb-3">
-                        <div class="fw-bolder">Form submission successful!</div>
-                        To activate this form, sign up at
-                        <br>
-                        <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                    </div>
-                </div>
-                <!-- Submit error message-->
-                <!---->
-                <!-- This is what your users will see when there is-->
-                <!-- an error submitting the form-->
-                <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                <input class="btn btn-primary" id="submitButton" type="submit" name="encrypt" value="Encrypt">
-                <input class="btn btn-primary" id="submitButton" type="submit" name="decrypt" value="Decrypt">
-            </form>
+            <div class="form-floating mb-3">
+                <input name="{{form.primeP.name}}" class="form-control" id="email" type="text" placeholder="Enter a prime number...">
+                <label name="primeP">Prime number (p)</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input name="{{form.primeQ.name}}" class="form-control" id="email" type="text" placeholder="Enter a prime number...">
+                <label name="primeQ">Prime number (q)</label>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea name="{{form.clearText.name}}" class="form-control" id="email" type="text" placeholder="Enter a cleartext..."></textarea>
+                <label name="primeP">Cleartext</label>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea name="{{form.cipherText.name}}" class="form-control" id="email" type="text" placeholder="Enter a ciphertext..."></textarea>
+                <label name="primeP">Ciphertext</label>
+            </div>
+            <input class="btn btn-primary" id="submitButton" type="submit" name="encrypt" value="Encrypt">
+            <input class="btn btn-primary" id="submitButton" type="submit" name="decrypt" value="Decrypt">
         </div>
     </div>
 </form>
-    
 {% endblock content %}
