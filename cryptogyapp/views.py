@@ -34,9 +34,6 @@ def rsaView(request):
             qParam = form.cleaned_data['primeQ']
             cleartextParam = form.cleaned_data['clearText']
             ciphertextParam = form.cleaned_data['cipherText']
-            print(request.POST)
-            print(request.POST.get('encrypt'))
-            print(request.POST.get('decrypt'))
             if request.POST.get('encrypt'):
                 # Encriptacion RSA
                 print('Encriptado.')
