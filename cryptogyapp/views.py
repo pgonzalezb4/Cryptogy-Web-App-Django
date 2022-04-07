@@ -25,7 +25,6 @@ def rsaView(request):
         form = RsaForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
-            instance = form.save()
             # process the data in form.cleaned_data as required
             pParam = int(form.cleaned_data['primeP'])
             qParam = int(form.cleaned_data['primeQ'])
@@ -53,9 +52,9 @@ def rsaView(request):
                     return JsonResponse({"error": "Hubo un error."}, status=200)
                 return JsonResponse({"cleartext": cleartext}, status=200)
 
-            # else:
-            #     print("Error.")
-            #     return JsonResponse({"error": "Hubo un error."}, status=200)
+            else:
+                print("Error.")
+                return JsonResponse({"error": "Hubo un error."}, status=200)
 
         else:
             print("Invalid form.")
@@ -75,28 +74,44 @@ def rsaView(request):
 
 def rabinView(request):
     # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        print("POST request.")
+    if request.is_ajax and request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = RabinForm(request.POST)
+        form = RsaForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            cd = form.cleaned_data
-            p = cd['primeP']
-            q = cd['primeQ']
-            cleartext = cd['clearText']
-            ciphertext = cd['cipherText']
-            print(cd)
-            # Encriptacion Rabin
-            if 'encrypt' in request.POST:
-                pass # Codigo para encriptar...
-            # Desencriptacion Rabin
-            elif 'decrypt' in request.POST:
-                pass # Codigo para desencriptar...
-            return render(request, 'cryptogyapp/rabin.html', {"form": form})
+            pParam = int(form.cleaned_data['primeP'])
+            qParam = int(form.cleaned_data['primeQ'])
+            cleartextParam = form.cleaned_data['clearText']
+            ciphertextParam = form.cleaned_data['cipherText']
+            print(request.POST)
+            
+            pubkey, privkey = rsa.gen_keys(pParam, qParam)
+            if cleartextParam != "":
+                # Encriptacion Rabin
+                print('Encriptado.')
+                ciphertext = rabin.encrypt(cleartextParam, pubkey)
+                ciphertext = ' '.join([str(x) for x in ciphertext])
+                return JsonResponse({"ciphertext": ciphertext}, status=200)
+
+            elif ciphertextParam != "":
+                # Desencriptacion Rabin
+                print('Desencriptado.')
+                ciphertextParam = [int(x.strip()) for x in ciphertextParam.split(' ')]
+                print(ciphertextParam)
+                try:
+                    cleartext = rabin.decrypt(ciphertextParam, privkey)
+                except Exception as e:
+                    print("Error.")
+                    return JsonResponse({"error": "Hubo un error."}, status=200)
+                return JsonResponse({"cleartext": cleartext}, status=200)
+
+            else:
+                print("Error.")
+                return JsonResponse({"error": "Hubo un error."}, status=200)
+
         else:
-            print('Invalid form.')
+            print("Invalid form.")
 
 
     # if a GET (or any other method) we'll create a blank form

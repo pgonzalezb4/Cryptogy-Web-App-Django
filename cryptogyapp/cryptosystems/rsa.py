@@ -143,8 +143,8 @@ def decrypt(cipher_text, private_key):
 
 if __name__ == "__main__":
 
-    p = 47
-    q = 31
+    p = 8258171947
+    q = 5891608337
 
     pub, priv = gen_keys(p, q)
     print(pub, priv)

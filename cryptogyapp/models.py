@@ -14,3 +14,4 @@ class RSAInput(models.Model):
     primeQ = models.BigIntegerField(blank=True)
     clearText = models.CharField(max_length=1200, blank=True)    
     cipherText = models.CharField(max_length=1200, blank=True)
+

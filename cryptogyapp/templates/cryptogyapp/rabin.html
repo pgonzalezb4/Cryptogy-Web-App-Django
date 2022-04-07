@@ -3,28 +3,30 @@
 {% block title-header %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
 {% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
 {% block content %}
-<form id="rabinForm" method="post">
+<form id="rabinForm" action="" method="post">
     {% csrf_token %}
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-6">
+            <small style="font-size:11px;color:#888888;">(Up to 9223372036854775807)</small>
             <div class="form-floating mb-3">
-                <input name="{{form.primeP.name}}" class="form-control" id="email" type="text" placeholder="Enter a prime number...">
-                <label name="primeP">Prime number (p)</label>
+                <input name="{{form.primeP.name}}" class="form-control" id="primep" type="text" placeholder="Enter a prime number...">
+                <label name="primeQ">Prime number (p)</label>
+            </div>
+            <small style="font-size:11px;color:#888888;">(Up to 9223372036854775807)</small>
+            <div class="form-floating mb-3">
+                <input name="{{form.primeQ.name}}" class="form-control" id="primeq" type="text" placeholder="Enter a prime number...">
+                <label name="primeP">Prime number (q)</label>
             </div>
             <div class="form-floating mb-3">
-                <input name="{{form.primeQ.name}}" class="form-control" id="email" type="text" placeholder="Enter a prime number...">
-                <label name="primeQ">Prime number (q)</label>
+                <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..." style="height: 10rem"></textarea>
+                <label name="clearText">Cleartext</label>
             </div>
             <div class="form-floating mb-3">
-                <textarea name="{{form.clearText.name}}" class="form-control" id="email" type="text" placeholder="Enter a cleartext..."></textarea>
-                <label name="primeP">Cleartext</label>
+                <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..." style="height: 10rem"></textarea>
+                <label name="cipherText">Ciphertext</label>
             </div>
-            <div class="form-floating mb-3">
-                <textarea name="{{form.cipherText.name}}" class="form-control" id="email" type="text" placeholder="Enter a ciphertext..."></textarea>
-                <label name="primeP">Ciphertext</label>
-            </div>
-            <input class="btn btn-primary" id="submitButton" type="submit" name="encrypt" value="Encrypt">
-            <input class="btn btn-primary" id="submitButton" type="submit" name="decrypt" value="Decrypt">
+            <input id="encryptbtn" type="submit" class="btn btn-primary" value="Encrypt" name="encryptinput"/>
+            <input id="decryptbtn" type="submit" class="btn btn-primary" value="Decrypt" name="decryptinput"/>
         </div>
     </div>
 </form>
