@@ -67,13 +67,14 @@ $(document).ready(function () {
                 // on successfull creating object
                 // display the info from backend.
 
+
                 console.log("Proceso:")
+                console.log(response)
                 if (Object.keys(response).indexOf('ciphertext') != -1) {
                     ciphertext = response['ciphertext'];
                     console.log(ciphertext);
                     $('#ciphertextarea').val(response['ciphertext']);
                 }
-                
                 
                 else if (Object.keys(response).indexOf('cleartext') != -1) {
                     cleartext = response['cleartext'];

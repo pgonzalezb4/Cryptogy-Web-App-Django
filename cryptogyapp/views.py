@@ -86,7 +86,7 @@ def rabinView(request):
             ciphertextParam = form.cleaned_data['cipherText']
             print(request.POST)
             
-            pubkey, privkey = rsa.gen_keys(pParam, qParam)
+            pubkey, privkey = rabin.gen_keys(pParam, qParam)
             if cleartextParam != "":
                 # Encriptacion Rabin
                 print('Encriptado.')

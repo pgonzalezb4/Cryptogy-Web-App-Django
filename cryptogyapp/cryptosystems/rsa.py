@@ -142,7 +142,6 @@ def decrypt(cipher_text, private_key):
 
 
 if __name__ == "__main__":
-
     p = 8258171947
     q = 5891608337
 
@@ -150,14 +149,14 @@ if __name__ == "__main__":
     print(pub, priv)
     print(
         encrypt(
-            "hola como estas",
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
             pub,
         )
     )
     print(
         decrypt(
         encrypt(
-            "hola como estas",
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
             pub,
         ), priv)
     )
