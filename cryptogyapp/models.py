@@ -8,3 +8,9 @@ class Cryptosystem(models.Model):
 
     def __str__(self):
         return self.name
+
+class RSAInput(models.Model):
+    primeP = models.BigIntegerField(blank=True)
+    primeQ = models.BigIntegerField(blank=True)
+    clearText = models.CharField(max_length=1200, blank=True)    
+    cipherText = models.CharField(max_length=1200, blank=True)

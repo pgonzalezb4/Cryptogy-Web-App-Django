@@ -1,6 +1,7 @@
 import ast
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
+from django.core import serializers
 from django.template import loader
 
 from .cryptosystems import rsa, rabin
@@ -24,6 +25,7 @@ def rsaView(request):
         form = RsaForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
+            instance = form.save()
             # process the data in form.cleaned_data as required
             pParam = int(form.cleaned_data['primeP'])
             qParam = int(form.cleaned_data['primeQ'])
@@ -32,28 +34,28 @@ def rsaView(request):
             print(request.POST)
             
             pubkey, privkey = rsa.gen_keys(pParam, qParam)
-            if 'encryptinput' in request.POST:
+            if cleartextParam != "":
                 # Encriptacion RSA
                 print('Encriptado.')
                 ciphertext = rsa.encrypt(cleartextParam, pubkey)
                 ciphertext = ' '.join([str(x) for x in ciphertext])
                 return JsonResponse({"ciphertext": ciphertext}, status=200)
 
-            elif 'decryptinput' in request.POST:
+            elif ciphertextParam != "":
                 # Desencriptacion RSA
                 print('Desencriptado.')
                 ciphertextParam = [int(x.strip()) for x in ciphertextParam.split(' ')]
+                print(ciphertextParam)
                 try:
                     cleartext = rsa.decrypt(ciphertextParam, privkey)
                 except Exception as e:
                     print("Error.")
                     return JsonResponse({"error": "Hubo un error."}, status=200)
-
                 return JsonResponse({"cleartext": cleartext}, status=200)
 
-            else:
-                print("Error.")
-                return JsonResponse({"error": "Hubo un error."}, status=200)
+            # else:
+            #     print("Error.")
+            #     return JsonResponse({"error": "Hubo un error."}, status=200)
 
         else:
             print("Invalid form.")
