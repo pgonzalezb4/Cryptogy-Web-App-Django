@@ -30,7 +30,7 @@ SECRET_KEY = 'ghc4u#vxsddhz4dj1xo$jmgu!mad&iwo8+t&@dumnw@z&oil(7'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cryptogyapp-env.eba-fnyg25cm.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['django-env.eba-kavue3ym.us-west-2.elasticbeanstalk.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
