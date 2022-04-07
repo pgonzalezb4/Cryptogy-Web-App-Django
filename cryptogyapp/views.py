@@ -1,17 +1,11 @@
-import json
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.core import serializers
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
+
+from .cryptosystems import rsa, rabin
 
 from .models import Cryptosystem
 from .forms import RsaForm, RabinForm
-
-def encryptRsa(p, q, cleartext):
-    return 'ciphertext sample.'
-
-def decryptRsa(p, q, ciphertext):
-    return 'cleartext sample.'
 
 # Create your views here.
 def index(request):
@@ -35,18 +29,22 @@ def rsaView(request):
             cleartextParam = form.cleaned_data['clearText']
             ciphertextParam = form.cleaned_data['cipherText']
             print(request.POST)
-            if request.POST.get('encrypt'):
+            
+            pubkey, privkey = rsa.gen_keys(pParam, qParam)
+            if 'encryptinput' in request.POST:
                 # Encriptacion RSA
                 print('Encriptado.')
-                ciphertext = encryptRsa(pParam, qParam, cleartextParam)
+                ciphertext = rsa.encrypt(cleartextParam, pubkey)
+                return JsonResponse({"ciphertext": ciphertext}, status=200)
 
-            elif request.POST.get('decrypt'):
+            elif 'decryptinput' in request.POST:
                 # Desencriptacion RSA
                 print('Desencriptado.')
-                cleartext = decryptRsa(pParam, qParam, ciphertextParam)
+                cleartext = rsa.decrypt(ciphertextParam, privkey)
+                return JsonResponse({"cleartext": cleartext}, status=200)
+            else:
+                return JsonResponse({"error": "Hubo un error."}, status=200)
 
-            ciphertext = "Sample cipher text."
-            return JsonResponse({"ciphertext": ciphertext}, status=200)
         else:
             print("Invalid form.")
 

@@ -142,14 +142,11 @@ def decrypt(cipher_text, private_key):
 
 if __name__ == "__main__":
 
-    p = 598523229523791300517772583157  ###########
-    q = 735983657699353304370886992107  ###########
-    # e = 17
+    p = 598523229523791300517772583157
+    q = 735983657699353304370886992107
 
     pub, priv = gen_keys(p, q)
-
     print(pub, priv)
-
     print(
         encrypt(
             "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",

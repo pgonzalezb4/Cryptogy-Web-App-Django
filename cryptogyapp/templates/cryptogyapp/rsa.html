@@ -16,15 +16,15 @@
                 <label name="primeQ">Prime number (q)</label>
             </div>
             <div class="form-floating mb-3">
-                <textarea name="{{form.clearText.name}}" class="form-control" id="cleartext" type="text" placeholder="Enter a cleartext..."></textarea>
+                <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..."></textarea>
                 <label name="primeP">Cleartext</label>
             </div>
             <div class="form-floating mb-3">
-                <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertext" type="text" placeholder="Enter a ciphertext..."></textarea>
+                <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..."></textarea>
                 <label name="primeP">Ciphertext</label>
             </div>
-            <input class="btn btn-primary" id="encrypt" type="submit" name="encrypt" value="Encrypt">
-            <input class="btn btn-primary" id="decrypt" type="submit" name="decrypt" value="Decrypt">
+            <button class="btn btn-primary" type="submit" value="encryptinput" name="encryptinput">Encrypt</button>
+            <button class="btn btn-primary" type="submit" value="decryptinput" name="decryptinput">Decrypt</button>
         </div>
     </div>
 </form>

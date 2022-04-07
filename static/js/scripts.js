@@ -19,9 +19,33 @@ $("#rsaForm").submit(function (e) {
         success: function (response) {
             // on successfull creating object
             // display the info from backend.
-            ciphertext = response['ciphertext']
-            $('#ciphertext').val(ciphertext);
-            console.log(response['ciphertext'])
+
+            console.log("Proceso:")
+            if (Object.keys(response).indexOf('ciphertext') != -1) {
+                ciphertext = response['ciphertext'];
+                console.log(ciphertext);
+                $('#ciphertextarea').val(ciphertext);
+            }
+
+            else if (Object.keys(response).indexOf('cleartext') != -1) {
+                cleartext = response['cleartext'];
+                console.log(cleartext);
+                $('#cleartextarea').val(cleartext);
+            }
+
+            else {
+                cleartext = response['error'];
+                console.log(cleartext);
+                $('#ciphertextarea').val(cleartext);
+                $('#cleartextarea').val(cleartext);
+            }
+
+            // Encriptado
+            
+            
+
+            // Desencriptado
+            
         },
         error: function (response) {
             // alert the error if any error occured
