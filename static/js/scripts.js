@@ -6,7 +6,7 @@
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
 
-$("#rsaForm").submit(function (e) {
+$("#contactForm").submit(function (e) {
     // preventing from page reload and default actions
     e.preventDefault();
     // serialize the data for sending the form data.
@@ -39,13 +39,6 @@ $("#rsaForm").submit(function (e) {
                 $('#ciphertextarea').val(cleartext);
                 $('#cleartextarea').val(cleartext);
             }
-
-            // Encriptado
-            
-            
-
-            // Desencriptado
-            
         },
         error: function (response) {
             // alert the error if any error occured
@@ -53,45 +46,3 @@ $("#rsaForm").submit(function (e) {
         }
     })
 })
-
-
-/*
-$(document).ready(function () {
-    $(function() {
-        $("#rsaForm").submit(function(event) {
-            // Stop form from submitting normally
-            event.preventDefault();
-            var rsaForm = $(this);
-            
-            // Send the data using post
-            var posting = $.post( rsaForm.attr('action'), rsaForm.serialize() );
-            // if success:
-            posting.done(function(data) {
-                alert('Encriptado.');
-            });
-            // if failure:
-            posting.fail(function(data) {
-                // 4xx or 5xx response, alert user about failure
-            });
-        });
-    });
-
-    $(function() {
-        $("#rabinForm").submit(function(event) {
-            // Stop form from submitting normally
-            event.preventDefault();
-            var rsaForm = $(this);
-            // Send the data using post
-            var posting = $.post( rsaForm.attr('action'), rsaForm.serialize() );
-            // if success:
-            posting.done(function(data) {
-                alert('Encriptado.');
-            });
-            // if failure:
-            posting.fail(function(data) {
-                // 4xx or 5xx response, alert user about failure
-            });
-        });
-    });
-});
-*/

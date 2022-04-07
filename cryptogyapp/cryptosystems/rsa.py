@@ -108,8 +108,9 @@ def int2bytes(i):
 
 
 def int2string(i, encoding="utf-8", errors="surrogatepass"):
+    print('Input', i)
     bytes_ = int2bytes(i)
-    # print(bytes_)
+    print('Bytes', bytes_)
     return bytes_.decode(encoding, errors)
 
 
@@ -154,11 +155,8 @@ if __name__ == "__main__":
         )
     )
     print(
-        decrypt(
-            encrypt(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-                pub,
-            ),
-            priv,
+        encrypt(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+            pub,
         )
     )

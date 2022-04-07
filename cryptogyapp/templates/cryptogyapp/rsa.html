@@ -3,7 +3,7 @@
 {% block title-header %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
 {% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
 {% block content %}
-<form id="rsaForm" method="POST">
+<form id="contactForm" action="" method="post">
     {% csrf_token %}
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-6">
@@ -16,15 +16,15 @@
                 <label name="primeQ">Prime number (q)</label>
             </div>
             <div class="form-floating mb-3">
-                <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..."></textarea>
+                <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..." style="height: 10rem"></textarea>
                 <label name="primeP">Cleartext</label>
             </div>
             <div class="form-floating mb-3">
-                <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..."></textarea>
+                <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..." style="height: 10rem"></textarea>
                 <label name="primeP">Ciphertext</label>
             </div>
-            <button class="btn btn-primary" type="submit" value="encryptinput" name="encryptinput">Encrypt</button>
-            <button class="btn btn-primary" type="submit" value="decryptinput" name="decryptinput">Decrypt</button>
+            <input type="submit" class="btn btn-primary" value="Encrypt" name="encryptinput"/>
+            <input type="submit" class="btn btn-primary" value="Decrypt" name="decryptinput"/>
         </div>
     </div>
 </form>
