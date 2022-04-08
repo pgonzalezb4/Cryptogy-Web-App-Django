@@ -11294,3 +11294,11 @@ textarea.form-control-lg {
   width: 4rem;
   font-size: 2rem;
 }
+
+/*
+  Custom styles (use only IDs instead of classes)
+*/
+#cryptosystemBox {
+  margin-bottom: 50px !important;
+  text-align: center;
+}

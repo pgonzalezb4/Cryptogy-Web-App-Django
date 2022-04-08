@@ -1,4 +1,4 @@
-import ast
+import math
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
@@ -14,7 +14,7 @@ def index(request):
     cryptosystem_list = Cryptosystem.objects.all()
     template = loader.get_template('cryptogyapp/index.html')
     context = {
-        'cryptosystem_list': cryptosystem_list,
+        'cryptosystem_list': cryptosystem_list
     }
     return HttpResponse(template.render(context, request))
 
@@ -126,3 +126,20 @@ def rabinView(request):
     }
     return HttpResponse(template.render(context, request))
 
+def elgamalView(request):
+    thisCryptosystem = Cryptosystem.objects.get(name="ElGamal")
+    template = loader.get_template('cryptogyapp/elgamal.html')
+    context = {
+        'thisCryptosystem': thisCryptosystem,
+        # 'form': form
+    }
+    return HttpResponse(template.render(context, request))
+
+def menezesvanstoneView(request):
+    thisCryptosystem = Cryptosystem.objects.get(name="Menezes-Vanstone")
+    template = loader.get_template('cryptogyapp/menezes-vanstone.html')
+    context = {
+        'thisCryptosystem': thisCryptosystem,
+        # 'form': form
+    }
+    return HttpResponse(template.render(context, request))

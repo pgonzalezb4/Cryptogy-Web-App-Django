@@ -6,5 +6,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('RSA/', views.rsaView, name='rsacryptosystem'),
     path('Rabin/', views.rabinView, name='rabincryptosystem'),
+    path('ElGamal/', views.elgamalView, name='elgamalcryptosystem'),
+    path('Menezes-Vanstone/', views.menezesvanstoneView, name='menezesvanstonecryptosystem'),
 ]
 

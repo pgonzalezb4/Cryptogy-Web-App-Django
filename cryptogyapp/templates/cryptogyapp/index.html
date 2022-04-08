@@ -1,25 +1,23 @@
 {% extends "cryptogyapp/base.html" %}
 {% block content %}
 <!-- Features section-->
-<section class="py-5 border-bottom" id="features">
-    <div class="container px-5 my-5">
-        <div class="row gx-5">
-            {% if cryptosystem_list %}
-                {% for cryptosystem in cryptosystem_list %}
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <div class="feature bg-white bg-gradient text-white rounded-3 mb-3"><img src="{{ cryptosystem.icon.url }}"></img></div>
-                        <h2 class="h4 fw-bolder">{{ cryptosystem.name }}</h2>
-                        <p>{{ cryptosystem.desc }}</p>
-                        <a class="text-decoration-none" href="/{{ cryptosystem.name }}/">
-                            Use this cryptosystem
-                            <i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>No cryptosystems are available.</p>
-            {% endif %}
-        </div>
+<div class="container px-5 my-5">
+    <div class="row gx-5">
+        {% if cryptosystem_list %}
+            {% for cryptosystem in cryptosystem_list %}
+                <div id="cryptosystemBox" class="col-lg-4 mb-5 mb-lg-0">
+                    <div class="feature bg-white bg-gradient text-white rounded-3 mb-3"><img src="{{ cryptosystem.icon.url }}"></img></div>
+                    <h2 class="h4 fw-bolder">{{ cryptosystem.name }}</h2>
+                    <p>{{ cryptosystem.desc }}</p>
+                    <a class="text-decoration-none" href="/{{ cryptosystem.name }}/">
+                        Use this cryptosystem
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No cryptosystems are available.</p>
+        {% endif %}
     </div>
-</section>
+</div>
 {% endblock content %}
