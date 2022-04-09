@@ -10,13 +10,13 @@ class Cryptosystem(models.Model):
         return self.name
 
 class RSAInput(models.Model):
-    primeP = models.BigIntegerField(blank=True)
-    primeQ = models.BigIntegerField(blank=True)
-    clearText = models.CharField(max_length=1200, blank=True)    
-    cipherText = models.CharField(max_length=1200, blank=True)
+    primeP = models.DecimalField(max_digits=78, decimal_places=0)
+    primeQ = models.DecimalField(max_digits=78, decimal_places=0)
+    clearText = models.CharField(max_length=65536, blank=True)    
+    cipherText = models.CharField(max_length=65536, blank=True)
 
 class RabinInput(models.Model):
-    primeP = models.CharField(max_length=1200, blank=True)
-    primeQ = models.CharField(max_length=1200, blank=True)
-    clearText = models.CharField(max_length=1200, blank=True)    
-    cipherText = models.CharField(max_length=1200, blank=True)
+    primeP = models.DecimalField(max_digits=78, decimal_places=0)
+    primeQ = models.DecimalField(max_digits=78, decimal_places=0)
+    clearText = models.CharField(max_length=65536, blank=True)    
+    cipherText = models.CharField(max_length=65536, blank=True)

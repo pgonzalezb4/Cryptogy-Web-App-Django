@@ -1,4 +1,3 @@
-import math
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
@@ -58,6 +57,7 @@ def rsaView(request):
 
         else:
             print("Invalid form.")
+            print(form.errors)
 
 
     # if a GET (or any other method) we'll create a blank form
@@ -80,29 +80,30 @@ def rabinView(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            pParam = int(form.cleaned_data['primeP'])
-            qParam = int(form.cleaned_data['primeQ'])
+            pParam = int(rabin.delete_space(str(form.cleaned_data['primeP'])))
+            qParam = int(rabin.delete_space(str(form.cleaned_data['primeQ'])))
             cleartextParam = form.cleaned_data['clearText']
             ciphertextParam = form.cleaned_data['cipherText']
             print(request.POST)
             
-            pubkey, privkey = rabin.gen_keys(pParam, qParam)
             if cleartextParam != "":
                 # Encriptacion Rabin
                 print('Encriptado.')
-                ciphertext = rabin.encrypt(cleartextParam, pubkey)
-                ciphertext = ' '.join([str(x) for x in ciphertext])
+                cleartextParam = int.from_bytes(cleartextParam.encode(), 'big')
+                ciphertext = rabin.encryption(cleartextParam, pParam*qParam)
+                ciphertext = rabin.add_space(str(ciphertext))
                 return JsonResponse({"ciphertext": ciphertext}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion Rabin
                 print('Desencriptado.')
-                ciphertextParam = [int(x.strip()) for x in ciphertextParam.split(' ')]
+                ciphertextParam = int(rabin.delete_space(ciphertextParam))
                 print(ciphertextParam)
                 try:
-                    cleartext = rabin.decrypt(ciphertextParam, privkey)
+                    cleartext = int(format(rabin.decryption(ciphertextParam, pParam, qParam), 'x').zfill(226 // 4), 16)
+                    cleartext = cleartext.to_bytes(((pParam*qParam).bit_length() + 7) // 8, 'big').decode('utf-8', 'strict')
                 except Exception as e:
-                    print("Error.")
+                    print("Error:", e)
                     return JsonResponse({"error": "Hubo un error."}, status=200)
                 return JsonResponse({"cleartext": cleartext}, status=200)
 
@@ -112,6 +113,7 @@ def rabinView(request):
 
         else:
             print("Invalid form.")
+            print(form.errors)
 
 
     # if a GET (or any other method) we'll create a blank form
