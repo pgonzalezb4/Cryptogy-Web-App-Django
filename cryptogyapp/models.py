@@ -16,8 +16,7 @@ class RSAInput(models.Model):
     cipherText = models.CharField(max_length=1200, blank=True)
 
 class RabinInput(models.Model):
-    primeP = models.BigIntegerField(blank=True)
-    primeQ = models.BigIntegerField(blank=True)
-    publicKey = models.BigIntegerField(blank=True)
+    primeP = models.CharField(max_length=1200, blank=True)
+    primeQ = models.CharField(max_length=1200, blank=True)
     clearText = models.CharField(max_length=1200, blank=True)    
     cipherText = models.CharField(max_length=1200, blank=True)

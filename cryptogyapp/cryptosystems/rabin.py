@@ -1,8 +1,7 @@
 # 105064506 鄭柏偉 HW3
 # Rabin Public-Key Cryptosystem
 
-import prime
-import rabinutils
+from . import prime, rabinutils
 
 def delete_space(string):
     lst = string.split(' ')
