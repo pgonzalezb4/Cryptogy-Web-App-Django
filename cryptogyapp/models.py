@@ -20,3 +20,8 @@ class RabinInput(models.Model):
     primeQ = models.DecimalField(max_digits=78, decimal_places=0)
     clearText = models.CharField(max_length=65536, blank=True)    
     cipherText = models.CharField(max_length=65536, blank=True)
+
+class MVInput(models.Model):
+    keyParam = models.CharField(max_length=65536) 
+    clearText = models.CharField(max_length=65536, blank=True)
+    cipherText = models.CharField(max_length=65536, blank=True)

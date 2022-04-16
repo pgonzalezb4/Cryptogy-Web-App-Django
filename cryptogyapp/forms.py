@@ -1,7 +1,6 @@
-from django.forms import ModelForm
 from django import forms
 
-from cryptogyapp.models import RSAInput, RabinInput
+from cryptogyapp.models import *
 
 class RsaForm(forms.ModelForm):
     class Meta:
@@ -11,4 +10,9 @@ class RsaForm(forms.ModelForm):
 class RabinForm(forms.ModelForm):
     class Meta:
         model = RabinInput
+        fields = ("__all__")
+
+class MVForm(forms.ModelForm):
+    class Meta:
+        model = MVInput
         fields = ("__all__")

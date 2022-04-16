@@ -1,12 +1,10 @@
-from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from django.core import serializers
 from django.template import loader
 
-from .cryptosystems import rsa, rabin
+from .cryptosystems import rsa, rabin, menezesvanstone
 
 from .models import Cryptosystem
-from .forms import RsaForm, RabinForm
+from .forms import *
 
 # Create your views here.
 def index(request):
@@ -128,18 +126,64 @@ def rabinView(request):
     }
     return HttpResponse(template.render(context, request))
 
-def elgamalView(request):
-    thisCryptosystem = Cryptosystem.objects.get(name="ElGamal")
-    template = loader.get_template('cryptogyapp/elgamal.html')
+def menezesvanstoneView(request):
+    if request.is_ajax and request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = MVForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            cleartextParam = form.cleaned_data['clearText']
+            ciphertextParam = form.cleaned_data['cipherText']
+            keyParam = form.cleaned_data['keyParam']
+            print(request.POST)
+            
+            key = [int(x) for x in keyParam.split()]
+            print("Key:", key)
+            cipher = menezesvanstone.GammaPentagonalCipher(key)
+            if cleartextParam != "":
+                # Encriptacion Rabin
+                print('Encriptado.')
+                cleartextParam = cleartextParam.replace(' ', '')
+                ciphertext = cipher.encode(cleartextParam)
+
+                return JsonResponse({"ciphertext": ciphertext}, status=200)
+
+            elif ciphertextParam != "":
+                # Desencriptacion Rabin
+                print('Desencriptado.')
+
+                try:
+                    cleartext = cipher.decode(ciphertextParam)
+                except Exception as e:
+                    print("Error:", e)
+                    return JsonResponse({"error": "Hubo un error."}, status=200)
+                return JsonResponse({"cleartext": cleartext.lower()}, status=200)
+
+            else:
+                print("Error.")
+                return JsonResponse({"error": "Hubo un error."}, status=200)
+
+        else:
+            print("Invalid form.")
+            print(form.errors)
+
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = MVForm()
+
+    thisCryptosystem = Cryptosystem.objects.get(name="Menezes-Vanstone")
+    template = loader.get_template('cryptogyapp/menezes-vanstone.html')
     context = {
         'thisCryptosystem': thisCryptosystem,
-        # 'form': form
+        'form': form
     }
     return HttpResponse(template.render(context, request))
 
-def menezesvanstoneView(request):
-    thisCryptosystem = Cryptosystem.objects.get(name="Menezes-Vanstone")
-    template = loader.get_template('cryptogyapp/menezes-vanstone.html')
+def elgamalView(request):
+    thisCryptosystem = Cryptosystem.objects.get(name="ElGamal")
+    template = loader.get_template('cryptogyapp/elgamal.html')
     context = {
         'thisCryptosystem': thisCryptosystem,
         # 'form': form
