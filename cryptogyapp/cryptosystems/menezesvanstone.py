@@ -4,7 +4,7 @@ import random
 
 # plt.rcParams["figure.figsize"] = (25, 25)
 
-class GammaPentagonalCipher():
+class MenezesVanstoneCipher():
     with open("cryptogyapp/cryptosystems/gammapentagonalgrapha.txt", "r") as f:
         data = f.read()
     a = eval(data)
@@ -69,9 +69,9 @@ class GammaPentagonalCipher():
         super().__init__()
         self.key = self.generateRandomKey(key)
         self.dicts = None
-        self.points = GammaPentagonalCipher.graphs[GammaPentagonalCipher.curgraph]
-        self.pointssmall = GammaPentagonalCipher.graphssmall[
-            GammaPentagonalCipher.curgraph
+        self.points = MenezesVanstoneCipher.graphs[MenezesVanstoneCipher.curgraph]
+        self.pointssmall = MenezesVanstoneCipher.graphssmall[
+            MenezesVanstoneCipher.curgraph
         ]
 
     def getRouteKey(self, Xi, Yi, coord):
@@ -91,9 +91,9 @@ class GammaPentagonalCipher():
         # Primero desplazamos por la permutacion, y luego desplazamos por el numero de trayectorias.
         dicts = [
             [
-                GammaPentagonalCipher.shiftEncrypt(
-                    GammaPentagonalCipher.shiftEncrypt(ABC[l], perm[k]),
-                    GammaPentagonalCipher.getRouteKey(self, Xi, Yi, (k, l)),
+                MenezesVanstoneCipher.shiftEncrypt(
+                    MenezesVanstoneCipher.shiftEncrypt(ABC[l], perm[k]),
+                    MenezesVanstoneCipher.getRouteKey(self, Xi, Yi, (k, l)),
                 )
                 for l in range(26)
             ]
@@ -122,7 +122,7 @@ class GammaPentagonalCipher():
             return keyParam
 
     def encode(self, cleartext: str):
-        self.dicts = GammaPentagonalCipher.generateDicts(self)
+        self.dicts = MenezesVanstoneCipher.generateDicts(self)
         perm = self.key[2:]
         ciphertext = ""
         x = 0
@@ -136,7 +136,7 @@ class GammaPentagonalCipher():
         return ciphertext[:-1]
 
     def decode(self, ciphertext):
-        self.dicts = GammaPentagonalCipher.generateDicts(self)
+        self.dicts = MenezesVanstoneCipher.generateDicts(self)
         cleartext = ""
         for x in ciphertext.split(";"):
             a, b = x[1:-1].split(", ")
@@ -144,12 +144,12 @@ class GammaPentagonalCipher():
         return cleartext
 
     def changeGraph(self):
-        GammaPentagonalCipher.curgraph = (GammaPentagonalCipher.curgraph + 1) % 2
-        #print(GammaPentagonalCipher.curgraph)
+        MenezesVanstoneCipher.curgraph = (MenezesVanstoneCipher.curgraph + 1) % 2
+        #print(MenezesVanstoneCipher.curgraph)
 
 
 # def showGraph(key, filename: str):
-#     pointssmall = GammaPentagonalCipher.graphssmall[GammaPentagonalCipher.curgraph]
+#     pointssmall = MenezesVanstoneCipher.graphssmall[MenezesVanstoneCipher.curgraph]
 #     #print("asdf")
 #     #print(type(key))
 #     key = [int(x) for x in key.split(",")]
@@ -190,12 +190,26 @@ if __name__ == "__main__":
 
     # key = 
     cleartext = "hola como vas"
-    cipher = GammaPentagonalCipher([13, -3, 18, 4, 0, 15, 17, 0, 5, 15])
+    cleartext = cleartext.split(" ")
+
+    cipher = MenezesVanstoneCipher([13, -3, 18, 4, 0, 15, 17, 0, 5, 15])
     print("cleartext: ")
     print(cleartext)
-    print(cipher.encode(cleartext))
+    ciphertext = []
+    for text in cleartext:
+        ciphertext.append(cipher.encode(text))
 
-    ciphertext = cipher.encode(cleartext)
+    ciphertext = '  '.join(ciphertext)
     print("ciphertext: ")
     print(ciphertext, type(ciphertext))
-    print(cipher.decode("(0, 15);(0, 22);(1, 7);(1, 22);(1, 24);(2, 14);(3, 23);(3, 25);(4, 4);(4, 9);(5, 18)"))
+
+    print("desencriptado:")
+    ciphertext = ciphertext.split('  ')
+
+    cleartext = []
+    for text in ciphertext:
+        print("text", text)
+        cleartext.append(cipher.decode(text))
+
+    cleartext = ' '.join(cleartext)
+    print(cleartext)

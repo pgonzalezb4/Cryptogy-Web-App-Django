@@ -140,21 +140,32 @@ def menezesvanstoneView(request):
             
             key = [int(x) for x in keyParam.split()]
             print("Key:", key)
-            cipher = menezesvanstone.GammaPentagonalCipher(key)
+            cipher = menezesvanstone.MenezesVanstoneCipher(key)
             if cleartextParam != "":
-                # Encriptacion Rabin
+                # Encriptacion Menezes-Vanstone
                 print('Encriptado.')
-                cleartextParam = cleartextParam.replace(' ', '')
-                ciphertext = cipher.encode(cleartextParam)
+                cleartextParam = cleartextParam.split(' ')
+
+                ciphertext = []
+                for text in cleartextParam:
+                    ciphertext.append(cipher.encode(text))
+
+                ciphertext = '  '.join(ciphertext)
 
                 return JsonResponse({"ciphertext": ciphertext}, status=200)
 
             elif ciphertextParam != "":
-                # Desencriptacion Rabin
+                # Desencriptacion Menezes-Vanstone
                 print('Desencriptado.')
 
                 try:
-                    cleartext = cipher.decode(ciphertextParam)
+                    ciphertextParam = ciphertextParam.split('  ')
+
+                    cleartext = []
+                    for text in ciphertextParam:
+                        cleartext.append(cipher.decode(text))
+
+                    cleartext = ' '.join(cleartext)
                 except Exception as e:
                     print("Error:", e)
                     return JsonResponse({"error": "Hubo un error."}, status=200)

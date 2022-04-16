@@ -98,7 +98,7 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    $("#MVForm").on("submit", function (e) {
+    $("#mvForm").on("submit", function (e) {
         // preventing from page reload and default actions
         e.preventDefault();
         // serialize the data for sending the form data.
