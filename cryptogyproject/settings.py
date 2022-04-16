@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'django-env.eba-ztyswan5.us-west-2.el
 # Application definition
 
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'cryptogyapp.apps.CryptogyappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
