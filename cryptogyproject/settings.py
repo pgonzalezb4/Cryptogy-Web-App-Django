@@ -25,7 +25,7 @@ MEDIA_URL = 'media/'
 SECRET_KEY = 'ghc4u#vxsddhz4dj1xo$jmgu!mad&iwo8+t&@dumnw@z&oil(7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['ec2-54-184-130-147.us-west-2.compute.amazonaws.com']
 
