@@ -1,7 +1,7 @@
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 
-from .cryptosystems import rsa, rabin, menezesvanstone
+from .cryptosystems import rsa, rabin, menezesvanstone, elgamal
 
 from .models import Cryptosystem
 from .forms import *
@@ -23,11 +23,21 @@ def rsaView(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            pParam = int(form.cleaned_data['primeP'])
-            qParam = int(form.cleaned_data['primeQ'])
+            pParam = form.cleaned_data['primeP']
+            qParam = form.cleaned_data['primeQ']
             cleartextParam = form.cleaned_data['clearText']
             ciphertextParam = form.cleaned_data['cipherText']
             print(request.POST)
+
+            # Random key generator
+            
+
+            if pParam != '' and qParam != '':
+                pParam = int(pParam)
+                qParam = int(qParam)
+            else:
+                pParam = rsa.generate_a_prime_number(256)
+                qParam = rsa.generate_a_prime_number(256)
             
             pubkey, privkey = rsa.gen_keys(pParam, qParam)
             if cleartextParam != "":
@@ -35,7 +45,7 @@ def rsaView(request):
                 print('Encriptado.')
                 ciphertext = rsa.encrypt(cleartextParam, pubkey)
                 ciphertext = ' '.join([str(x) for x in ciphertext])
-                return JsonResponse({"ciphertext": ciphertext}, status=200)
+                return JsonResponse({"ciphertext": ciphertext, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion RSA
@@ -47,7 +57,7 @@ def rsaView(request):
                 except Exception as e:
                     print("Error.")
                     return JsonResponse({"error": "Hubo un error."}, status=200)
-                return JsonResponse({"cleartext": cleartext}, status=200)
+                return JsonResponse({"cleartext": cleartext, "pParam" : pParam, "qParam" : qParam}, status=200)
 
             else:
                 print("Error.")
@@ -138,9 +148,15 @@ def menezesvanstoneView(request):
             keyParam = form.cleaned_data['keyParam']
             print(request.POST)
             
-            key = [int(x) for x in keyParam.split()]
-            print("Key:", key)
-            cipher = menezesvanstone.MenezesVanstoneCipher(key)
+            if keyParam != '':
+                key = [int(x.strip()) for x in keyParam.split(',')]
+                print("Key:", key)
+                cipher = menezesvanstone.MenezesVanstoneCipher(key)
+            else:
+                cipher = menezesvanstone.MenezesVanstoneCipher(None)
+                key = cipher.key
+                print(key)
+
             if cleartextParam != "":
                 # Encriptacion Menezes-Vanstone
                 print('Encriptado.')
@@ -152,7 +168,7 @@ def menezesvanstoneView(request):
 
                 ciphertext = '  '.join(ciphertext)
 
-                return JsonResponse({"ciphertext": ciphertext}, status=200)
+                return JsonResponse({"ciphertext": ciphertext, "key" : key}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion Menezes-Vanstone
@@ -193,10 +209,79 @@ def menezesvanstoneView(request):
     return HttpResponse(template.render(context, request))
 
 def elgamalView(request):
+    if request.is_ajax and request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = GammalForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            pNumber = int(form.cleaned_data['pNumber'])
+            qNumber = int(form.cleaned_data['qNumber'])
+            gNumber = int(form.cleaned_data['gNumber'])
+            B = form.cleaned_data['pubKey']
+            b = form.cleaned_data['privKey']
+            cleartextParam = form.cleaned_data['clearText']
+            ciphertextParam = form.cleaned_data['cipherText']
+            print(request.POST)
+            
+            params = (pNumber, qNumber, gNumber)
+
+            # Keys
+            if B == '' and b == '':
+                print("Generando nuevas claves...")
+                B, b = elgamal.genKey(params)
+            else:
+                B = int(B)
+                b = int(b)
+
+            print("Claves:", B, b, type(B), type(b))
+            if cleartextParam != "":
+                # Encriptacion ElGammal
+                print('Encriptado.')
+                ciphertext = elgamal.encrypt(params, B, cleartextParam)
+                
+                new_ciphertext = ''
+
+                for tup in ciphertext:
+                    new_ciphertext += '--'.join([str(x) for x in list(tup)]) + '  '
+
+                return JsonResponse({"ciphertext": new_ciphertext, "pubkey" : str(B), "privkey" : str(b)}, status=200)
+
+            elif ciphertextParam != "":
+                # Desencriptacion ElGammal
+                print('Desencriptado.')
+                ciphertextParam = ciphertextParam.split('  ')
+
+                ciphertext = []
+                for ciphert in ciphertextParam:
+                    newl = [int(x) for x in ciphert.split('--')]
+                    newl = tuple(newl)
+                    ciphertext.append(newl)
+
+                try:
+                    cleartext = elgamal.decrypt(params, b, ciphertext)
+                except Exception as e:
+                    print("Error:", e)
+                    return JsonResponse({"error": "Hubo un error."}, status=200)
+                return JsonResponse({"cleartext": cleartext}, status=200)
+
+            else:
+                print("Error.")
+                return JsonResponse({"error": "Hubo un error."}, status=200)
+
+        else:
+            print("Invalid form.")
+            print(form.errors)
+
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = GammalForm()
+
     thisCryptosystem = Cryptosystem.objects.get(name="ElGamal")
     template = loader.get_template('cryptogyapp/elgamal.html')
     context = {
         'thisCryptosystem': thisCryptosystem,
-        # 'form': form
+        'form': form
     }
     return HttpResponse(template.render(context, request))

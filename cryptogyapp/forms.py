@@ -16,3 +16,8 @@ class MVForm(forms.ModelForm):
     class Meta:
         model = MVInput
         fields = ("__all__")
+
+class GammalForm(forms.ModelForm):
+    class Meta:
+        model = GammalInput
+        fields = ("__all__")

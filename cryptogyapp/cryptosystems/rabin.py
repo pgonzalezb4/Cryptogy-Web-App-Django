@@ -32,7 +32,6 @@ def isPrime(n):
         k += 1
     else:
         m = temp
-
     # 2. Primality Test
     # Test all entries in the 'primes' list
     for a in primes:
@@ -42,7 +41,6 @@ def isPrime(n):
             return False
         elif pow(a, m, n) == 1 or not none_in_x_is_n(x, n - 1):
             continue
-
     return True
 
 

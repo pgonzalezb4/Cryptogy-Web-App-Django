@@ -7,6 +7,7 @@
     {% csrf_token %}
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-6">
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A pair of random prime numbers will be generated for encryption if not provided by the user.</small>
             <div class="form-floating mb-3">
                 <input name="{{form.primeP.name}}" class="form-control" id="primep" type="text" placeholder="Enter a prime number...">
                 <label name="primeQ">Prime number (p)</label>
@@ -15,6 +16,12 @@
                 <input name="{{form.primeQ.name}}" class="form-control" id="primeq" type="text" placeholder="Enter a prime number...">
                 <label name="primeP">Prime number (q)</label>
             </div>
+
+            {% comment %} <!-- Generate random key button -->
+            <div class="form-floating mb-3">
+                <button type="submit" id="generateRandomKey" value="generaterandomkey" name="generaterandomkey" class="btn btn-primary">Generate random key</button>
+            </div> {% endcomment %}
+            
             <div class="form-floating mb-3">
                 <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..." style="height: 10rem"></textarea>
                 <label name="clearText">Cleartext</label>

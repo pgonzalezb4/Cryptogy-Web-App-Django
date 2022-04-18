@@ -10,18 +10,27 @@ class Cryptosystem(models.Model):
         return self.name
 
 class RSAInput(models.Model):
-    primeP = models.DecimalField(max_digits=78, decimal_places=0)
-    primeQ = models.DecimalField(max_digits=78, decimal_places=0)
+    primeP = models.CharField(max_length=65536, blank=True)
+    primeQ = models.CharField(max_length=65536, blank=True)
     clearText = models.CharField(max_length=65536, blank=True)    
     cipherText = models.CharField(max_length=65536, blank=True)
 
 class RabinInput(models.Model):
-    primeP = models.DecimalField(max_digits=78, decimal_places=0)
-    primeQ = models.DecimalField(max_digits=78, decimal_places=0)
+    primeP = models.DecimalField(max_digits=128, decimal_places=0, blank=True)
+    primeQ = models.DecimalField(max_digits=128, decimal_places=0, blank=True)
     clearText = models.CharField(max_length=65536, blank=True)    
     cipherText = models.CharField(max_length=65536, blank=True)
 
 class MVInput(models.Model):
-    keyParam = models.CharField(max_length=65536) 
+    keyParam = models.CharField(max_length=65536, blank=True) 
+    clearText = models.CharField(max_length=65536, blank=True)
+    cipherText = models.CharField(max_length=65536, blank=True)
+
+class GammalInput(models.Model):
+    pNumber = models.DecimalField(max_digits=512, decimal_places=0, blank=True)
+    qNumber = models.DecimalField(max_digits=512, decimal_places=0, blank=True)
+    gNumber = models.DecimalField(max_digits=512, decimal_places=0, blank=True)
+    pubKey = models.CharField(max_length=65536, blank=True, default='-')
+    privKey = models.CharField(max_length=65536, blank=True, default='-')
     clearText = models.CharField(max_length=65536, blank=True)
     cipherText = models.CharField(max_length=65536, blank=True)

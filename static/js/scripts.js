@@ -27,8 +27,9 @@ $(document).ready(function () {
                     ciphertext = response['ciphertext'];
                     console.log(ciphertext);
                     $('#ciphertextarea').val(response['ciphertext']);
+                    $('#primep').val(response['pParam']);
+                    $('#primeq').val(response['qParam']);
                 }
-                
                 
                 else if (Object.keys(response).indexOf('cleartext') != -1) {
                     cleartext = response['cleartext'];
@@ -42,6 +43,7 @@ $(document).ready(function () {
                     $('#ciphertextarea').val(cleartext);
                     $('#cleartextarea').val(cleartext);
                 }
+                
             },
             error: function (response) {
                 // alert the error if any error occured
@@ -120,6 +122,7 @@ $(document).ready(function () {
                     ciphertext = response['ciphertext'];
                     console.log(ciphertext);
                     $('#ciphertextarea').val(response['ciphertext']);
+                    $('#key').val(response['key']);
                 }
                 
                 else if (Object.keys(response).indexOf('cleartext') != -1) {
@@ -133,6 +136,60 @@ $(document).ready(function () {
                     console.log(cleartext);
                     $('#ciphertextarea').val(cleartext);
                     $('#cleartextarea').val(cleartext);
+                }
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
+});
+
+$(document).ready(function () {
+    $("#gammalForm").on("submit", function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+    
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "",
+            data: serializedData,
+            success: function (response) {
+                // on successfull creating object
+                // display the info from backend.
+                console.log("Proceso...")
+                console.log(response)
+                if (Object.keys(response).indexOf('ciphertext') != -1) {
+                    ciphertext = response['ciphertext'];
+                    console.log(ciphertext);
+                    $('#ciphertextarea').val(response['ciphertext']);
+                }
+                
+                else if (Object.keys(response).indexOf('cleartext') != -1) {
+                    cleartext = response['cleartext'];
+                    console.log(cleartext);
+                    $('#cleartextarea').val(response['cleartext']);
+                }
+    
+                else {
+                    cleartext = response['error'];
+                    console.log(cleartext);
+                    $('#ciphertextarea').val(cleartext);
+                    $('#cleartextarea').val(cleartext);
+                }
+
+                // Setear claves
+                console.log('Settings keys...');
+
+                if ($('#pubkey').val() == '' && $('#privkey').val() == '') {
+                    publickey = response['pubkey'];
+                    privatekey = response['privkey'];
+                    $('#pubkey').val(publickey);
+                    $('#privkey').val(privatekey);
                 }
             },
             error: function (response) {
