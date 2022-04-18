@@ -1,3 +1,5 @@
+import string
+
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 
@@ -160,6 +162,7 @@ def menezesvanstoneView(request):
             if cleartextParam != "":
                 # Encriptacion Menezes-Vanstone
                 print('Encriptado.')
+                cleartextParam = cleartextParam.translate(str.maketrans('', '', string.punctuation))
                 cleartextParam = cleartextParam.split(' ')
 
                 ciphertext = []
@@ -185,7 +188,7 @@ def menezesvanstoneView(request):
                 except Exception as e:
                     print("Error:", e)
                     return JsonResponse({"error": "Hubo un error."}, status=200)
-                return JsonResponse({"cleartext": cleartext.lower()}, status=200)
+                return JsonResponse({"cleartext": cleartext.lower().capitalize()}, status=200)
 
             else:
                 print("Error.")
