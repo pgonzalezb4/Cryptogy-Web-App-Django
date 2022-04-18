@@ -22,7 +22,8 @@ class RabinInput(models.Model):
     cipherText = models.CharField(max_length=65536, blank=True)
 
 class MVInput(models.Model):
-    keyParam = models.CharField(max_length=65536, blank=True) 
+    pubKey = models.CharField(max_length=65536, blank=True, default='-')
+    privKey = models.CharField(max_length=65536, blank=True, default='-')
     clearText = models.CharField(max_length=65536, blank=True)
     cipherText = models.CharField(max_length=65536, blank=True)
 
