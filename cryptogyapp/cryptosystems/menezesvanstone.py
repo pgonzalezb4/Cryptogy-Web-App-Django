@@ -1,6 +1,5 @@
 import random
 from sympy import randprime
-from collections import defaultdict
 
 # Helper Functions
 char_to_point = {
@@ -12,7 +11,7 @@ char_to_point = {
     "f": (4, 28),
     "g": (0, 34),
     "h": (16, 17),
-    "I": (15, 26),
+    "i": (15, 26),
     "j": (27, 32),
     "k": (9, 4),
     "l": (2, 24),
@@ -47,7 +46,6 @@ char_to_point = {
     "$": (1, 7),
     "%": (5, 12),
 }
-char_to_point = defaultdict(lambda: "O", char_to_point)
 
 point_to_char = {
     (5, 25): "a",
@@ -58,7 +56,7 @@ point_to_char = {
     (4, 28): "f",
     (0, 34): "g",
     (16, 17): "h",
-    (15, 26): "I",
+    (15, 26): "i",
     (27, 32): "j",
     (9, 4): "k",
     (2, 24): "l",
@@ -93,7 +91,6 @@ point_to_char = {
     (1, 7): "$",
     (5, 12): "%",
 }
-point_to_char = defaultdict(lambda: "*", point_to_char)
 
 
 def get_points(a: int, b: int, p: int):
@@ -190,6 +187,11 @@ def encrypt(message: str, alpha: int, k: int, params: tuple, generator: tuple):
 
     ciphertext = list()
     for char in message:
+        char = char.lower()
+
+        if char not in char_to_point:
+            ciphertext.append(("O", "O"))
+            continue
 
         b = key_gen(alpha, generate_cycle(generator, params))
         x = key_gen(k, generate_cycle(generator, params))
@@ -204,6 +206,11 @@ def decrypt(cipher_text: list, alpha: int, params: tuple):
     cleartext = list()
 
     for x, y in cipher_text:
+
+        if x not in char_to_point or y not in char_to_point:
+            cleartext.append(" ")
+            continue
+
         r = add(
             char_to_point[y],
             generate_cycle(
@@ -232,7 +239,7 @@ if __name__ == "__main__":
         raise ("incorrect params")
 
     # message = (5, 25)
-    message = "thisisacleartext"
+    message = "this is a clear text"
     alpha = 5
     k = 7
 
