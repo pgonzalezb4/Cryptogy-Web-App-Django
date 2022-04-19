@@ -11,7 +11,7 @@ def generate_a_prime_number(num_of_bits):
     while 1:
         # randomly generate a 128-bit number
         num = random.getrandbits(num_of_bits)
-        if isprime(num):
+        if isprime(num) and (num % 4) == 3:
             return num
         else:
             continue
@@ -134,6 +134,10 @@ if __name__ == "__main__":
     q = int(
         delete_space(input("q = "))
     )  # q = f99988626723eef2a54ed484dfa735c7 (331774958573786300819827599586292610503)
+    p = generate_a_prime_number(128)
+    q = generate_a_prime_number(128)
+    print("p:", p)
+    print("q:", q)
     n = p * q
     print("n = pq =", n)
 

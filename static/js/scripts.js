@@ -69,19 +69,25 @@ $(document).ready(function () {
                 // on successfull creating object
                 // display the info from backend.
 
-
                 console.log("Proceso:")
                 console.log(response)
                 if (Object.keys(response).indexOf('ciphertext') != -1) {
                     ciphertext = response['ciphertext'];
+                    pParam = response['pParam'];
+                    qParam = response['qParam'];
+                    console.log(pParam);
+                    console.log(qParam);
                     console.log(ciphertext);
-                    $('#ciphertextarea').val(response['ciphertext']);
+                    $('#ciphertextarea').val(ciphertext);
+                    $('#primeprabin').val(pParam);
+                    $('#primeqrabin').val(qParam);
                 }
                 
                 else if (Object.keys(response).indexOf('cleartext') != -1) {
                     cleartext = response['cleartext'];
-                    console.log(cleartext);
-                    $('#cleartextarea').val(response['cleartext']);
+                    console.log("String arreglado...")
+                    console.log(cleartext.substring(0,2).replace(/\S\s/g,"").trim());
+                    $('#cleartextarea').val(cleartext.substring(0,2).replace(/\S\s/g,"").trim());
                 }
     
                 else {

@@ -88,19 +88,29 @@ def rabinView(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            pParam = int(rabin.delete_space(str(form.cleaned_data['primeP'])))
-            qParam = int(rabin.delete_space(str(form.cleaned_data['primeQ'])))
+            pParam = form.cleaned_data['primeP']
+            qParam = form.cleaned_data['primeQ']
             cleartextParam = form.cleaned_data['clearText']
             ciphertextParam = form.cleaned_data['cipherText']
             print(request.POST)
-            
+
+            # Random key generator
+            if pParam != '' and qParam != '':
+                pParam = int(pParam)
+                qParam = int(qParam)
+            else:
+                pParam = rabin.generate_a_prime_number(256)
+                qParam = rabin.generate_a_prime_number(256)
+
+            print('p:', pParam)
+            print('q:', qParam)
             if cleartextParam != "":
                 # Encriptacion Rabin
                 print('Encriptado.')
                 cleartextParam = int.from_bytes(cleartextParam.encode(), 'big')
                 ciphertext = rabin.encryption(cleartextParam, pParam*qParam)
                 ciphertext = rabin.add_space(str(ciphertext))
-                return JsonResponse({"ciphertext": ciphertext}, status=200)
+                return JsonResponse({"ciphertext": ciphertext, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion Rabin
@@ -113,7 +123,7 @@ def rabinView(request):
                 except Exception as e:
                     print("Error:", e)
                     return JsonResponse({"error": "Hubo un error."}, status=200)
-                return JsonResponse({"cleartext": cleartext}, status=200)
+                return JsonResponse({"cleartext": cleartext, "pParam" : pParam, "qParam" : qParam}, status=200)
 
             else:
                 print("Error.")

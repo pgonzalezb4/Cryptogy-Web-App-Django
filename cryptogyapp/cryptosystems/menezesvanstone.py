@@ -239,7 +239,7 @@ if __name__ == "__main__":
         raise ("incorrect params")
 
     # message = (5, 25)
-    message = "this is a clear text"
+    message = "this is a completely random clear text to test the menezes vanstone cryptosystem encryption process"
     alpha = 5
     k = 7
 
