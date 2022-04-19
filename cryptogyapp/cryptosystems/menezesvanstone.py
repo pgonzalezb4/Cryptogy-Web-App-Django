@@ -232,7 +232,7 @@ if __name__ == "__main__":
         raise ("incorrect params")
 
     # message = (5, 25)
-    message = "attack"
+    message = "thisisacleartext"
     alpha = 5
     k = 7
 

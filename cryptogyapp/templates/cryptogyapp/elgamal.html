@@ -7,24 +7,13 @@
     {% csrf_token %}
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-6">
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A pair of random public and private keys will be generated for encryption if not provided by the user.</small>
             <div class="form-floating mb-3">
-                <input name="{{form.pNumber.name}}" class="form-control" id="pnumber" type="text" placeholder="">
-                <label name="pNumber">Prime number (p)</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input name="{{form.qNumber.name}}" class="form-control" id="qnumber" type="text" placeholder="">
-                <label name="qNumber">Prime number (q)</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input name="{{form.gNumber.name}}" class="form-control" id="gnumber" type="text" placeholder="">
-                <label name="gNumber">Number (g)</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input name="{{form.pubKey.name}}" class="form-control" id="pubkey" type="text" placeholder="" readonly>
+                <input name="{{form.pubKey.name}}" class="form-control" id="pubkey" type="text" placeholder="">
                 <label name="gNumber">Public key</label>
             </div>
             <div class="form-floating mb-3">
-                <input name="{{form.privKey.name}}" class="form-control" id="privkey" type="text" placeholder="" readonly>
+                <input name="{{form.privKey.name}}" class="form-control" id="privkey" type="text" placeholder="">
                 <label name="gNumber">Private key</label>
             </div>
             <div class="form-floating mb-3">

@@ -32,8 +32,6 @@ def rsaView(request):
             print(request.POST)
 
             # Random key generator
-            
-
             if pParam != '' and qParam != '':
                 pParam = int(pParam)
                 qParam = int(qParam)
@@ -218,16 +216,16 @@ def elgamalView(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            pNumber = int(form.cleaned_data['pNumber'])
-            qNumber = int(form.cleaned_data['qNumber'])
-            gNumber = int(form.cleaned_data['gNumber'])
             B = form.cleaned_data['pubKey']
             b = form.cleaned_data['privKey']
             cleartextParam = form.cleaned_data['clearText']
             ciphertextParam = form.cleaned_data['cipherText']
             print(request.POST)
-            
-            params = (pNumber, qNumber, gNumber)
+
+            p = 19327210897467885519624495407304217845488409100133554803661172025039322784872775172789521895444178690740428588185031695453815386756662619555849446656794905221115788002016245291768283472480460523777510973085032471711187806590185987219179345022033106753600355795626394426859896564719805266547324204357196851217
+            q = 983633858469108611936846792207646525014934079943
+            g = 2008851267811649301382055697326002225321501629224616043097959307844472637339783779480891271906681929732776937543331689329117914118665148580824850572191418544875109802154341862162654424065963144063936607375606796563706389362731767772194368576684632589065496658911743756860379357301492526015846031839304359976
+            params = (p, q, g)
 
             # Keys
             if B == '' and b == '':

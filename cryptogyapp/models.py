@@ -28,9 +28,6 @@ class MVInput(models.Model):
     cipherText = models.CharField(max_length=65536, blank=True)
 
 class GammalInput(models.Model):
-    pNumber = models.DecimalField(max_digits=512, decimal_places=0, blank=True)
-    qNumber = models.DecimalField(max_digits=512, decimal_places=0, blank=True)
-    gNumber = models.DecimalField(max_digits=512, decimal_places=0, blank=True)
     pubKey = models.CharField(max_length=65536, blank=True, default='-')
     privKey = models.CharField(max_length=65536, blank=True, default='-')
     clearText = models.CharField(max_length=65536, blank=True)

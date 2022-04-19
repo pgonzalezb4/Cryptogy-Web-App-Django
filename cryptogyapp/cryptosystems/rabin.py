@@ -18,8 +18,6 @@ primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67
           701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829,
           839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977,
           983, 991, 997]
-#
-
 
 # n -> integer, return if n is prime or not
 def isPrime(n):
@@ -73,11 +71,9 @@ def sqrt_p_5_mod_8(a, p):
 
     return r
 
-
 # Legendre symbol
 def Legendre(a, p):
     return pow(a, (p - 1) / 2, p)
-
 
 #
 def egcd(a, b):
@@ -86,7 +82,6 @@ def egcd(a, b):
     else:
         gcd, y, x = egcd(b % a, a)
         return gcd, x - (b // a) * y, y
-
 
 # Additional functions
 def none_in_x_is_n(x, n):
@@ -102,13 +97,11 @@ def encryption(plaintext, n):
     plaintext = padding(plaintext)
     return plaintext ** 2 % n
 
-
 # padding 16 bits to the end of a number
 def padding(plaintext):
     binary_str = bin(plaintext)     # convert to a bit string
     output = binary_str + binary_str[-16:]      # pad the last 16 bits to the end
     return int(output, 2)       # convert back to integer
-
 
 # encryption function
 def decryption(a, p, q):
@@ -138,7 +131,6 @@ def decryption(a, p, q):
 
     return plaintext
 
-
 # decide which answer to choose
 def choose(lst):
     for i in lst:
@@ -156,12 +148,10 @@ def delete_space(string):
         output += i
     return output
 
-
 def add_space(string):
     string = string[::-1]
     string = ' '.join(string[i:i + 8] for i in range(0, len(string), 8))
     return string[::-1]
-
 
 # main()
 if __name__ == '__main__':
