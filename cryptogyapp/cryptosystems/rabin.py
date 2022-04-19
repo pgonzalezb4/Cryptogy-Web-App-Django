@@ -16,12 +16,10 @@ def generate_a_prime_number(num_of_bits):
         else:
             continue
 
-
 # Find SQROOT in Zp where p = 3 mod 4
 def sqrt_p_3_mod_4(a, p):
     r = pow(a, (p + 1) // 4, p)
     return r
-
 
 # Find SQROOT in Zp where p = 5 mod 8
 def sqrt_p_5_mod_8(a, p):
@@ -104,7 +102,6 @@ def choose(lst):
         if append == binary[-16:]:
             return i
     return
-
 
 def delete_space(string):
     lst = string.split(" ")
