@@ -1,215 +1,247 @@
 import random
+from sympy import randprime
+from collections import defaultdict
 
-# import networkx as nx
+# Helper Functions
+char_to_point = {
+    "a": (5, 25),
+    "b": (1, 30),
+    "c": (21, 32),
+    "d": (7, 25),
+    "e": (25, 12),
+    "f": (4, 28),
+    "g": (0, 34),
+    "h": (16, 17),
+    "I": (15, 26),
+    "j": (27, 32),
+    "k": (9, 4),
+    "l": (2, 24),
+    "m": (26, 5),
+    "n": (33, 14),
+    "o": (11, 17),
+    "p": (31, 22),
+    "q": (13, 30),
+    "r": (35, 21),
+    "s": (23, 7),
+    "t": (10, 17),
+    "u": (29, 6),
+    "v": (29, 31),
+    "w": (10, 20),
+    "x": (23, 30),
+    "y": (35, 16),
+    "z": (13, 7),
+    "1": (31, 15),
+    "2": (11, 20),
+    "3": (33, 23),
+    "4": (26, 32),
+    "5": (2, 13),
+    "6": (9, 33),
+    "7": (27, 5),
+    "8": (15, 11),
+    "9": (16, 20),
+    "0": (0, 3),
+    "#": (4, 9),
+    "@": (25, 25),
+    "!": (7, 12),
+    "&": (21, 5),
+    "$": (1, 7),
+    "%": (5, 12),
+}
+char_to_point = defaultdict(lambda: "O", char_to_point)
 
-# plt.rcParams["figure.figsize"] = (25, 25)
+point_to_char = {
+    (5, 25): "a",
+    (1, 30): "b",
+    (21, 32): "c",
+    (7, 25): "d",
+    (25, 12): "e",
+    (4, 28): "f",
+    (0, 34): "g",
+    (16, 17): "h",
+    (15, 26): "I",
+    (27, 32): "j",
+    (9, 4): "k",
+    (2, 24): "l",
+    (26, 5): "m",
+    (33, 14): "n",
+    (11, 17): "o",
+    (31, 22): "p",
+    (13, 30): "q",
+    (35, 21): "r",
+    (23, 7): "s",
+    (10, 17): "t",
+    (29, 6): "u",
+    (29, 31): "v",
+    (10, 20): "w",
+    (23, 30): "x",
+    (35, 16): "y",
+    (13, 7): "z",
+    (31, 15): "1",
+    (11, 20): "2",
+    (33, 23): "3",
+    (26, 32): "4",
+    (2, 13): "5",
+    (9, 33): "6",
+    (27, 5): "7",
+    (15, 11): "8",
+    (16, 20): "9",
+    (0, 3): "0",
+    (4, 9): "#",
+    (25, 25): "@",
+    (7, 12): "!",
+    (21, 5): "&",
+    (1, 7): "$",
+    (5, 12): "%",
+}
+point_to_char = defaultdict(lambda: "*", point_to_char)
 
-class MenezesVanstoneCipher():
-    with open("cryptogyapp/cryptosystems/gammapentagonalgrapha.txt", "r") as f:
-        data = f.read()
-    a = eval(data)
 
-    with open("cryptogyapp/cryptosystems/gammapentagonalgraphb.txt", "r") as f:
-        data = f.read()
-    b = eval(data)
+def get_points(a: int, b: int, p: int):
 
-    graphs = [a, b]
+    return [
+        (x, y)
+        for x in range(p)
+        for y in range(p)
+        if (y ** 2 - (x ** 3 + (a * x) + b)) % p == 0
+    ]
 
-    with open("cryptogyapp/cryptosystems/gammapentagonalgraphasmall.txt", "r") as f:
-        data = f.read()
-    asmall = eval(data)
 
-    with open("cryptogyapp/cryptosystems/gammapentagonalgraphbsmall.txt", "r") as f:
-        data = f.read()
-    bsmall = eval(data)
+def check_params(a: int, b: int, p: int, generator: tuple):
 
-    graphssmall = [asmall, bsmall]
+    if 4 * a ** 3 + 27 * b ** 2 % p != 0:
+        points = get_points(a, b, p)
 
-    curgraph = 0
-
-    """
-    Unused: Graph is hardcoded now.
-
-    @staticmethod
-    def generateMatrix(h = 50, w = 50):
-        # Inicializacion de Diccionarios
-        points = {(0,0):[]}
-        originpoints = [(0,0)]
-        # Iterar por anchura.
-        for x in range(w):
-            # Crear lista temporal para actualizar puntos de origen.
-            pointsnew = []
-            # Iterar por los puntos de origen. (Aquellos puntos de los cuales deben comenzar nuevas ramas.)
-            for point in originpoints:
-                j = point[1]
-                # Iterar por altura.
-                for i in range(1, h):
-                    # Actualizar diccionario de puntos.
-                    if (point[0] + i, j) in points:
-                        if (point[0] + i - 1, j - i + 1) not in points[(point[0] + i, j)]:
-                            points[(point[0] + i, j)].append((point[0] + i - 1, j - i + 1))
-                    else:
-                        points[(point[0] + i, j)] = [(point[0]+i-1, j-i+1)]
-                    # Si el punto es de origen, agregarlo.
-                    if point[0] / 2 == point[1] and (point[0] + i, j) not in originpoints:
-                        pointsnew.append((point[0] + i - 1, j - i + 1))
-                    j += i
-            originpoints = pointsnew[1:]
-        return points
-    """
-
-    @staticmethod
-    def shiftEncrypt(text: str, key: int):
-        """
-        Cifrado de desplazamiento simple para caracteres.
-        """
-        return chr(((ord(text.lower()) - 97 + key) % 26) + 65)
-
-    def __init__(self, key=None):
-        super().__init__()
-        self.key = self.generateRandomKey(key)
-        self.dicts = None
-        self.points = MenezesVanstoneCipher.graphs[MenezesVanstoneCipher.curgraph]
-        self.pointssmall = MenezesVanstoneCipher.graphssmall[
-            MenezesVanstoneCipher.curgraph
-        ]
-
-    def getRouteKey(self, Xi, Yi, coord):
-        a, b = coord
-        coord = (a - Xi, b - Yi)
-
-        if coord in self.points:
-            return len(self.points[coord])
-        else:
-            return 0
-
-    def generateDicts(self):
-        Xi, Yi = self.key[:2]
-        perm = self.key[2:]
-
-        ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        # Primero desplazamos por la permutacion, y luego desplazamos por el numero de trayectorias.
-        dicts = [
-            [
-                MenezesVanstoneCipher.shiftEncrypt(
-                    MenezesVanstoneCipher.shiftEncrypt(ABC[l], perm[k]),
-                    MenezesVanstoneCipher.getRouteKey(self, Xi, Yi, (k, l)),
-                )
-                for l in range(26)
-            ]
-            for k in range(len(perm))
-        ]
-        return dicts
-
-    def validKey(self, key):
-        if len(key) <= 3:
-            return False
-        if all((0 <= x and x <= 25) for x in key[2:]):
+        if generator in points:
             return True
-        return False
 
-    def generateRandomKey(self, keyParam):
-        if keyParam is None:
-            key = list()
-            for i in range(2):
-                key.append(random.randint(-25, 25))
-            for i in range(random.randint(5, 15)):
-                rand_number = random.randint(0, 25)
-                key.append(rand_number)
-            print("Key:", key, len(key))
-            return key
         else:
-            return keyParam
-
-    def encode(self, cleartext: str):
-        self.dicts = MenezesVanstoneCipher.generateDicts(self)
-        perm = self.key[2:]
-        ciphertext = ""
-        x = 0
-        for l in cleartext:
-            xi = x
-            while self.dicts[x // 26][x % 26] != l.upper():
-                x = (x + 1) % (26 * len(perm))
-                if x == xi:  # Puede suceder que una letra no este en los diccionarios
-                    return False
-            ciphertext += "(" + str(x // 26) + ", " + str(x % 26) + ");"
-        return ciphertext[:-1]
-
-    def decode(self, ciphertext):
-        self.dicts = MenezesVanstoneCipher.generateDicts(self)
-        cleartext = ""
-        for x in ciphertext.split(";"):
-            a, b = x[1:-1].split(", ")
-            cleartext += self.dicts[int(a)][int(b)]
-        return cleartext
-
-    def changeGraph(self):
-        MenezesVanstoneCipher.curgraph = (MenezesVanstoneCipher.curgraph + 1) % 2
-        #print(MenezesVanstoneCipher.curgraph)
+            raise Exception("Generator not in curve.")
+    else:
+        raise Exception("a and b do not satisfy requirements.")
 
 
-# def showGraph(key, filename: str):
-#     pointssmall = MenezesVanstoneCipher.graphssmall[MenezesVanstoneCipher.curgraph]
-#     #print("asdf")
-#     #print(type(key))
-#     key = [int(x) for x in key.split(",")]
-#     #print(key)
-#     Xi, Yi = key[:2]
-#     # Generar grafo en networkx.
-#     g = nx.DiGraph()
-#     keysn = [tuple(map(lambda i, j: i + j, x, (Xi, Yi))) for x in pointssmall.keys()]
-#     g.add_nodes_from(keysn)
-#     for k, v in pointssmall.items():
-#         kn = tuple(map(lambda i, j: i + j, k, (Xi, Yi)))
-#         vn = [tuple(map(lambda i, j: i + j, t, (Xi, Yi))) for t in v]
-#         g.add_edges_from(([(t, kn) for t in vn]))
+# PARAMETERS and KEYS Generator.
 
-#     # Definir las posiciones de los nodos.
-#     pos = {(x, y): (x, y) for x, y in g.nodes()}
 
-    # Dibujar el grafo.
-    # nx.draw_networkx(g, pos=pos, node_size=500)
+def generate_params():
 
-    # # Opciones de grafica.
-    # plt.gca().set_aspect("equal")
-    # plt.gca().set_xlim([-25, 25])
-    # plt.gca().set_ylim([-25, 25])
-    # plt.gca().axhline(y=0, lw=2, color="k")
-    # plt.gca().axvline(x=0, lw=2, color="k")
-    # plt.grid("on")
-    # plt.tight_layout()
-    # plt.savefig(filename)
-    # plt.gca().clear()
-    # plt.close()
-    # 
-    #print("printed")
-    # return True
+    a = random.randint(0, 100)
+    b = random.randint(0, 100)
+    p = randprime(1, 1000)
+
+    while 4 * a ** 3 + 27 * b ** 2 % p == 0:
+        a = random.randint(0, 100)
+        b = random.randint(0, 100)
+        p = randprime(1, 1000)
+
+    cycle = get_points(a, b, p)
+    generator = random.choice(cycle)
+
+    return (a, b, p, generator)
+
+
+def generate_keys(a: int, b: int, p: int):
+
+    cycle = get_points(a, b, p)
+
+    alpha = random.randint(0, len(cycle))
+    k = random.randint(0, len(cycle))
+
+    return (alpha, k)
+
+
+# Cycle Generator
+
+
+def generate_cycle(generator: tuple, params: tuple):
+    cycle = [generator]
+    np = add(generator, generator, params)
+    cycle.append(np)
+    while np[0] != generator[0]:
+        np = add(np, generator, params)
+        cycle.append(np)
+    cycle.append("O")
+    return cycle
+
+
+def add(p1: tuple, p2: tuple, params: tuple):
+    a = params[0]
+    p = params[2]
+
+    if p1 == p2:
+        h = ((3 * p1[0] ** 2 + a) % p * pow(2 * p1[1], -1, p)) % p
+    else:
+        h = ((p2[1] - p1[1]) % p * pow(p2[0] - p1[0], -1, p)) % p
+
+    x3 = (h ** 2 - p1[0] - p2[0]) % p
+    y3 = (h * (p1[0] - x3) - p1[1]) % p
+
+    return (x3, y3)
+
+
+def key_gen(key: int, cycle: list):
+    key = key % p
+    if key == 0:
+        return cycle[-1]
+    return cycle[key - 1]
+
+
+def encrypt(message: str, alpha: int, k: int, params: tuple, generator: tuple):
+
+    ciphertext = list()
+    for char in message:
+
+        b = key_gen(alpha, generate_cycle(generator, params))
+        x = key_gen(k, generate_cycle(generator, params))
+        y = add(char_to_point[char], key_gen(k, generate_cycle(b, params)), params)
+
+        ciphertext.append((point_to_char[x], point_to_char[y]))
+    return ciphertext
+
+
+def decrypt(cipher_text: list, alpha: int, params: tuple):
+
+    cleartext = list()
+
+    for x, y in cipher_text:
+        r = add(
+            char_to_point[y],
+            generate_cycle(
+                key_gen(alpha, generate_cycle(char_to_point[x], params)), params
+            )[-2],
+            params,
+        )
+        cleartext.append(point_to_char[r])
+    return "".join(cleartext)
 
 
 if __name__ == "__main__":
+    # a = 1
+    # b = 6
+    # p = 11
+    # generator = (2, 7)
 
-    # key = 
-    cleartext = "hola como vas"
-    cleartext = cleartext.split(" ")
+    a = 2
+    b = 9
+    p = 37
+    generator = (9, 4)
 
-    cipher = MenezesVanstoneCipher([13, -3, 18, 4, 0, 15, 17, 0, 5, 15])
-    print("cleartext: ")
-    print(cleartext)
-    ciphertext = []
-    for text in cleartext:
-        ciphertext.append(cipher.encode(text))
+    if check_params(a, b, p, generator):
+        params = (a, b, p)
+    else:
+        raise ("incorrect params")
 
-    ciphertext = '  '.join(ciphertext)
-    print("ciphertext: ")
-    print(ciphertext, type(ciphertext))
+    # message = (5, 25)
+    message = "attack"
+    alpha = 5
+    k = 7
 
-    print("desencriptado:")
-    ciphertext = ciphertext.split('  ')
+    print("encrypting", message)
+    e = encrypt(message, alpha, k, params, generator)
+    print(e)
 
-    cleartext = []
-    for text in ciphertext:
-        print("text", text)
-        cleartext.append(cipher.decode(text))
+    print()
 
-    cleartext = ' '.join(cleartext)
-    print(cleartext)
+    print("decrypting", e)
+    d = decrypt(e, alpha, params)
+    print(d)
