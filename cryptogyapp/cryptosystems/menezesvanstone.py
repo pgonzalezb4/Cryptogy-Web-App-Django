@@ -150,12 +150,11 @@ def generate_keys(params: tuple, generator: tuple, cleartext : str):
 
         try:
             encryption = encrypt(cleartext, alpha, k, params, generator)
-            decrypt(encryption, alpha, params)
+            decryption = decrypt(encryption, alpha, params)
+            break
         except:
             pass
-        else:
-            break
-
+        
     return (alpha, k)
 
 
@@ -186,7 +185,7 @@ def add(p1: tuple, p2: tuple, params: tuple):
     return (x3, y3)
 
 
-def key_gen(key: int, cycle: list):
+def key_gen(key: int, cycle: list, p : int):
     key = key % p
     if key == 0:
         return cycle[-1]
@@ -194,6 +193,8 @@ def key_gen(key: int, cycle: list):
 
 
 def encrypt(message: str, alpha: int, k: int, params: tuple, generator: tuple):
+
+    a, b, p = params
 
     ciphertext = list()
     for char in message:
@@ -203,15 +204,17 @@ def encrypt(message: str, alpha: int, k: int, params: tuple, generator: tuple):
             ciphertext.append(("O", "O"))
             continue
 
-        b = key_gen(alpha, generate_cycle(generator, params))
-        x = key_gen(k, generate_cycle(generator, params))
-        y = add(char_to_point[char], key_gen(k, generate_cycle(b, params)), params)
+        b = key_gen(alpha, generate_cycle(generator, params), p)
+        x = key_gen(k, generate_cycle(generator, params), p)
+        y = add(char_to_point[char], key_gen(k, generate_cycle(b, params), p), params)
 
         ciphertext.append((point_to_char[x], point_to_char[y]))
     return ciphertext
 
 
 def decrypt(cipher_text: list, alpha: int, params: tuple):
+
+    a, b, p = params
 
     cleartext = list()
 
@@ -224,7 +227,7 @@ def decrypt(cipher_text: list, alpha: int, params: tuple):
         r = add(
             char_to_point[y],
             generate_cycle(
-                key_gen(alpha, generate_cycle(char_to_point[x], params)), params
+                key_gen(alpha, generate_cycle(char_to_point[x], params), p), params
             )[-2],
             params,
         )
@@ -241,7 +244,7 @@ if __name__ == "__main__":
     params = (a, b, p)
 
     # message = (5, 25)
-    message = "This is a completely random clear text to show the encryption process of Menezes-Vanstone cryptosystem"
+    message = "This is a completely random clear text to show the encryption process of Menezes-Vanstone cryptosystem!"
     alpha, k = generate_keys(params, generator, message)
 
     print("encrypting", message)

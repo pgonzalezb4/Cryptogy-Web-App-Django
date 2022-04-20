@@ -176,21 +176,38 @@ def menezesvanstoneView(request):
             if cleartextParam != "":
                 # Encriptacion Menezes-Vanstone
                 print('Encriptado.')
-
                 ciphertext = menezesvanstone.encrypt(cleartextParam, alpha, k, params, generator)
+                newCipherText = ''
 
-                return JsonResponse({"ciphertext": ciphertext, "alpha" : alpha, "k" : k}, status=200)
+                for elem in ciphertext:
+                    a, b = str(elem[0]), str(elem[1])
+                    newCipherText += ('(' + a + ', ' + b + ')' + '; ') 
+
+                print(newCipherText)
+
+                return JsonResponse({"ciphertext": newCipherText, "alpha" : alpha, "k" : k}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion Menezes-Vanstone
                 print('Desencriptado.')
+                ciphertextParam = [x.strip() for x in ciphertextParam.split(';')][:-1]
+
+                print(ciphertextParam)
+
+                ciphertext = []
+                for elem in ciphertextParam:
+                    newElem = tuple(elem[1:-1].split(', '))
+                    ciphertext.append(newElem)
+
+                print(ciphertext)
 
                 try:
-                    cleartext = ''
+                    cleartext = menezesvanstone.decrypt(ciphertext, alpha, params)
+
                 except Exception as e:
                     print("Error:", e)
                     return JsonResponse({"error": "Hubo un error."}, status=200)
-                return JsonResponse({"cleartext": cleartext, "alpha" : alpha, "k" : k}, status=200)
+                return JsonResponse({"cleartext": cleartext.capitalize(), "alpha" : alpha, "k" : k}, status=200)
 
             else:
                 print("Error.")

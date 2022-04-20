@@ -16,16 +16,12 @@
                 <input name="{{form.primeQ.name}}" class="form-control" id="primeq" type="text" placeholder="Enter a prime number...">
                 <label name="primeP">Prime number (q)</label>
             </div>
-
-            {% comment %} <!-- Generate random key button -->
-            <div class="form-floating mb-3">
-                <button type="submit" id="generateRandomKey" value="generaterandomkey" name="generaterandomkey" class="btn btn-primary">Generate random key</button>
-            </div> {% endcomment %}
-            
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For decryption process, make sure the cleartext field is empty.</small>
             <div class="form-floating mb-3">
                 <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
                 <label name="clearText">Cleartext</label>
             </div>
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For encryption process, make sure the ciphertext field is empty.</small>
             <div class="form-floating mb-3">
                 <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
                 <label name="cipherText">Ciphertext</label>

@@ -16,14 +16,16 @@
                 <input name="{{form.privKey.name}}" class="form-control" id="privkey" type="text" placeholder="">
                 <label name="privKey">Private key</label>
             </div>
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For decryption process, make sure the cleartext field is empty.</small>
             <div class="form-floating mb-3">
                 <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
                 <label name="clearText">Cleartext</label>
             </div>
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For encryption process, make sure the ciphertext field is empty.</small>
             <div class="form-floating mb-3">
                 <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
                 <label name="cipherText">Ciphertext</label>
-            </div>
+            </div>            
             <input id="encryptbtn" type="submit" class="btn btn-primary" value="Encrypt" name="encryptinput"/>
             <input id="decryptbtn" type="submit" class="btn btn-primary" value="Decrypt" name="decryptinput"/>
             {{ form.errors }}
