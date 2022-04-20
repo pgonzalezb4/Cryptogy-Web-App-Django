@@ -250,7 +250,7 @@ if __name__ == "__main__":
         raise ("incorrect params")
 
     # message = (5, 25)
-    message = "test"
+    message = "this is a completely random clear text to show the encryption process of menezes vanstone cryptosystem!"
     alpha, k = generate_keys(params, generator)
 
     print("encrypting", message)
