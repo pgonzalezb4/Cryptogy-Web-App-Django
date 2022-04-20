@@ -99,8 +99,8 @@ def rabinView(request):
                 pParam = int(pParam)
                 qParam = int(qParam)
             else:
-                pParam = rabin.generate_a_prime_number(256)
-                qParam = rabin.generate_a_prime_number(256)
+                pParam = rabin.generate_a_prime_number(512)
+                qParam = rabin.generate_a_prime_number(512)
 
             print('p:', pParam)
             print('q:', qParam)
@@ -123,7 +123,7 @@ def rabinView(request):
                 except Exception as e:
                     print("Error:", e)
                     return JsonResponse({"error": "Hubo un error."}, status=200)
-                return JsonResponse({"cleartext": cleartext, "pParam" : pParam, "qParam" : qParam}, status=200)
+                return JsonResponse({"cleartext": cleartext.strip('\x00'), "pParam" : pParam, "qParam" : qParam}, status=200)
 
             else:
                 print("Error.")

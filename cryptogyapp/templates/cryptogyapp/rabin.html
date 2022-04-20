@@ -7,7 +7,7 @@
     {% csrf_token %}
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-6">
-            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A pair of random prime numbers will be generated for encryption if not provided by the user.</small>
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A pair of random prime numbers congruent with 3 modulo 4 will be generated for encryption if not provided by the user.</small>
             <div class="form-floating mb-3">
                 <input name="{{form.primeP.name}}" class="form-control" id="primeprabin" type="text" placeholder="Enter a prime number...">
                 <label name="primeQ">Prime number (p)</label>

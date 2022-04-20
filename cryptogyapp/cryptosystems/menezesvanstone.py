@@ -118,8 +118,6 @@ def check_params(a: int, b: int, p: int, generator: tuple):
 
 
 # PARAMETERS and KEYS Generator.
-
-
 def generate_params():
 
     a = random.randint(0, 100)
@@ -148,8 +146,6 @@ def generate_keys(a: int, b: int, p: int):
 
 
 # Cycle Generator
-
-
 def generate_cycle(generator: tuple, params: tuple):
     cycle = [generator]
     np = add(generator, generator, params)
@@ -240,8 +236,7 @@ if __name__ == "__main__":
 
     # message = (5, 25)
     message = "this is a completely random clear text to test the menezes vanstone cryptosystem encryption process"
-    alpha = 5
-    k = 7
+    alpha, k = generate_keys(a, b, p)
 
     print("encrypting", message)
     e = encrypt(message, alpha, k, params, generator)

@@ -85,9 +85,9 @@ $(document).ready(function () {
                 
                 else if (Object.keys(response).indexOf('cleartext') != -1) {
                     cleartext = response['cleartext'];
-                    console.log("String arreglado...")
-                    console.log(cleartext.substring(0,2).replace(/\S\s/g,"").trim());
-                    $('#cleartextarea').val(cleartext.substring(0,2).replace(/\S\s/g,"").trim());
+                    cleartext = decodeURI(cleartext)
+                    cleartext = cleartext.trim()
+                    $('#cleartextarea').val(cleartext);
                 }
     
                 else {
