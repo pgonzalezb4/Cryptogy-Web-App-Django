@@ -93,7 +93,9 @@ point_to_char = {
 }
 
 
-def get_points(a: int, b: int, p: int):
+def get_points(params: tuple):
+
+    a, b, p = params
 
     return [
         (x, y)
@@ -105,8 +107,10 @@ def get_points(a: int, b: int, p: int):
 
 def check_params(a: int, b: int, p: int, generator: tuple):
 
+    params = (a, b, p)
+
     if 4 * a ** 3 + 27 * b ** 2 % p != 0:
-        points = get_points(a, b, p)
+        points = get_points(params)
 
         if generator in points:
             return True
@@ -129,18 +133,29 @@ def generate_params():
         b = random.randint(0, 100)
         p = randprime(1, 1000)
 
-    cycle = get_points(a, b, p)
+    params = (a, b, p)
+
+    cycle = get_points(params)
     generator = random.choice(cycle)
 
-    return (a, b, p, generator)
+    return (params, generator)
 
 
-def generate_keys(a: int, b: int, p: int):
+def generate_keys(params: tuple, generator: tuple):
 
-    cycle = get_points(a, b, p)
+    cycle = get_points(params)
 
-    alpha = random.randint(0, len(cycle))
-    k = random.randint(0, len(cycle))
+    while True:
+        alpha = random.randint(0, len(cycle))
+        k = random.randint(0, len(cycle))
+
+        try:
+            encrypt("test", alpha, k, params, generator)
+            decrypt([("k", "n"), ("k", "%"), ("k", "m"), ("k", "n")], alpha, params)
+        except:
+            pass
+        else:
+            break
 
     return (alpha, k)
 
@@ -234,8 +249,9 @@ if __name__ == "__main__":
     else:
         raise ("incorrect params")
 
-    message = "this is a completely random clear text to test the menezes vanstone cryptosystem encryption process"
-    alpha, k = generate_keys(a, b, p)
+    # message = (5, 25)
+    message = "test"
+    alpha, k = generate_keys(params, generator)
 
     print("encrypting", message)
     e = encrypt(message, alpha, k, params, generator)
