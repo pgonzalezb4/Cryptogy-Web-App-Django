@@ -153,50 +153,44 @@ def menezesvanstoneView(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
+            pubKey = form.cleaned_data['pubKey']
+            privKey = form.cleaned_data['privKey']
             cleartextParam = form.cleaned_data['clearText']
             ciphertextParam = form.cleaned_data['cipherText']
-            keyParam = form.cleaned_data['keyParam']
             print(request.POST)
-            
-            if keyParam != '':
-                key = [int(x.strip()) for x in keyParam.split(',')]
-                print("Key:", key)
-                cipher = menezesvanstone.MenezesVanstoneCipher(key)
-            else:
-                cipher = menezesvanstone.MenezesVanstoneCipher(None)
-                key = cipher.key
-                print(key)
 
+            a = 2
+            b = 9
+            p = 37
+            generator = (9, 4)
+
+            params = (a, b, p)
+            
+            if pubKey != '' and privKey != '':
+                alpha, k = int(pubKey), int(privKey)
+            else:
+                print('Generating keys...')
+                alpha, k = menezesvanstone.generate_keys(params, generator, cleartextParam)
+
+            print('Llaves:', alpha, k)
             if cleartextParam != "":
                 # Encriptacion Menezes-Vanstone
                 print('Encriptado.')
-                cleartextParam = cleartextParam.translate(str.maketrans('', '', string.punctuation))
-                cleartextParam = cleartextParam.split(' ')
 
-                ciphertext = []
-                for text in cleartextParam:
-                    ciphertext.append(cipher.encode(text))
+                ciphertext = menezesvanstone.encrypt(cleartextParam, alpha, k, params, generator)
 
-                ciphertext = '  '.join(ciphertext)
-
-                return JsonResponse({"ciphertext": ciphertext, "key" : key}, status=200)
+                return JsonResponse({"ciphertext": ciphertext, "alpha" : alpha, "k" : k}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion Menezes-Vanstone
                 print('Desencriptado.')
 
                 try:
-                    ciphertextParam = ciphertextParam.split('  ')
-
-                    cleartext = []
-                    for text in ciphertextParam:
-                        cleartext.append(cipher.decode(text))
-
-                    cleartext = ' '.join(cleartext)
+                    cleartext = ''
                 except Exception as e:
                     print("Error:", e)
                     return JsonResponse({"error": "Hubo un error."}, status=200)
-                return JsonResponse({"cleartext": cleartext.lower().capitalize()}, status=200)
+                return JsonResponse({"cleartext": cleartext, "alpha" : alpha, "k" : k}, status=200)
 
             else:
                 print("Error.")

@@ -7,10 +7,14 @@
     {% csrf_token %}
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-6">
-            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A random key will be generated for encryption if not provided by the user.</small>
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A pair of random public and private keys will be generated for encryption if not provided by the user.</small>
             <div class="form-floating mb-3">
-                <input name="{{form.keyParam.name}}" class="form-control" id="key" type="text" placeholder="Enter a list of at most 17 random numbers separated by spaces...">
-                <label name="keyParam">Key</label>
+                <input name="{{form.pubKey.name}}" class="form-control" id="pubkey" type="text" placeholder="">
+                <label name="pubKey">Public key</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input name="{{form.privKey.name}}" class="form-control" id="privkey" type="text" placeholder="">
+                <label name="privKey">Private key</label>
             </div>
             <div class="form-floating mb-3">
                 <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>

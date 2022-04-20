@@ -128,7 +128,8 @@ $(document).ready(function () {
                     ciphertext = response['ciphertext'];
                     console.log(ciphertext);
                     $('#ciphertextarea').val(response['ciphertext']);
-                    $('#key').val(response['key']);
+                    $('#pubkey').val(response['alpha']);
+                    $('#privkey').val(response['k']);
                 }
                 
                 else if (Object.keys(response).indexOf('cleartext') != -1) {

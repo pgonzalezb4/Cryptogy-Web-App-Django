@@ -141,8 +141,7 @@ def generate_params():
     return (params, generator)
 
 
-def generate_keys(params: tuple, generator: tuple):
-
+def generate_keys(params: tuple, generator: tuple, cleartext : str):
     cycle = get_points(params)
 
     while True:
@@ -150,8 +149,8 @@ def generate_keys(params: tuple, generator: tuple):
         k = random.randint(0, len(cycle))
 
         try:
-            encrypt("test", alpha, k, params, generator)
-            decrypt([("k", "n"), ("k", "%"), ("k", "m"), ("k", "n")], alpha, params)
+            encryption = encrypt(cleartext, alpha, k, params, generator)
+            decrypt(encryption, alpha, params)
         except:
             pass
         else:
@@ -234,24 +233,16 @@ def decrypt(cipher_text: list, alpha: int, params: tuple):
 
 
 if __name__ == "__main__":
-    # a = 1
-    # b = 6
-    # p = 11
-    # generator = (2, 7)
-
     a = 2
     b = 9
     p = 37
     generator = (9, 4)
 
-    if check_params(a, b, p, generator):
-        params = (a, b, p)
-    else:
-        raise ("incorrect params")
+    params = (a, b, p)
 
     # message = (5, 25)
-    message = "this is a completely random clear text to show the encryption process of menezes vanstone cryptosystem!"
-    alpha, k = generate_keys(params, generator)
+    message = "This is a completely random clear text to show the encryption process of Menezes-Vanstone cryptosystem"
+    alpha, k = generate_keys(params, generator, message)
 
     print("encrypting", message)
     e = encrypt(message, alpha, k, params, generator)
