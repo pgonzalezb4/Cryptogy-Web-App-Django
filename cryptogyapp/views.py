@@ -1,4 +1,4 @@
-import string
+import re
 
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
@@ -108,6 +108,8 @@ def rabinView(request):
                 # Encriptacion Rabin
                 print('Encriptado.')
                 cleartextParam = int.from_bytes(cleartextParam.encode(), 'big')
+
+                cleartextParam = re.sub(r'[^\w\s]', '', cleartextParam)
                 ciphertext = rabin.encryption(cleartextParam, pParam*qParam)
                 ciphertext = rabin.add_space(str(ciphertext))
                 return JsonResponse({"ciphertext": ciphertext, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
