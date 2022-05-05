@@ -90,7 +90,13 @@ def rabinView(request):
             # process the data in form.cleaned_data as required
             pParam = form.cleaned_data['primeP']
             qParam = form.cleaned_data['primeQ']
-            cleartextParam = re.sub(r'[^\w\s]', '', form.cleaned_data['clearText'])
+            cleartextParam = form.cleaned_data['clearText']
+
+            if len(cleartextParam) <= 2 and cleartextParam != '':
+                cleartextParam += ' . .'
+
+            cleartextParam = re.sub(r'[^\w\s]', '', cleartextParam)
+
             print(len(cleartextParam))
             ciphertextParam = form.cleaned_data['cipherText']
             print(request.POST)
