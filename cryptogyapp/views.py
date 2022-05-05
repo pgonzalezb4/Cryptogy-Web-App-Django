@@ -52,7 +52,6 @@ def rsaView(request):
                 # Desencriptacion RSA
                 print('Desencriptado.')
                 ciphertextParam = [int(x.strip()) for x in ciphertextParam.split(' ')]
-                print(ciphertextParam)
                 try:
                     cleartext = rsa.decrypt(ciphertextParam, privkey)
                 except Exception as e:

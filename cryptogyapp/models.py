@@ -10,25 +10,25 @@ class Cryptosystem(models.Model):
         return self.name
 
 class RSAInput(models.Model):
-    primeP = models.CharField(max_length=65536, blank=True)
-    primeQ = models.CharField(max_length=65536, blank=True)
-    clearText = models.CharField(max_length=65536, blank=True)    
-    cipherText = models.CharField(max_length=65536, blank=True)
+    primeP = models.CharField(max_length=4294967296, blank=True)
+    primeQ = models.CharField(max_length=4294967296, blank=True)
+    clearText = models.CharField(max_length=4294967296, blank=True)    
+    cipherText = models.CharField(max_length=4294967296, blank=True)
 
 class RabinInput(models.Model):
-    primeP = models.CharField(max_length=65536, blank=True)
-    primeQ = models.CharField(max_length=65536, blank=True)
-    clearText = models.CharField(max_length=65536, blank=True)    
-    cipherText = models.CharField(max_length=65536, blank=True)
+    primeP = models.CharField(max_length=4294967296, blank=True)
+    primeQ = models.CharField(max_length=4294967296, blank=True)
+    clearText = models.CharField(max_length=4294967296, blank=True)    
+    cipherText = models.CharField(max_length=4294967296, blank=True)
 
 class MVInput(models.Model):
-    pubKey = models.CharField(max_length=65536, blank=True, default='-')
-    privKey = models.CharField(max_length=65536, blank=True, default='-')
-    clearText = models.CharField(max_length=65536, blank=True)
-    cipherText = models.CharField(max_length=65536, blank=True)
+    pubKey = models.CharField(max_length=4294967296, blank=True, default='-')
+    privKey = models.CharField(max_length=4294967296, blank=True, default='-')
+    clearText = models.CharField(max_length=4294967296, blank=True)
+    cipherText = models.CharField(max_length=4294967296, blank=True)
 
 class GammalInput(models.Model):
-    pubKey = models.CharField(max_length=65536, blank=True, default='-')
-    privKey = models.CharField(max_length=65536, blank=True, default='-')
-    clearText = models.CharField(max_length=65536, blank=True)
-    cipherText = models.CharField(max_length=65536, blank=True)
+    pubKey = models.CharField(max_length=4294967296, blank=True, default='-')
+    privKey = models.CharField(max_length=4294967296, blank=True, default='-')
+    clearText = models.CharField(max_length=4294967296, blank=True)
+    cipherText = models.CharField(max_length=4294967296, blank=True)
