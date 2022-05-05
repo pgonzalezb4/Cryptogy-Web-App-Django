@@ -27,7 +27,7 @@ def int_to_string(i, encoding="utf-8", errors="surrogatepass"):
     try:
         bits = int_to_bits(i)
     except Exception as e:
-        print("Error in int tobits:", e)
+        print("Error in int to bits:", e)
     return bits.decode(encoding, errors)
 
 
