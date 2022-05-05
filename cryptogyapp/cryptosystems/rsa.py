@@ -68,7 +68,7 @@ def encrypt(clear_text, public_key):
     n, value = public_key.n, public_key.value
 
     ciphertext = list()
-    list_of_messages = string_to_nlist(clear_text, 4)
+    list_of_messages = string_to_nlist(clear_text, 8)
 
     for subtext in list_of_messages:
 
