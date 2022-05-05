@@ -1,4 +1,5 @@
 import re
+import textwrap
 
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
@@ -36,8 +37,8 @@ def rsaView(request):
                 pParam = int(pParam)
                 qParam = int(qParam)
             else:
-                pParam = rsa.generate_a_prime_number(256)
-                qParam = rsa.generate_a_prime_number(256)
+                pParam = rsa.generate_a_prime_number(512)
+                qParam = rsa.generate_a_prime_number(512)
             
             pubkey, privkey = rsa.gen_keys(pParam, qParam)
             if cleartextParam != "":
@@ -90,7 +91,8 @@ def rabinView(request):
             # process the data in form.cleaned_data as required
             pParam = form.cleaned_data['primeP']
             qParam = form.cleaned_data['primeQ']
-            cleartextParam = form.cleaned_data['clearText']
+            cleartextParam = re.sub(r'[^\w\s]', '', form.cleaned_data['clearText'])
+            print(len(cleartextParam))
             ciphertextParam = form.cleaned_data['cipherText']
             print(request.POST)
 
@@ -104,28 +106,43 @@ def rabinView(request):
 
             print('p:', pParam)
             print('q:', qParam)
+
             if cleartextParam != "":
                 # Encriptacion Rabin
                 print('Encriptado.')
-                cleartextParam = int.from_bytes(cleartextParam.encode(), 'big')
+                
+                print(cleartextParam)
 
-                cleartextParam = re.sub(r'[^\w\s]', '', cleartextParam)
-                ciphertext = rabin.encryption(cleartextParam, pParam*qParam)
-                ciphertext = rabin.add_space(str(ciphertext))
+                cleartextParam = textwrap.wrap(cleartextParam, 32)
+                print(cleartextParam)
+                
+                ciphertext = []
+                for cltext in cleartextParam:
+                    cltext = int.from_bytes(cltext.encode(), 'big')
+                    cltext = rabin.encryption(cltext, pParam*qParam)
+                    cltext = rabin.add_space(str(cltext))
+                    ciphertext.append(cltext)
+
+                print(ciphertext)
+
+                ciphertext = ' | '.join(ciphertext)
                 return JsonResponse({"ciphertext": ciphertext, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion Rabin
                 print('Desencriptado.')
-                ciphertextParam = int(rabin.delete_space(ciphertextParam))
+                ciphertextParam = ciphertextParam.split(' | ')
                 print(ciphertextParam)
-                try:
-                    cleartext = int(format(rabin.decryption(ciphertextParam, pParam, qParam), 'x').zfill(226 // 4), 16)
-                    cleartext = cleartext.to_bytes(((pParam*qParam).bit_length() + 7) // 8, 'big').decode('utf-8', 'strict')
-                except Exception as e:
-                    print("Error:", e)
-                    return JsonResponse({"error": "Hubo un error."}, status=200)
-                return JsonResponse({"cleartext": cleartext.strip('\x00'), "pParam" : pParam, "qParam" : qParam}, status=200)
+
+                cleartext = []
+                for ciphtext in ciphertextParam:
+                    ciphtext = int(rabin.delete_space(ciphtext))
+                    cltext = int(format(rabin.decryption(ciphtext, pParam, qParam), 'x').zfill(226 // 4), 16)
+                    cltext = cltext.to_bytes(((pParam*qParam).bit_length() + 7) // 8, 'big').decode('utf-8', 'strict')
+                    cleartext.append(cltext)
+
+                cleartext = ''.join([x.strip('\x00') for x in cleartext])
+                return JsonResponse({"cleartext": cleartext, "pParam" : pParam, "qParam" : qParam}, status=200)
 
             else:
                 print("Error.")
