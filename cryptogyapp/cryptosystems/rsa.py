@@ -1,4 +1,5 @@
 import random
+import textwrap
 from .message import *
 from sympy import isprime
 
@@ -68,7 +69,7 @@ def encrypt(clear_text, public_key):
     n, value = public_key.n, public_key.value
 
     ciphertext = list()
-    list_of_messages = string_to_nlist(clear_text, 8)
+    list_of_messages = [x + ' ' for x in textwrap.wrap(clear_text, 16)]
 
     for subtext in list_of_messages:
 
@@ -85,8 +86,11 @@ def decrypt(cipher_text, private_key):
     cleartext = list()
 
     for c in cipher_text:
-        m = pow(c, value, n)
-        cleartext.append(int_to_string(m))
+        try:
+            m = pow(c, value, n)
+            cleartext.append(int_to_string(m))
+        except:
+            pass
 
     return "".join(cleartext)
 
