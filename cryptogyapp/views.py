@@ -113,7 +113,11 @@ def rabinView(request):
                 
                 print(cleartextParam)
 
-                cleartextParam = textwrap.wrap(cleartextParam, 32)
+                if len(cleartextParam) > 64:
+                    cleartextParam = textwrap.wrap(cleartextParam, 16)
+                else:
+                    cleartextParam = [cleartextParam]
+
                 print(cleartextParam)
                 
                 ciphertext = []
@@ -141,7 +145,7 @@ def rabinView(request):
                     cltext = cltext.to_bytes(((pParam*qParam).bit_length() + 7) // 8, 'big').decode('utf-8', 'strict')
                     cleartext.append(cltext)
 
-                cleartext = ''.join([x.strip('\x00') for x in cleartext])
+                cleartext = ' '.join([x.strip('\x00') for x in cleartext])
                 return JsonResponse({"cleartext": cleartext, "pParam" : pParam, "qParam" : qParam}, status=200)
 
             else:
