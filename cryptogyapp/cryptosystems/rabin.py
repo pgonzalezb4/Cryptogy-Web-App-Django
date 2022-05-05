@@ -5,11 +5,11 @@ sys.path.insert(0, r"cryptogyapp")
 from sympy import isprime
 
 # PARAMETERS
-# generate a 128-bit prime number
+# generate a n-bit prime number
 def generate_a_prime_number(num_of_bits):
-    # keep creating a random 16-byte (128-bit) number until there is a prime number
+    # keep creating a random (n/8)-byte (n-bit) number until there is a prime number
     while 1:
-        # randomly generate a 128-bit number
+        # randomly generate a n-bit number
         num = random.getrandbits(num_of_bits)
         if isprime(num) and (num % 4) == 3:
             return num
@@ -50,7 +50,6 @@ def none_in_x_is_n(x, n):
         if i == n:
             return False
     return True
-
 
 # encryption function
 # plaintext is a 224-bit number

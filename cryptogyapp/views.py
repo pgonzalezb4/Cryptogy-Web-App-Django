@@ -229,7 +229,7 @@ def menezesvanstoneView(request):
                 except Exception as e:
                     print("Error:", e)
                     return JsonResponse({"error": "Hubo un error."}, status=200)
-                return JsonResponse({"cleartext": cleartext.capitalize(), "alpha" : alpha, "k" : k}, status=200)
+                return JsonResponse({"cleartext": cleartext, "alpha" : alpha, "k" : k}, status=200)
 
             else:
                 print("Error.")
