@@ -5,15 +5,29 @@
     <div class="row gx-5">
         {% if cryptosystem_list %}
             {% for cryptosystem in cryptosystem_list %}
-                <div id="cryptosystemBox" class="col-lg-4 mb-5 mb-lg-0">
-                    <div class="feature bg-white bg-gradient text-white rounded-3 mb-3"><img src="{{ cryptosystem.icon.url }}"></img></div>
-                    <h2 class="h4 fw-bolder">{{ cryptosystem.name }}</h2>
-                    <p>{{ cryptosystem.desc }}</p>
-                    <a class="text-decoration-none" href="/{{ cryptosystem.name }}/">
-                        Use this cryptosystem
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
+                {% if cryptosystem.name in 'RSA, Rabin, ElGamal, Menezes-Vanstone' %}
+                    <div id="cryptosystemBox" class="col-lg-4 mb-5 mb-lg-0">
+                        <div class="feature bg-white bg-gradient text-white rounded-3 mb-3"><img src="{{ cryptosystem.icon.url }}"></img></div>
+                        <h2 class="h4 fw-bolder">{{ cryptosystem.name }}</h2>
+                        <p>{{ cryptosystem.desc }}</p>
+                        {% if cryptosystem.name in 'ElGamal, Menezes-Vanstone' %}
+                        <a class="text-decoration-none" href="/{{ cryptosystem.name }}/">
+                            Text encryption/decryption
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        <br>
+                        <a class="text-decoration-none" href="/{{ cryptosystem.name|add:'-DSS' }}/">
+                            Digital Signature Scheme
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        {% else %}
+                        <a class="text-decoration-none" href="/{{ cryptosystem.name }}/">
+                            Text encryption/decryption
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             {% endfor %}
         {% else %}
             <p>No cryptosystems are available.</p>

@@ -335,3 +335,20 @@ def elgamalView(request):
         'form': form
     }
     return HttpResponse(template.render(context, request))
+
+def elgamalDSSView(request):
+    thisCryptosystem = Cryptosystem.objects.get(name="ElGamal-DSS")
+    template = loader.get_template('cryptogyapp/elgamal-dss.html')
+    context = {
+        'thisCryptosystem': thisCryptosystem,
+    }
+    return HttpResponse(template.render(context, request))
+
+def menezesvanstoneDSSView(request):
+    thisCryptosystem = Cryptosystem.objects.get(name="Menezes-Vanstone-DSS")
+    print(thisCryptosystem.name)
+    template = loader.get_template('cryptogyapp/menezesvanstone-dss.html')
+    context = {
+        'thisCryptosystem': thisCryptosystem,
+    }
+    return HttpResponse(template.render(context, request))

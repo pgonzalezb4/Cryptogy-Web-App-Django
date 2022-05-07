@@ -1,0 +1,13 @@
+{% extends "cryptogyapp/base.html" %}
+{% block title %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
+{% block title-header %}
+    {{ thisCryptosystem.name|slice:':-4' }}
+    <br>
+    Digital Signature Scheme
+{% endblock %}
+{% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
+{% block content %}
+<center>
+    <h5 class="display-6">En construccion...</h5>
+</center>
+{% endblock content %}
