@@ -10,7 +10,7 @@
                         <div class="feature bg-white bg-gradient text-white rounded-3 mb-3"><img src="{{ cryptosystem.icon.url }}"></img></div>
                         <h2 class="h4 fw-bolder">{{ cryptosystem.name }}</h2>
                         <p>{{ cryptosystem.desc }}</p>
-                        {% if cryptosystem.name in 'ElGamal, Menezes-Vanstone' %}
+                        {% if cryptosystem.name in 'RSA, ElGamal, Menezes-Vanstone' %}
                         <a class="text-decoration-none" href="/{{ cryptosystem.name }}/">
                             Text encryption/decryption
                             <i class="bi bi-arrow-right"></i>

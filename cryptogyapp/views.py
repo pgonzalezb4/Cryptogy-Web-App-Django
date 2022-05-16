@@ -336,6 +336,14 @@ def elgamalView(request):
     }
     return HttpResponse(template.render(context, request))
 
+def rsaDSSView(request):
+    thisCryptosystem = Cryptosystem.objects.get(name="RSA-DSS")
+    template = loader.get_template('cryptogyapp/rsa-dss.html')
+    context = {
+        'thisCryptosystem': thisCryptosystem,
+    }
+    return HttpResponse(template.render(context, request))
+
 def elgamalDSSView(request):
     thisCryptosystem = Cryptosystem.objects.get(name="ElGamal-DSS")
     template = loader.get_template('cryptogyapp/elgamal-dss.html')

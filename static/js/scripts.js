@@ -6,6 +6,8 @@
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
 
+
+
 $(document).ready(function () {
     $("#rsaForm").on("submit", function (e) {
         // preventing from page reload and default actions

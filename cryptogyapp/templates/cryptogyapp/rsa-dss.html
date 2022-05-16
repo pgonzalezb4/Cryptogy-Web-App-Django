@@ -1,0 +1,34 @@
+{% extends "cryptogyapp/base.html" %}
+{% block title %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
+{% block title-header %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
+{% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
+{% block content %}
+<form id="rsaForm" action="" method="post">
+    {% csrf_token %}
+    <div class="row gx-5 justify-content-center">
+        <div class="col-lg-6">
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A pair of random prime numbers will be generated for digital signature if not provided by the user.</small>
+            <div class="form-floating mb-3">
+                <input name="{{form.primeP.name}}" class="form-control" id="primep" type="text" placeholder="Enter a prime number...">
+                <label name="primeQ">Prime number (p)</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input name="{{form.primeQ.name}}" class="form-control" id="primeq" type="text" placeholder="Enter a prime number...">
+                <label name="primeP">Prime number (q)</label>
+            </div>
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For signature process, make sure the signature field is empty.</small>
+            <div class="form-floating mb-3">
+                <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
+                <label name="clearText">Message to sign</label>
+            </div>
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For validation process, make sure there are a signature as well as a message to validate with.</small>
+            <div class="form-floating mb-3">
+                <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
+                <label name="cipherText">Signature</label>
+            </div>
+            <input id="encryptbtn" type="submit" class="btn btn-primary" value="Sign" name="encryptinput"/>
+            <input id="decryptbtn" type="submit" class="btn btn-primary" value="Validate signature" name="decryptinput"/>
+        </div>
+    </div>
+</form>
+{% endblock content %}
