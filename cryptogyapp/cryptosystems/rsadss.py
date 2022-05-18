@@ -106,6 +106,7 @@ if __name__ == "__main__":
     bytes_message = str.encode(message)
     hash = int.from_bytes(sha512(bytes_message).digest(), byteorder='big')
     signature = pow(hash, priv[1], priv[0])
+    print('Signature pre:', signature)
     print('Signature:', hex(signature))
 
     # Verificacion

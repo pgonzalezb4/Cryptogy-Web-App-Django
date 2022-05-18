@@ -18,12 +18,12 @@
             </div>
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For signature process, make sure the signature field is empty.</small>
             <div class="form-floating mb-3">
-                <textarea name="{{form.clearText.name}}" class="form-control" id="messagearea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
+                <textarea name="{{form.message.name}}" class="form-control" id="messagearea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
                 <label name="clearText">Message to sign</label>
             </div>
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For validation process, make sure there are a signature as well as a message to validate with.</small>
             <div class="form-floating mb-3">
-                <textarea name="{{form.cipherText.name}}" class="form-control" id="signaturearea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
+                <textarea name="{{form.signature.name}}" class="form-control" id="signaturearea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
                 <label name="cipherText">Signature</label>
             </div>
             <input id="encryptbtn" type="submit" class="btn btn-primary" value="Sign" name="encryptinput"/>

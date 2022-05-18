@@ -6,7 +6,7 @@ from hashlib import sha512
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 
-from .cryptosystems import rsa, rabin, menezesvanstone, elgamal
+from .cryptosystems import rsa, rsadss, rabin, menezesvanstone, elgamal, elgamaldss
 
 from .models import Cryptosystem
 from .forms import *
@@ -341,14 +341,15 @@ def elgamalView(request):
 def rsaDSSView(request):
     if request.is_ajax and request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = RsaForm(request.POST)
+        form = RsaDSSForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
+            print(form.cleaned_data)
             pParam = form.cleaned_data['primeP']
             qParam = form.cleaned_data['primeQ']
-            message = form.cleaned_data['clearText']
-            signature = form.cleaned_data['cipherText']
+            message = form.cleaned_data['message']
+            signature = form.cleaned_data['signature']
             print(request.POST)
 
             # Random key generator
@@ -356,10 +357,10 @@ def rsaDSSView(request):
                 pParam = int(pParam)
                 qParam = int(qParam)
             else:
-                pParam = rsa.generate_a_prime_number(512)
-                qParam = rsa.generate_a_prime_number(512)
+                pParam = rsadss.generate_a_prime_number(512)
+                qParam = rsadss.generate_a_prime_number(512)
             
-            pubkey, privkey = rsa.gen_keys(pParam, qParam)
+            pubkey, privkey = rsadss.gen_keys(pParam, qParam)
             n, e = pubkey
             n, d = privkey
             
@@ -378,7 +379,7 @@ def rsaDSSView(request):
 
             elif message != "":
                 # Firma RSA
-                print('Encriptado.')
+                print('Firma.')
                 bytes_message = str.encode(message)
                 hash = int.from_bytes(sha512(bytes_message).digest(), byteorder='big')
                 signature = hex(pow(hash, d, n))
@@ -395,21 +396,85 @@ def rsaDSSView(request):
 
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = RsaForm()
+        form = RsaDSSForm()
 
 
     thisCryptosystem = Cryptosystem.objects.get(name="RSA-DSS")
     template = loader.get_template('cryptogyapp/rsa-dss.html')
     context = {
         'thisCryptosystem': thisCryptosystem,
+        'form': form,
     }
     return HttpResponse(template.render(context, request))
 
 def elgamalDSSView(request):
+    if request.is_ajax and request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = GammalDSSForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            B = form.cleaned_data['pubKey']
+            b = form.cleaned_data['privKey']
+            message = form.cleaned_data['message']
+            signature = form.cleaned_data['signature']
+            print(request.POST)
+
+            p = 283
+            q = 47
+            g = 60
+            params = (p, q, g)
+
+            # Keys
+            if B == '' and b == '':
+                print("Generando nuevas claves...")
+                B, b = elgamaldss.genKey(params)
+            else:
+                B = int(B)
+                b = int(b)
+
+            print("Claves:", B, b, type(B), type(b))
+
+            if message != "" and signature != "":
+                # Validación ElGammal
+                verification = elgamaldss.verify(params, B, message, signature)
+                if verification:
+                    isValid = 'La firma es válida.'
+                else:
+                    isValid = 'La firma no es válida.'
+
+                return JsonResponse({"isValid": isValid, "pubkey" : str(B), "privkey" : str(b)}, status=200)
+
+            elif message != "":
+                # Firma ElGammal
+                print('Firma.')
+                ciphertext = elgamaldss.sign(params, b, message)
+                
+                new_ciphertext = ''
+
+                for tup in ciphertext:
+                    new_ciphertext += '--'.join([str(x) for x in list(tup)]) + '  '
+
+                return JsonResponse({"signature": signature, "pubkey" : str(B), "privkey" : str(b)}, status=200)
+
+            else:
+                print("Error.")
+                return JsonResponse({"error": "Hubo un error."}, status=200)
+
+        else:
+            print("Invalid form.")
+            print(form.errors)
+
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = GammalDSSForm()
+
     thisCryptosystem = Cryptosystem.objects.get(name="ElGamal-DSS")
     template = loader.get_template('cryptogyapp/elgamal-dss.html')
     context = {
         'thisCryptosystem': thisCryptosystem,
+        'form': form,
     }
     return HttpResponse(template.render(context, request))
 
