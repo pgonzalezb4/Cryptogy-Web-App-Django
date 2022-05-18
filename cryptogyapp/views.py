@@ -1,6 +1,8 @@
 import re
 import textwrap
 
+from hashlib import sha512
+
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 
@@ -337,6 +339,65 @@ def elgamalView(request):
     return HttpResponse(template.render(context, request))
 
 def rsaDSSView(request):
+    if request.is_ajax and request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = RsaForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            pParam = form.cleaned_data['primeP']
+            qParam = form.cleaned_data['primeQ']
+            message = form.cleaned_data['clearText']
+            signature = form.cleaned_data['cipherText']
+            print(request.POST)
+
+            # Random key generator
+            if pParam != '' and qParam != '':
+                pParam = int(pParam)
+                qParam = int(qParam)
+            else:
+                pParam = rsa.generate_a_prime_number(512)
+                qParam = rsa.generate_a_prime_number(512)
+            
+            pubkey, privkey = rsa.gen_keys(pParam, qParam)
+            n, e = pubkey
+            n, d = privkey
+            
+            # Validacion
+            if message != "" and signature != "":
+                print('Validacion.')
+                bytes_message = str.encode(message)
+                hash = int.from_bytes(sha512(bytes_message).digest(), byteorder='big')
+                hashFromSignature = pow(signature, e, n)
+                if hash == hashFromSignature:
+                    isValid = 'La firma es válida.'
+                else:
+                    isValid = 'La firma no es válida.'
+                return JsonResponse({"isValid": isValid, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
+
+
+            elif message != "":
+                # Firma RSA
+                print('Encriptado.')
+                bytes_message = str.encode(message)
+                hash = int.from_bytes(sha512(bytes_message).digest(), byteorder='big')
+                signature = hex(pow(hash, d, n))
+                return JsonResponse({"signature": signature, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
+
+            else:
+                print("Error.")
+                return JsonResponse({"error": "Hubo un error."}, status=200)
+
+        else:
+            print("Invalid form.")
+            print(form.errors)
+
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = RsaForm()
+
+
     thisCryptosystem = Cryptosystem.objects.get(name="RSA-DSS")
     template = loader.get_template('cryptogyapp/rsa-dss.html')
     context = {

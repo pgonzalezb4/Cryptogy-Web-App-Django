@@ -208,3 +208,52 @@ $(document).ready(function () {
         })
     })
 });
+
+// ESQUEMAS DE FIRMA DIGITAL
+$(document).ready(function () {
+    $("#rsaDSSForm").on("submit", function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+    
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "",
+            data: serializedData,
+            success: function (response) {
+                // on successfull creating object
+                // display the info from backend.
+
+                console.log("Proceso:")
+                if (Object.keys(response).indexOf('signature') != -1) {
+                    signature = response['signature'];
+                    console.log(signature);
+                    $('#signaturearea').val(signature);
+                    $('#primep').val(response['pParam']);
+                    $('#primeq').val(response['qParam']);
+                }
+                
+                else if (Object.keys(response).indexOf('isValid') != -1) {
+                    isValid = response['isValid'];
+                    console.log(isValid);
+                    $('#isvalid-message').val(response['isValid']);
+                    $('#isvalid-message').val(response['isValid']);
+                }
+    
+                else {
+                    error = response['error'];
+                    console.log(error);
+                    $('#signaturearea').val(error);
+                    $('#messagearea').val(error);
+                }
+                
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
+});
