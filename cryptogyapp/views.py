@@ -369,9 +369,10 @@ def rsaDSSView(request):
                 print('Validacion.')
                 bytes_message = str.encode(message)
                 hash = int.from_bytes(sha512(bytes_message).digest(), byteorder='big')
-                hashFromSignature = pow(signature, e, n)
+                hashFromSignature = pow(int(signature, base=16), e, n)
                 if hash == hashFromSignature:
                     isValid = 'La firma es válida.'
+                    print('Firma validada')
                 else:
                     isValid = 'La firma no es válida.'
                 return JsonResponse({"isValid": isValid, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
@@ -437,7 +438,15 @@ def elgamalDSSView(request):
 
             if message != "" and signature != "":
                 # Validación ElGammal
-                verification = elgamaldss.verify(params, B, message, signature)
+                new_signature = []
+
+                for pair in signature.split('  '):
+                    k = pair.split('--')
+                    k = (int(k[0]), int(k[1]))
+                    new_signature.append(k)
+
+                print(new_signature)
+                verification = elgamaldss.verify(params, B, message, new_signature)
                 if verification:
                     isValid = 'La firma es válida.'
                 else:
@@ -448,14 +457,14 @@ def elgamalDSSView(request):
             elif message != "":
                 # Firma ElGammal
                 print('Firma.')
-                ciphertext = elgamaldss.sign(params, b, message)
-                
-                new_ciphertext = ''
+                signature = elgamaldss.sign(params, b, message)
 
-                for tup in ciphertext:
-                    new_ciphertext += '--'.join([str(x) for x in list(tup)]) + '  '
+                new_signature = ''
 
-                return JsonResponse({"signature": signature, "pubkey" : str(B), "privkey" : str(b)}, status=200)
+                for tup in signature:
+                    new_signature += '--'.join([str(x) for x in list(tup)]) + '  '
+
+                return JsonResponse({"signature": new_signature, "pubkey" : str(B), "privkey" : str(b)}, status=200)
 
             else:
                 print("Error.")

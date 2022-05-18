@@ -1,7 +1,7 @@
 import random
 import textwrap
 from hashlib import sha512
-from message import *
+from .message import *
 from sympy import isprime
 
 # generate a 128-bit prime number
