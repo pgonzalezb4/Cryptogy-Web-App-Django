@@ -1,11 +1,12 @@
 {% extends "cryptogyapp/base.html" %}
-{% block title %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
-{% block title-header %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
+{% block title %}Cryptogy | {{ thisCryptosystem.name }} {% endblock %}
+{% block title-header %}{{ thisCryptosystem.name }}<br>
+Digital Signature Scheme {% endblock %}
 {% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
 {% block content %}
 <form id="rsaDSSForm" action="" method="post">
     {% csrf_token %}
-    <div class="row gx-5 justify-content-center">
+    <div class="row gx-5 justify-content-center" style="padding:20px">
         <div class="col-lg-6">
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A pair of random prime numbers will be generated for digital signature if not provided by the user.</small>
             <div class="form-floating mb-3">
@@ -26,7 +27,7 @@
                 <textarea name="{{form.signature.name}}" class="form-control" id="signaturearea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
                 <label name="cipherText">Signature</label>
             </div>
-            <input id="encryptbtn" type="submit" class="btn btn-primary" value="Sign" name="encryptinput"/>
+            <input id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Sign" name="encryptinput"/>
             <input id="decryptbtn" type="submit" class="btn btn-primary" value="Validate signature" name="decryptinput"/>
             <p class="btn btn-light" id="isvalid-message"></p>
         </div>
