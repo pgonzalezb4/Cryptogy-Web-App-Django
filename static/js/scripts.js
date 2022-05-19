@@ -237,7 +237,8 @@ $(document).ready(function () {
                 else if (Object.keys(response).indexOf('isValid') != -1) {
                     isValid = response['isValid'];
                     console.log(isValid);
-                    $('#isvalid-message').val(response['isValid']);
+                    // $('#isvalid-message').val(response['isValid']);
+                    document.getElementById("decryptbtn").value = isValid;
                 }
     
                 else {
@@ -283,7 +284,8 @@ $(document).ready(function () {
                 else if (Object.keys(response).indexOf('isValid') != -1) {
                     isValid = response['isValid'];
                     console.log(isValid);
-                    $('#isvalid-message').val(response['isValid']);
+                    // $('#isvalid-message').val(response['isValid']);
+                    document.getElementById("decryptbtn").value = isValid;
                 }
     
                 else {

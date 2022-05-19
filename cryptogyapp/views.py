@@ -371,10 +371,10 @@ def rsaDSSView(request):
                 hash = int.from_bytes(sha512(bytes_message).digest(), byteorder='big')
                 hashFromSignature = pow(int(signature, base=16), e, n)
                 if hash == hashFromSignature:
-                    isValid = 'La firma es válida.'
+                    isValid = 'Signature validated'
                     print('Firma validada')
                 else:
-                    isValid = 'La firma no es válida.'
+                    isValid = 'Signature not validated'
                 return JsonResponse({"isValid": isValid, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
 
 
@@ -448,9 +448,9 @@ def elgamalDSSView(request):
                 print(new_signature)
                 verification = elgamaldss.verify(params, B, message, new_signature)
                 if verification:
-                    isValid = 'La firma es válida.'
+                    isValid = 'Signature validated'
                 else:
-                    isValid = 'La firma no es válida.'
+                    isValid = 'Signature not validated'
 
                 return JsonResponse({"isValid": isValid, "pubkey" : str(B), "privkey" : str(b)}, status=200)
 
