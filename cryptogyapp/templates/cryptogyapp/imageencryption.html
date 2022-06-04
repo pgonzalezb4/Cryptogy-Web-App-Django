@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="row gx-2 justify-content-center" style="padding:20px">
-        <div class="col-lg-4">
+        <div class="col-lg-5">
             <div class="form-floating mb-3">
                 {% if img_obj %}
                     <img name="cipherImageT1" class="form-control" id="cipherimaget1area" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
@@ -31,8 +31,9 @@
                 {% endif %}
                 <label name="T1">Encrypted Image (T1)</label>
             </div>
+            <input id="downloadbtn" class="btn btn-primary" value="Download" name="downloadinput"/>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-5">
             <div class="form-floating mb-3">
                 {% if img_obj %}
                     <img name="cipherImageT2" class="form-control" id="cipherimaget2area" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
@@ -41,8 +42,9 @@
                 {% endif %}
                 <label name="T2">Encrypted Image (T2)</label>
             </div>
+            <input id="downloadbtn" class="btn btn-primary" value="Download" name="downloadinput"/>
         </div>
-        <input id="decryptbtn" type="submit" class="btn btn-primary" value="Download Encrypted Images" name="downloadinput" style="width:40%;"/>
+        
     </div>
 </form>
 {% endblock content %}
