@@ -7,7 +7,6 @@
     {% csrf_token %}
     <div class="row gx-5 justify-content-center" style="padding:20px">
         <div class="col-lg-6">
-            <input name="clearImage" class="form-control" accept="image/*" id="clearimagearea" type="file" onchange="readImage(this);" style="border:none;"></input>
             <div class="form-floating mb-3">
                 {% if img_obj %}
                     <img name="clearImage" class="form-control" id="imageUploaded" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
@@ -16,6 +15,14 @@
                 {% endif %}
                 <label name="clearImage">Clear Image</label>
             </div>
+            <input id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Encrypt Image" name="encryptinput"/>
+            <input name="clearImage" class="btn btn-light" accept="image/*" id="clearimagearea" type="file" onchange="readImage(this);"/>
+            {{ form.errors }}
+            {{ form.non_field_errors }}
+        </div>
+    </div>
+    <div class="row gx-2 justify-content-center" style="padding:20px">
+        <div class="col-lg-4">
             <div class="form-floating mb-3">
                 {% if img_obj %}
                     <img name="cipherImageT1" class="form-control" id="cipherimaget1area" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
@@ -24,7 +31,8 @@
                 {% endif %}
                 <label name="T1">Encrypted Image (T1)</label>
             </div>
-
+        </div>
+        <div class="col-lg-4">
             <div class="form-floating mb-3">
                 {% if img_obj %}
                     <img name="cipherImageT2" class="form-control" id="cipherimaget2area" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
@@ -33,12 +41,8 @@
                 {% endif %}
                 <label name="T2">Encrypted Image (T2)</label>
             </div>
-
-            <input id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Encrypt Image" name="encryptinput"/>
-            <input id="decryptbtn" type="submit" class="btn btn-primary" value="Download Encrypted Images" name="decryptinput"/>
-            {{ form.errors }}
-            {{ form.non_field_errors }}
         </div>
+        <input id="decryptbtn" type="submit" class="btn btn-primary" value="Download Encrypted Images" name="downloadinput" style="width:40%;"/>
     </div>
 </form>
 {% endblock content %}
