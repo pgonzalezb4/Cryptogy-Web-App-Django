@@ -510,11 +510,16 @@ def imageEncryption(request):
         if form.is_valid():
             # process the data in form.cleaned_data as required
             form.save()
-            img_obj = form.instance
-            img = Image.open(settings.BASE_DIR + img_obj.clearImage.url)
 
-            img_array = np.asarray(img)
-            print(img_array)
+            try:
+                img_obj = form.instance
+                img = Image.open(settings.BASE_DIR + img_obj.clearImage.url)
+
+                img_array = np.asarray(img)
+                print(img_array)
+            except:
+                return render(request, 'imageencryption.html', {'form': form})
+
             
             return render(request, 'imageencryption.html', {'form': form, 'img_obj': img_obj})
         else:
