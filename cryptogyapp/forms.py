@@ -31,3 +31,8 @@ class GammalDSSForm(forms.ModelForm):
     class Meta:
         model = GammalDSSInput
         fields = ("__all__")
+
+class ImageEncryptionForm(forms.ModelForm):
+    class Meta:
+        model = ImageEncryptionInput
+        fields = ("__all__")

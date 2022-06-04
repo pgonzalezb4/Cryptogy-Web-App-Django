@@ -1,4 +1,6 @@
 import re
+import numpy as np
+from PIL import Image
 import textwrap
 
 from hashlib import sha512
@@ -6,10 +8,14 @@ from hashlib import sha512
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 
+from django.shortcuts import render
+
 from .cryptosystems import rsa, rsadss, rabin, menezesvanstone, elgamal, elgamaldss
 
 from .models import Cryptosystem
 from .forms import *
+
+from django.conf import settings  
 
 # Create your views here.
 def index(request):
@@ -493,5 +499,35 @@ def menezesvanstoneDSSView(request):
     template = loader.get_template('cryptogyapp/menezesvanstone-dss.html')
     context = {
         'thisCryptosystem': thisCryptosystem,
+    }
+    return HttpResponse(template.render(context, request))
+
+def imageEncryption(request):
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = ImageEncryptionForm(request.POST, request.FILES)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            form.save()
+            img_obj = form.instance
+            img = Image.open(settings.BASE_DIR + img_obj.clearImage.url)
+            print(np.asarray(img))
+            
+            return render(request, 'imageencryption.html', {'form': form, 'img_obj': img_obj})
+        else:
+            print("Invalid form.")
+            print(form.errors)
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = ImageEncryptionForm()
+
+    thisCryptosystem = Cryptosystem.objects.get(name="Image-Encryption")
+    print(thisCryptosystem.name)
+    template = loader.get_template('cryptogyapp/imageencryption.html')
+    context = {
+        'thisCryptosystem': thisCryptosystem,
+        'form': form,
     }
     return HttpResponse(template.render(context, request))
