@@ -512,7 +512,9 @@ def imageEncryption(request):
             form.save()
             img_obj = form.instance
             img = Image.open(settings.BASE_DIR + img_obj.clearImage.url)
-            print(np.asarray(img))
+
+            img_array = np.asarray(img)
+            print(img_array)
             
             return render(request, 'imageencryption.html', {'form': form, 'img_obj': img_obj})
         else:
