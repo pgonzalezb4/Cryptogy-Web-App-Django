@@ -232,13 +232,13 @@ $(document).ready(function () {
                     $('#signaturearea').val(signature);
                     $('#primep').val(response['pParam']);
                     $('#primeq').val(response['qParam']);
+                    document.getElementById("isvalid-message").innerHTML  = "";
                 }
                 
                 else if (Object.keys(response).indexOf('isValid') != -1) {
                     isValid = response['isValid'];
                     console.log(isValid);
-                    // $('#isvalid-message').val(response['isValid']);
-                    document.getElementById("decryptbtn").value = isValid;
+                    document.getElementById("isvalid-message").innerHTML  = isValid;
                 }
     
                 else {
@@ -279,13 +279,14 @@ $(document).ready(function () {
                     signature = response['signature'];
                     console.log(signature);
                     $('#signaturearea').val(signature);
+                    document.getElementById("isvalid-message").innerHTML  = "";
                 }
                 
                 else if (Object.keys(response).indexOf('isValid') != -1) {
                     isValid = response['isValid'];
                     console.log(isValid);
                     // $('#isvalid-message').val(response['isValid']);
-                    document.getElementById("decryptbtn").value = isValid;
+                    document.getElementById("isvalid-message").innerHTML  = isValid;
                 }
     
                 else {

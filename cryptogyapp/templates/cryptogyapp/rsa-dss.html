@@ -27,9 +27,9 @@ Digital Signature Scheme {% endblock %}
                 <textarea name="{{form.signature.name}}" class="form-control" id="signaturearea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
                 <label name="cipherText">Signature</label>
             </div>
-            <input id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Sign" name="encryptinput"/>
-            <input id="decryptbtn" type="submit" class="btn btn-primary" value="Validate signature" name="decryptinput"/>
-            <p class="btn btn-light" id="isvalid-message"></p>
+            <p id="isvalid-message"></p> 
+            <input name="encryptbtn" id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Sign" name="encryptinput"></input>
+            <input name="decryptbtn" id="decryptbtn" type="submit" class="btn btn-primary" value="Validate signature" name="decryptinput"/>                  
         </div>
     </div>
 </form>

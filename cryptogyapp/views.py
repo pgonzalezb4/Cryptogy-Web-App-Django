@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 import textwrap
 
+
 from hashlib import sha512
 
 from django.http import HttpResponse, JsonResponse
@@ -351,6 +352,12 @@ def rsaDSSView(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
+            print("----------------------------------------")
+            if 'encryptbtn' in request.POST:
+                print("**************************")
+                print("está")
+                print("**************************")
+            print(form)
             print(form.cleaned_data)
             pParam = form.cleaned_data['primeP']
             qParam = form.cleaned_data['primeQ']
