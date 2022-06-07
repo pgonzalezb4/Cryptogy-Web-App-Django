@@ -16,7 +16,10 @@
                 <label name="clearImage">Clear Image</label>
             </div>
             <input id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Encrypt Image" name="encryptinput"/>
-            <input name="clearImage" class="btn btn-light" accept="image/*" id="clearimagearea" type="file" onchange="readImage(this);"/>
+            <label class="btn btn-light" for="clearimagearea" class="custom-file-upload">
+                Select image to encrypt
+            </label>
+            <input style="display:none;" name="clearImage" class="btn btn-light" accept="image/*" id="clearimagearea" type="file" onchange="readImage(this);"/>
             {{ form.errors }}
             {{ form.non_field_errors }}
         </div>
