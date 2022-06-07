@@ -214,7 +214,8 @@ $(document).ready(function () {
         // preventing from page reload and default actions
         e.preventDefault();
         // serialize the data for sending the form data.
-        var serializedData = $(this).serialize();
+        var serializedData = $(this).serialize();        
+        s_text = e.target.value;
     
         // make POST ajax call
         $.ajax({
@@ -223,12 +224,11 @@ $(document).ready(function () {
             data: serializedData,
             success: function (response) {
                 // on successfull creating object
-                // display the info from backend.
-
+                // display the info from backend. 
                 console.log("Proceso:")
                 if (Object.keys(response).indexOf('signature') != -1) {
                     signature = response['signature'];
-                    console.log(signature);
+                                                         
                     $('#signaturearea').val(signature);
                     $('#primep').val(response['pParam']);
                     $('#primeq').val(response['qParam']);
@@ -314,6 +314,7 @@ $(document).ready(function () {
         })
     })
 });
+
 
 // Mostrar la imagen una vez es cargada
 function readImage(input) {

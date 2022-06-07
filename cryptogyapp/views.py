@@ -345,6 +345,9 @@ def elgamalView(request):
     }
     return HttpResponse(template.render(context, request))
 
+def copyFunction():
+    print("Copiando")
+
 def rsaDSSView(request):
     if request.is_ajax and request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -352,19 +355,12 @@ def rsaDSSView(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            print("----------------------------------------")
-            if 'encryptbtn' in request.POST:
-                print("**************************")
-                print("está")
-                print("**************************")
-            print(form)
             print(form.cleaned_data)
             pParam = form.cleaned_data['primeP']
             qParam = form.cleaned_data['primeQ']
             message = form.cleaned_data['message']
             signature = form.cleaned_data['signature']
             print(request.POST)
-
             # Random key generator
             if pParam != '' and qParam != '':
                 pParam = int(pParam)

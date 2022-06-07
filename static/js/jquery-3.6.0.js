@@ -75,6 +75,9 @@ var ObjectFunctionString = fnToString.call( Object );
 
 var support = {};
 
+//FUNCIÓN PARA COPIAR 
+
+
 var isFunction = function isFunction( obj ) {
 
 		// Support: Chrome <=57, Firefox <=52
@@ -145,6 +148,7 @@ function toType( obj ) {
 		class2type[ toString.call( obj ) ] || "object" :
 		typeof obj;
 }
+
 /* global Symbol */
 // Defining this global in .eslintrc.json would create a danger of using the global
 // unguarded in another place, it seems safer to define global only for this module
