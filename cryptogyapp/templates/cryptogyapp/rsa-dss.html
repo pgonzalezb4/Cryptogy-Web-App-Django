@@ -22,20 +22,42 @@ Digital Signature Scheme {% endblock %}
                 <textarea name="{{form.message.name}}" class="form-control" id="messagearea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
                 <label name="clearText">Message to sign</label>
             </div>
+            <button class="btn btn-aux" type="button" onclick="copyMessage()">Copy Message</button>
+            <button class="btn btn-aux2" type="button" onclick="copySignature()">Copy Signature</button>
+            <button class="btn btn-danger" type="button" id="clearBtn" onclick="clearFunction()">Clear</button>  
+            <br>
+            <br>
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For validation process, make sure there is a signature as well as a message to validate with.</small>
-            <button class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;float: right;" id="copyBtnRsaDSS" onclick="copyFunction()">Copy Text</button>
+            
             <div class="form-floating mb-3">
                 <textarea name="{{form.signature.name}}" class="form-control" id="signaturearea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
                 <label name="cipherText">Signature</label>
             </div>
             <p id="isvalid-message"></p> 
             <button name="{{form.encryptinput.name}}" type="submit" class="btn btn-aux-outline" value="encryptinput" id ="encryptinput" required>Sign</button>
-            <button name="{{form.decryptinput.name}}" type="submit" class="btn btn-primary" value="decryptinput" id="decryptinput">Validate signature</button>              
+            <button name="{{form.decryptinput.name}}" type="submit" class="btn btn-primary" value="decryptinput" id="decryptinput">Validate signature</button>  
+                     
         </div>
     </div>
 </form>
+ 
 <script>
-    function copyFunction() {
+    function copyMessage() {
+        /* Get the text field */
+        console.log('Funciona');
+        var copyText = document.getElementById("messagearea");
+      
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+      
+         /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+      
+        /* Alert the copied text */
+      }
+
+      function copySignature() {
         /* Get the text field */
         console.log('Funciona');
         var copyText = document.getElementById("signaturearea");
@@ -48,8 +70,15 @@ Digital Signature Scheme {% endblock %}
         navigator.clipboard.writeText(copyText.value);
       
         /* Alert the copied text */
-        alert("Signature copied");
+      }
+
+      function clearFunction() {
+        /* Get the text field */
+        console.log('Entra a borrar');
+        signaturearea.value = "";
+        messagearea.value = "";
       }
 </script>
+
 {% endblock content %}
 

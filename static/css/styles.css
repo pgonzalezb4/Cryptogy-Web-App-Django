@@ -3033,10 +3033,20 @@ textarea.form-control-lg {
 }
 .btn-aux:hover {
   color: #fff;
+  background-color: #FCB91380;
+  border-color: #FCB91380;
+}
+
+.btn-aux2 {
+  color: #fff;
   background-color: #F58B1F;
   border-color: #F58B1F;
 }
-
+.btn-aux2:hover {
+  color: #fff;
+  background-color: #F58B1F80;
+  border-color: #F58B1F80;
+}
 
 .btn-outline-light {
   color: #f8f9fa;
