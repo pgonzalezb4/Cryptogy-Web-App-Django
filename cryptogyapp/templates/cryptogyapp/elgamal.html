@@ -21,8 +21,13 @@
                 <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
                 <label name="clearText">Cleartext</label>
             </div>
+            <button class="btn btn-aux" type="button" onclick="copyCleartext()">Copy Cleartext</button>
+            <button class="btn btn-aux2" type="button" onclick="copyCiphertext()">Copy Ciphertext</button>
+            <button class="btn btn-danger" type="button" id="clearBtn" onclick="clearFunction()">Clear</button>  
+            <br>
+            <br>
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For encryption process, make sure the ciphertext field is empty.</small>
-            <button class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;float: right;" id="copyBtnRsa" onclick="copyFunction()">Copy Text</button>
+            
             <div class="form-floating mb-3">
                 <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
                 <label name="cipherText">Ciphertext</label>
@@ -35,7 +40,22 @@
     </div>
 </form>
 <script>
-    function copyFunction() {
+    function copyCleartext() {
+        /* Get the text field */
+        console.log('Funciona');
+        var copyText = document.getElementById("cleartextarea");
+      
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+      
+         /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+      
+        /* Alert the copied text */
+      }
+
+      function copyCiphertext() {
         /* Get the text field */
         console.log('Funciona');
         var copyText = document.getElementById("ciphertextarea");
@@ -48,7 +68,13 @@
         navigator.clipboard.writeText(copyText.value);
       
         /* Alert the copied text */
-        alert("Signature copied");
+      }
+
+      function clearFunction() {
+        /* Get the text field */
+        console.log('Entra a borrar');
+        cleartextarea.value = "";
+        ciphertextarea.value = "";
       }
 </script>
 {% endblock content %}
