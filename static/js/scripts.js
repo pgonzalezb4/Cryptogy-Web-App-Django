@@ -343,7 +343,7 @@ fileInput.addEventListener('change', (e) => {
             .replace('data:', '')
             .replace(/^.+,/, '');
 
-            $('#messagearea').val(base64String.substring(0, 100));
+            $('#messagearea').val(base64String.substring(0, 10000));
         // Logs wL2dvYWwgbW9yZ...
     };
     reader.readAsDataURL(file);
