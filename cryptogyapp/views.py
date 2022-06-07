@@ -375,19 +375,17 @@ def copyFunction():
 def rsaDSSView(request):
     if request.is_ajax and request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = RsaDSSForm(request.POST, request.FILES)
+        form = RsaDSSForm(request.POST)
         # check whether it's valid:
         if form.is_valid():
             form.save()
 
             # process the data in form.cleaned_data as required
-            print(form.cleaned_data)
             pParam = form.cleaned_data['primeP']
             qParam = form.cleaned_data['primeQ']
             message = form.cleaned_data['message']
             signature = form.cleaned_data['signature']
-            file = form.cleaned_data['clearFile']
-            print('File:', file)
+
             print(request.POST)
             # Random key generator
             if pParam != '' and qParam != '':
@@ -457,8 +455,6 @@ def elgamalDSSView(request):
             message = form.cleaned_data['message']
             signature = form.cleaned_data['signature']
 
-            file = form.cleaned_data['clearFile']
-            print('File:', file)
             print(request.POST)
 
             p = 283
@@ -527,15 +523,6 @@ def elgamalDSSView(request):
     }
     return HttpResponse(template.render(context, request))
 
-def menezesvanstoneDSSView(request):
-    thisCryptosystem = Cryptosystem.objects.get(name="Menezes-Vanstone-DSS")
-    print(thisCryptosystem.name)
-    template = loader.get_template('cryptogyapp/menezesvanstone-dss.html')
-    context = {
-        'thisCryptosystem': thisCryptosystem,
-    }
-    return HttpResponse(template.render(context, request))
-
 def imageEncryption(request):
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
@@ -565,7 +552,6 @@ def imageEncryption(request):
         form = ImageEncryptionForm()
 
     thisCryptosystem = Cryptosystem.objects.get(name="Image-Encryption")
-    print(thisCryptosystem.name)
     template = loader.get_template('cryptogyapp/imageencryption.html')
     context = {
         'thisCryptosystem': thisCryptosystem,

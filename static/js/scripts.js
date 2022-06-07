@@ -328,3 +328,25 @@ function readImage(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+// Read File for Digital Signature Scheme and encode to paste in #messagearea.
+const fileInput = document.getElementById("clearFile");
+fileInput.addEventListener('change', (e) => {
+    // Get a reference to the file
+    const file = e.target.files[0];
+
+    // Encode the file using the FileReader API
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        // Use a regex to remove data url part
+        const base64String = reader.result
+            .replace('data:', '')
+            .replace(/^.+,/, '');
+
+            $('#messagearea').val(base64String.substring(0, 100));
+        // Logs wL2dvYWwgbW9yZ...
+    };
+    reader.readAsDataURL(file);
+});
+
+

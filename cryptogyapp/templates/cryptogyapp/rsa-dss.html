@@ -4,7 +4,7 @@
 Digital Signature Scheme {% endblock %}
 {% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
 {% block content %}
-<form id="rsaDSSForm" action="" method="post" enctype="multipart/form-data">
+<form id="rsaDSSForm" enctype="multipart/form-data" method="post">
     {% csrf_token %}
     <div class="row gx-5 justify-content-center" style="padding:20px">
         <div class="col-lg-6">
@@ -22,7 +22,7 @@ Digital Signature Scheme {% endblock %}
                 <textarea name="{{form.message.name}}" class="form-control" id="messagearea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
                 <label name="clearText">Message to sign</label>
             </div>
-            <input class="btn btn-light" type="file" name="clearFile">
+            <input class="btn btn-light" type="file" id="clearFile">
             <br>
             <br>
             <button class="btn btn-aux" type="button" onclick="copyMessage()">Copy Message</button>
@@ -37,8 +37,8 @@ Digital Signature Scheme {% endblock %}
                 <label name="cipherText">Signature</label>
             </div>
             <p id="isvalid-message"></p> 
-            <button name="{{form.encryptinput.name}}" type="submit" class="btn btn-aux-outline" value="encryptinput" id ="encryptinput" required>Sign</button>
-            <button name="{{form.decryptinput.name}}" type="submit" class="btn btn-primary" value="decryptinput" id="decryptinput">Validate signature</button>  
+            <button name="encryptinputbtn" type="submit" class="btn btn-aux-outline" value="encryptinput" id="encryptinput" required>Sign</button>
+            <button name="decryptinputbtn" type="submit" class="btn btn-primary" value="decryptinput" id="decryptinput">Validate signature</button>  
                      
         </div>
     </div>
