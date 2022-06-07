@@ -44,20 +44,28 @@ def rsaView(request):
             if cleartextParam != "":
                 # Encriptacion RSA
                 print('Encriptado.')
-                ciphertext = rsa.encrypt(cleartextParam, pubkey)
-                ciphertext = ' '.join([str(x) for x in ciphertext])
-                return JsonResponse({"ciphertext": ciphertext, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
+                try:
+                    ciphertext = rsa.encrypt(cleartextParam, pubkey)
+                    ciphertext = ' '.join([str(x) for x in ciphertext])
+                    return JsonResponse({"ciphertext": ciphertext, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
+                except Exception as e:
+                    print('Error:', e)
+                    return JsonResponse({"error": "Hubo un error."}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion RSA
                 print('Desencriptado.')
-                ciphertextParam = [int(x.strip()) for x in ciphertextParam.split(' ')]
                 try:
-                    cleartext = rsa.decrypt(ciphertextParam, privkey)
+                    ciphertextParam = [int(x.strip()) for x in ciphertextParam.split(' ')]
+                    try:
+                        cleartext = rsa.decrypt(ciphertextParam, privkey)
+                    except Exception as e:
+                        print("Error.")
+                        return JsonResponse({"error": "Hubo un error."}, status=200)
+                    return JsonResponse({"cleartext": cleartext, "pParam" : pParam, "qParam" : qParam}, status=200)
                 except Exception as e:
-                    print("Error.")
+                    print('Error:', e)
                     return JsonResponse({"error": "Hubo un error."}, status=200)
-                return JsonResponse({"cleartext": cleartext, "pParam" : pParam, "qParam" : qParam}, status=200)
 
             else:
                 print("Error.")
@@ -115,43 +123,51 @@ def rabinView(request):
             if cleartextParam != "":
                 # Encriptacion Rabin
                 print('Encriptado.')
+                try:
                 
-                print(cleartextParam)
+                    print(cleartextParam)
 
-                if len(cleartextParam) > 64:
-                    cleartextParam = textwrap.wrap(cleartextParam, 16)
-                else:
-                    cleartextParam = [cleartextParam]
+                    if len(cleartextParam) > 64:
+                        cleartextParam = textwrap.wrap(cleartextParam, 16)
+                    else:
+                        cleartextParam = [cleartextParam]
 
-                print(cleartextParam)
-                
-                ciphertext = []
-                for cltext in cleartextParam:
-                    cltext = int.from_bytes(cltext.encode(), 'big')
-                    cltext = rabin.encryption(cltext, pParam*qParam)
-                    cltext = rabin.add_space(str(cltext))
-                    ciphertext.append(cltext)
+                    print(cleartextParam)
+                    
+                    ciphertext = []
+                    for cltext in cleartextParam:
+                        cltext = int.from_bytes(cltext.encode(), 'big')
+                        cltext = rabin.encryption(cltext, pParam*qParam)
+                        cltext = rabin.add_space(str(cltext))
+                        ciphertext.append(cltext)
 
-                print(ciphertext)
+                    print(ciphertext)
 
-                ciphertext = ' | '.join(ciphertext)
-                return JsonResponse({"ciphertext": ciphertext, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
+                    ciphertext = ' | '.join(ciphertext)
+                    return JsonResponse({"ciphertext": ciphertext, "pParam" : str(pParam), "qParam" : str(qParam)}, status=200)
+                except Exception as e:
+                    print('Error:', e)
+                    return JsonResponse({"error": "Hubo un error."}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion Rabin
                 print('Desencriptado.')
-                ciphertextParam = ciphertextParam.split(' | ')
-                print(ciphertextParam)
+                try:
+                    ciphertextParam = ciphertextParam.split(' | ')
+                    print(ciphertextParam)
 
-                cleartext = []
-                for ciphtext in ciphertextParam:
-                    ciphtext = int(rabin.delete_space(ciphtext))
-                    cltext = int(format(rabin.decryption(ciphtext, pParam, qParam), 'x').zfill(226 // 4), 16)
-                    cltext = cltext.to_bytes(((pParam*qParam).bit_length() + 7) // 8, 'big').decode('utf-8', 'strict')
-                    cleartext.append(cltext)
+                    cleartext = []
+                    for ciphtext in ciphertextParam:
+                        ciphtext = int(rabin.delete_space(ciphtext))
+                        cltext = int(format(rabin.decryption(ciphtext, pParam, qParam), 'x').zfill(226 // 4), 16)
+                        cltext = cltext.to_bytes(((pParam*qParam).bit_length() + 7) // 8, 'big').decode('utf-8', 'strict')
+                        cleartext.append(cltext)
 
-                cleartext = ' '.join([x.strip('\x00') for x in cleartext])
-                return JsonResponse({"cleartext": cleartext, "pParam" : pParam, "qParam" : qParam}, status=200)
+                    cleartext = ' '.join([x.strip('\x00') for x in cleartext])
+                    return JsonResponse({"cleartext": cleartext, "pParam" : pParam, "qParam" : qParam}, status=200)
+                except Exception as e:
+                    print('Error:', e)
+                    return JsonResponse({"error": "Hubo un error."}, status=200)
 
             else:
                 print("Error.")
@@ -204,16 +220,20 @@ def menezesvanstoneView(request):
             if cleartextParam != "":
                 # Encriptacion Menezes-Vanstone
                 print('Encriptado.')
-                ciphertext = menezesvanstone.encrypt(cleartextParam, alpha, k, params, generator)
-                newCipherText = ''
+                try:
+                    ciphertext = menezesvanstone.encrypt(cleartextParam, alpha, k, params, generator)
+                    newCipherText = ''
 
-                for elem in ciphertext:
-                    a, b = str(elem[0]), str(elem[1])
-                    newCipherText += ('(' + a + ', ' + b + ')' + '; ') 
+                    for elem in ciphertext:
+                        a, b = str(elem[0]), str(elem[1])
+                        newCipherText += ('(' + a + ', ' + b + ')' + '; ') 
 
-                print(newCipherText)
+                    print(newCipherText)
 
-                return JsonResponse({"ciphertext": newCipherText, "alpha" : alpha, "k" : k}, status=200)
+                    return JsonResponse({"ciphertext": newCipherText, "alpha" : alpha, "k" : k}, status=200)
+                except Exception as e:
+                    print('Error:', e)
+                    return JsonResponse({"error": "Hubo un error."}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion Menezes-Vanstone
@@ -288,14 +308,18 @@ def elgamalView(request):
             if cleartextParam != "":
                 # Encriptacion ElGammal
                 print('Encriptado.')
-                ciphertext = elgamal.encrypt(params, B, cleartextParam)
-                
-                new_ciphertext = ''
+                try:
+                    ciphertext = elgamal.encrypt(params, B, cleartextParam)
+                    
+                    new_ciphertext = ''
 
-                for tup in ciphertext:
-                    new_ciphertext += '--'.join([str(x) for x in list(tup)]) + '  '
+                    for tup in ciphertext:
+                        new_ciphertext += '--'.join([str(x) for x in list(tup)]) + '  '
 
-                return JsonResponse({"ciphertext": new_ciphertext, "pubkey" : str(B), "privkey" : str(b)}, status=200)
+                    return JsonResponse({"ciphertext": new_ciphertext, "pubkey" : str(B), "privkey" : str(b)}, status=200)
+                except Exception as e:
+                    print('Error:', e)
+                    return JsonResponse({"error": "Hubo un error."}, status=200)
 
             elif ciphertextParam != "":
                 # Desencriptacion ElGammal

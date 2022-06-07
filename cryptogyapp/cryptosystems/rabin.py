@@ -80,10 +80,10 @@ def decryption(a, p, q):
     elif q % 8 == 5:
         s = sqrt_p_5_mod_8(a, q)
 
-    gcd, c, d = egcd(p, q)
+    gcd, c, d = egcd(p, q) # algoritmo extendido de euclides para hallar c, d tales que c*p + d*q = 1
     x = (r * d * q + s * c * p) % n
     y = (r * d * q - s * c * p) % n
-    lst = [x, n - x, y, n - y]
+    lst = [x, n - x, y, n - y] # 4 raices cuadradas de c modulo n usando el teorema chino del residuo
 
     plaintext = choose(lst)
     string = bin(plaintext)
