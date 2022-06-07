@@ -18,7 +18,8 @@ class RSAInput(models.Model):
 class RSADSSInput(models.Model):
     primeP = models.CharField(max_length=4294967296, blank=True)
     primeQ = models.CharField(max_length=4294967296, blank=True)
-    message = models.CharField(max_length=4294967296, blank=True)    
+    message = models.CharField(max_length=4294967296, blank=True)
+    clearFile = models.FileField(blank = True) 
     signature = models.CharField(max_length=4294967296, blank=True)
 
 class RabinInput(models.Model):
@@ -43,6 +44,7 @@ class GammalDSSInput(models.Model):
     pubKey = models.CharField(max_length=4294967296, blank=True, default='-')
     privKey = models.CharField(max_length=4294967296, blank=True, default='-')
     message = models.CharField(max_length=4294967296, blank=True)
+    clearFile = models.FileField(blank = True)
     signature = models.CharField(max_length=4294967296, blank=True)
 
 class ImageEncryptionInput(models.Model):

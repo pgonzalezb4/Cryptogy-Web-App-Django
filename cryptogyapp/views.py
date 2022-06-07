@@ -375,15 +375,19 @@ def copyFunction():
 def rsaDSSView(request):
     if request.is_ajax and request.method == 'POST':
         # create a form instance and populate it with data from the request:
-        form = RsaDSSForm(request.POST)
+        form = RsaDSSForm(request.POST, request.FILES)
         # check whether it's valid:
         if form.is_valid():
+            form.save()
+
             # process the data in form.cleaned_data as required
             print(form.cleaned_data)
             pParam = form.cleaned_data['primeP']
             qParam = form.cleaned_data['primeQ']
             message = form.cleaned_data['message']
             signature = form.cleaned_data['signature']
+            file = form.cleaned_data['clearFile']
+            print('File:', file)
             print(request.POST)
             # Random key generator
             if pParam != '' and qParam != '':
@@ -452,6 +456,9 @@ def elgamalDSSView(request):
             b = form.cleaned_data['privKey']
             message = form.cleaned_data['message']
             signature = form.cleaned_data['signature']
+
+            file = form.cleaned_data['clearFile']
+            print('File:', file)
             print(request.POST)
 
             p = 283

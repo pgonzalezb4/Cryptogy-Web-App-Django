@@ -25,6 +25,9 @@
                 <textarea name="{{form.message.name}}" class="form-control" id="messagearea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
                 <label name="clearText">Message to sign</label>
             </div>
+            <input class="btn btn-light" type="file" name="clearFile">
+            <br>
+            <br>
             <button class="btn btn-aux" type="button" onclick="copyMessage()">Copy Message</button>
             <button class="btn btn-aux2" type="button" onclick="copySignature()">Copy Signature</button>
             <button class="btn btn-danger" type="button" id="clearBtn" onclick="clearFunction()">Clear</button>  

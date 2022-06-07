@@ -4,7 +4,7 @@
 Digital Signature Scheme {% endblock %}
 {% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
 {% block content %}
-<form id="rsaDSSForm" action="" method="post">
+<form id="rsaDSSForm" action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="row gx-5 justify-content-center" style="padding:20px">
         <div class="col-lg-6">
@@ -22,6 +22,9 @@ Digital Signature Scheme {% endblock %}
                 <textarea name="{{form.message.name}}" class="form-control" id="messagearea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
                 <label name="clearText">Message to sign</label>
             </div>
+            <input class="btn btn-light" type="file" name="clearFile">
+            <br>
+            <br>
             <button class="btn btn-aux" type="button" onclick="copyMessage()">Copy Message</button>
             <button class="btn btn-aux2" type="button" onclick="copySignature()">Copy Signature</button>
             <button class="btn btn-danger" type="button" id="clearBtn" onclick="clearFunction()">Clear</button>  
