@@ -10,27 +10,30 @@ Digital Signature Scheme {% endblock %}
         <div class="col-lg-6">
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A pair of random prime numbers will be generated for digital signature if not provided by the user.</small>
             <div class="form-floating mb-3">
-                <input name="{{form.primeP.name}}" class="form-control" id="primep" type="text" placeholder="Enter a prime number...">
+                <input name="{{form.primeP.name}}" class="form-control" id="primep" type="text">
                 <label name="primeQ">Prime number (p)</label>
             </div>
             <div class="form-floating mb-3">
-                <input name="{{form.primeQ.name}}" class="form-control" id="primeq" type="text" placeholder="Enter a prime number...">
+                <input name="{{form.primeQ.name}}" class="form-control" id="primeq" type="text">
                 <label name="primeP">Prime number (q)</label>
             </div>
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For signature process, make sure the signature field is empty.</small>
             <div class="form-floating mb-3">
                 <textarea name="{{form.message.name}}" class="form-control" id="messagearea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
-                <label name="clearText">Message to sign</label>
+                <label name="clearText">Message/File to sign</label>
             </div>
-            <input class="btn btn-light" type="file" id="clearFile">
+            <label class="btn btn-light" for="clearFile" class="custom-file-upload">
+                Select file to sign
+            </label>
+            <input style="display:none;"  type="file" id="clearFile">
             <br>
             <br>
-            <button class="btn btn-aux" type="button" onclick="copyMessage()">Copy Message</button>
+            <button class="btn btn-aux" type="button" onclick="copyMessage()">Copy Message/File</button>
             <button class="btn btn-aux2" type="button" onclick="copySignature()">Copy Signature</button>
             <button class="btn btn-danger" type="button" id="clearBtn" onclick="clearFunction()">Clear</button>  
             <br>
             <br>
-            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For validation process, make sure there is a signature as well as a message to validate with.</small>
+            <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For validation process, make sure there is a signature as well as a message/file to validate with.</small>
             
             <div class="form-floating mb-3">
                 <textarea name="{{form.signature.name}}" class="form-control" id="signaturearea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
