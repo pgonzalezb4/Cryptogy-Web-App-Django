@@ -22,6 +22,7 @@
                 <label name="clearText">Cleartext</label>
             </div>
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For encryption process, make sure the ciphertext field is empty.</small>
+            <button class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;float: right;" id="copyBtnRsa" onclick="copyFunction()">Copy Text</button>
             <div class="form-floating mb-3">
                 <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
                 <label name="cipherText">Ciphertext</label>
@@ -33,4 +34,21 @@
         </div>
     </div>
 </form>
+<script>
+    function copyFunction() {
+        /* Get the text field */
+        console.log('Funciona');
+        var copyText = document.getElementById("ciphertextarea");
+      
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+      
+         /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+      
+        /* Alert the copied text */
+        alert("Signature copied");
+      }
+</script>
 {% endblock content %}
