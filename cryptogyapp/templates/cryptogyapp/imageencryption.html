@@ -1,0 +1,50 @@
+{% extends "cryptogyapp/base.html" %}
+{% block title %}Cryptogy | {{ thisCryptosystem.name }} Cryptosystem{% endblock %}
+{% block title-header %}Image Encryption{% endblock %}
+{% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
+{% block content %}
+<form id="imageencryptionForm" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+    <div class="row gx-5 justify-content-center" style="padding:20px">
+        <div class="col-lg-6">
+            <div class="form-floating mb-3">
+                {% if img_obj %}
+                    <img name="clearImage" class="form-control" id="imageUploaded" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
+                {% else %}
+                    <img name="clearImage" class="form-control" id="imageUploaded" style="height: 25rem;"/>
+                {% endif %}
+                <label name="clearImage">Clear Image</label>
+            </div>
+            <input id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Encrypt Image" name="encryptinput"/>
+            <input name="clearImage" class="btn btn-light" accept="image/*" id="clearimagearea" type="file" onchange="readImage(this);"/>
+            {{ form.errors }}
+            {{ form.non_field_errors }}
+        </div>
+    </div>
+    <div class="row gx-2 justify-content-center" style="padding:20px">
+        <div class="col-lg-5">
+            <div class="form-floating mb-3">
+                {% if img_obj %}
+                    <img name="cipherImageT1" class="form-control" id="cipherimaget1area" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
+                {% else %}
+                    <img name="cipherImageT1" class="form-control" id="cipherimaget1area" style="height: 25rem"></img>
+                {% endif %}
+                <label name="T1">Encrypted Image (T1)</label>
+            </div>
+            <input id="downloadbtn" class="btn btn-primary" value="Download" name="downloadinput"/>
+        </div>
+        <div class="col-lg-5">
+            <div class="form-floating mb-3">
+                {% if img_obj %}
+                    <img name="cipherImageT2" class="form-control" id="cipherimaget2area" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
+                {% else %}
+                    <img name="cipherImageT2" class="form-control" id="cipherimaget2area" style="height: 25rem"></img>
+                {% endif %}
+                <label name="T2">Encrypted Image (T2)</label>
+            </div>
+            <input id="downloadbtn" class="btn btn-primary" value="Download" name="downloadinput"/>
+        </div>
+        
+    </div>
+</form>
+{% endblock content %}

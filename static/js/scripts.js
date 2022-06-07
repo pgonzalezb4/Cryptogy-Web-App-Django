@@ -6,6 +6,7 @@
 // This file is intentionally blank
 // Use this file to add JavaScript to your project
 
+
 $(document).ready(function () {
     $("#rsaForm").on("submit", function (e) {
         // preventing from page reload and default actions
@@ -206,3 +207,124 @@ $(document).ready(function () {
         })
     })
 });
+
+// ESQUEMAS DE FIRMA DIGITAL
+$(document).ready(function () {
+    $("#rsaDSSForm").on("submit", function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();        
+        s_text = e.target.value;
+    
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "",
+            data: serializedData,
+            success: function (response) {
+                // on successfull creating object
+                // display the info from backend. 
+                console.log("Proceso:")
+                if (Object.keys(response).indexOf('signature') != -1) {
+                    signature = response['signature'];
+                                                         
+                    $('#signaturearea').val(signature);
+                    $('#primep').val(response['pParam']);
+                    $('#primeq').val(response['qParam']);
+                    document.getElementById("isvalid-message").innerHTML  = "";
+                }
+                
+                else if (Object.keys(response).indexOf('isValid') != -1) {
+                    isValid = response['isValid'];
+                    console.log(isValid);
+                    document.getElementById("isvalid-message").innerHTML  = isValid;
+                }
+    
+                else {
+                    error = response['error'];
+                    console.log(error);
+                    $('#signaturearea').val(error);
+                    $('#messagearea').val(error);
+                }
+                
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
+});
+
+// ESQUEMAS DE FIRMA DIGITAL
+$(document).ready(function () {
+    $("#gammalDSSForm").on("submit", function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+    
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "",
+            data: serializedData,
+            success: function (response) {
+                // on successfull creating object
+                // display the info from backend.
+
+                console.log("Proceso:")
+                if (Object.keys(response).indexOf('signature') != -1) {
+                    signature = response['signature'];
+                    console.log(signature);
+                    $('#signaturearea').val(signature);
+                    document.getElementById("isvalid-message").innerHTML  = "";
+                }
+                
+                else if (Object.keys(response).indexOf('isValid') != -1) {
+                    isValid = response['isValid'];
+                    console.log(isValid);
+                    // $('#isvalid-message').val(response['isValid']);
+                    document.getElementById("isvalid-message").innerHTML  = isValid;
+                }
+    
+                else {
+                    error = response['error'];
+                    console.log(error);
+                    $('#signaturearea').val(error);
+                    $('#messagearea').val(error);
+                }
+
+                // Setear claves
+                console.log('Settings keys...');
+
+                if ($('#pubkey').val() == '' && $('#privkey').val() == '') {
+                    publickey = response['pubkey'];
+                    privatekey = response['privkey'];
+                    $('#pubkey').val(publickey);
+                    $('#privkey').val(privatekey);
+                }
+                
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
+});
+
+
+// Mostrar la imagen una vez es cargada
+function readImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+    
+        reader.onload = function (e) {
+            $('#imageUploaded').attr('src', e.target.result);
+        };
+    
+        reader.readAsDataURL(input.files[0]);
+    }
+}

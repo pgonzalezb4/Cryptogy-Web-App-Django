@@ -7,6 +7,11 @@ class RsaForm(forms.ModelForm):
         model = RSAInput
         fields = ("__all__")
 
+class RsaDSSForm(forms.ModelForm):
+    class Meta:
+        model = RSADSSInput
+        fields = ("__all__")
+
 class RabinForm(forms.ModelForm):
     class Meta:
         model = RabinInput
@@ -20,4 +25,14 @@ class MVForm(forms.ModelForm):
 class GammalForm(forms.ModelForm):
     class Meta:
         model = GammalInput
+        fields = ("__all__")
+
+class GammalDSSForm(forms.ModelForm):
+    class Meta:
+        model = GammalDSSInput
+        fields = ("__all__")
+
+class ImageEncryptionForm(forms.ModelForm):
+    class Meta:
+        model = ImageEncryptionInput
         fields = ("__all__")

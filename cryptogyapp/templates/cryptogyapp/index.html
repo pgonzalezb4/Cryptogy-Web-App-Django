@@ -1,23 +1,60 @@
 {% extends "cryptogyapp/base.html" %}
 {% block content %}
 <!-- Features section-->
+
 <div class="container px-5 my-5">
+    <h2 style="text-align:center">Welcome!</h2>
+    <br>
+    <p style="text-align:center"> Thank you for choosing <strong>Cryptogy</strong> to secure your messages, chats or your most valuable information. <br><br> Which tool are you going to use first?</p>
+    <br>
+    <br>
     <div class="row gx-5">
         {% if cryptosystem_list %}
             {% for cryptosystem in cryptosystem_list %}
-                <div id="cryptosystemBox" class="col-lg-4 mb-5 mb-lg-0">
-                    <div class="feature bg-white bg-gradient text-white rounded-3 mb-3"><img src="{{ cryptosystem.icon.url }}"></img></div>
-                    <h2 class="h4 fw-bolder">{{ cryptosystem.name }}</h2>
-                    <p>{{ cryptosystem.desc }}</p>
-                    <a class="text-decoration-none" href="/{{ cryptosystem.name }}/">
-                        Use this cryptosystem
-                        <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
+                {% if cryptosystem.name in 'RSA, Rabin, ElGamal, Menezes-Vanstone' %}
+                    <div id="cryptosystemBox" class="col-lg-6 mb-5 mb-lg-0">
+                        <div class="feature bg-white bg-gradient text-white rounded-3 mb-3"><img src="{{ cryptosystem.icon.url }}"></img></div>
+                        <h2 class="h4 fw-bolder">{{ cryptosystem.name }}</h2>
+                        <p>{{ cryptosystem.desc }}</p>
+                        {% if cryptosystem.name in 'RSA, ElGamal' %}
+                        <a style="color:#F58B1F" class="text-decoration-none" href="/{{ cryptosystem.name }}/">
+                            Text encryption/decryption
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        <br>
+                        <a style="color:#F58B1F" class="text-decoration-none" href="/{{ cryptosystem.name|add:'-DSS' }}/">
+                            Digital Signature Scheme
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        {% else %}
+                        <a style="color:#F58B1F" class="text-decoration-none" href="/{{ cryptosystem.name }}/">
+                            Text encryption/decryption
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                {% elif cryptosystem.name == 'Image-Encryption' %}
+                    <div id="cryptosystemBox" class="col-lg-6 mb-5 mb-lg-0">
+                        <div class="feature bg-white bg-gradient text-white rounded-3 mb-3"><img src="{{ cryptosystem.icon.url }}"></img></div>
+                        <h2 class="h4 fw-bolder">Image Encryption</h2>
+                        <p>{{ cryptosystem.desc }}</p>
+                        <a style="color:#F58B1F" class="text-decoration-none" href="/{{ cryptosystem.name }}/">
+                            Image encryption/decryption
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                {% endif %}
             {% endfor %}
         {% else %}
             <p>No cryptosystems are available.</p>
         {% endif %}
+    </div>
+    <br>
+    <br>
+    <h6 style="text-align:center">This is the link to the repository, in case you want to see the source code or to contribute to the project.</h6>
+    <br>
+    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
+        <a class="btn btn-aux btn-lg px-4" href="https://github.com/pgonzalezb4/Cryptogy-Web-App-Django" target="_blank">Github Repository</a>
     </div>
 </div>
 {% endblock content %}

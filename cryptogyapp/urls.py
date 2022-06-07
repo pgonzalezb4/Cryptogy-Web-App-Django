@@ -8,5 +8,9 @@ urlpatterns = [
     path('Rabin/', views.rabinView, name='rabincryptosystem'),
     path('ElGamal/', views.elgamalView, name='elgamalcryptosystem'),
     path('Menezes-Vanstone/', views.menezesvanstoneView, name='menezesvanstonecryptosystem'),
+    path('RSA-DSS/', views.rsaDSSView, name='rsadsscryptosystem'),
+    path('ElGamal-DSS/', views.elgamalDSSView, name='elgamaldsscryptosystem'),
+    path('Menezes-Vanstone-DSS/', views.menezesvanstoneDSSView, name='menezesvanstonedsscryptosystem'),
+    path('Image-Encryption/', views.imageEncryption, name='imageencryption'),
 ]
 

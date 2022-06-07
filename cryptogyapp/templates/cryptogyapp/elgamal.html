@@ -1,11 +1,11 @@
 {% extends "cryptogyapp/base.html" %}
-{% block title %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
+{% block title %}Cryptogy | {{ thisCryptosystem.name }} Cryptosystem{% endblock %}
 {% block title-header %}{{ thisCryptosystem.name }} Cryptosystem{% endblock %}
 {% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
 {% block content %}
 <form id="gammalForm" action="" method="post">
     {% csrf_token %}
-    <div class="row gx-5 justify-content-center">
+    <div class="row gx-5 justify-content-center" style="padding:20px">
         <div class="col-lg-6">
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">A pair of random public and private keys will be generated for encryption if not provided by the user.</small>
             <div class="form-floating mb-3">
@@ -21,16 +21,60 @@
                 <textarea name="{{form.clearText.name}}" class="form-control" id="cleartextarea" type="text" placeholder="Enter a cleartext..." style="height: 15rem"></textarea>
                 <label name="clearText">Cleartext</label>
             </div>
+            <button class="btn btn-aux" type="button" onclick="copyCleartext()">Copy Cleartext</button>
+            <button class="btn btn-aux2" type="button" onclick="copyCiphertext()">Copy Ciphertext</button>
+            <button class="btn btn-danger" type="button" id="clearBtn" onclick="clearFunction()">Clear</button>  
+            <br>
+            <br>
             <small class="btn btn-light" style="font-size:12px;background-color:#E2E2E2;">For encryption process, make sure the ciphertext field is empty.</small>
+            
             <div class="form-floating mb-3">
                 <textarea name="{{form.cipherText.name}}" class="form-control" id="ciphertextarea" type="text" placeholder="Enter a ciphertext..." style="height: 15rem"></textarea>
                 <label name="cipherText">Ciphertext</label>
             </div>
-            <input id="encryptbtn" type="submit" class="btn btn-primary" value="Encrypt" name="encryptinput"/>
+            <input id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Encrypt" name="encryptinput"/>
             <input id="decryptbtn" type="submit" class="btn btn-primary" value="Decrypt" name="decryptinput"/>
             {{ form.errors }}
             {{ form.non_field_errors }}
         </div>
     </div>
 </form>
+<script>
+    function copyCleartext() {
+        /* Get the text field */
+        console.log('Funciona');
+        var copyText = document.getElementById("cleartextarea");
+      
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+      
+         /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+      
+        /* Alert the copied text */
+      }
+
+      function copyCiphertext() {
+        /* Get the text field */
+        console.log('Funciona');
+        var copyText = document.getElementById("ciphertextarea");
+      
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+      
+         /* Copy the text inside the text field */
+        navigator.clipboard.writeText(copyText.value);
+      
+        /* Alert the copied text */
+      }
+
+      function clearFunction() {
+        /* Get the text field */
+        console.log('Entra a borrar');
+        cleartextarea.value = "";
+        ciphertextarea.value = "";
+      }
+</script>
 {% endblock content %}

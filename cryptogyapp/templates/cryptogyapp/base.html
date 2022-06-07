@@ -21,28 +21,46 @@
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-5">
-                <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'assets/logo.jpg' %}"></img>Cryptogy</a>
+                <a class="navbar-brand" href="{% url 'index' %}"><img style="width:45%"  src="{% static 'assets/Logo-crypto-blanco.png' %}"></img></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="https://github.com/pgonzalezb4/Cryptogy-Web-App-Django" target="_blank">Github Repository</a></li>
+                        <li class="nav-item" style="border-radius: 10px 10px 10px 10px;"><a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a></li>
+                        <li class="nav-item" style="border-radius: 10px 10px 10px 10px;"><a class="nav-link active" aria-current="page" href="/Image-Encryption">Image Encryption</a></li>
+                        <div class="subnav">
+                            <button class="subnavbtn">Text Encryption <i class="fa fa-caret-down"></i></button>
+                            <div class="subnav-content">
+                                <ul style="list-style-type:none">
+                                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/RSA">RSA</a></li>
+                                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/Rabin">Rabin</a></li>
+                                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/ElGamal">ElGamal</a></li>
+                                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/Menezes-Vanstone">Menezes-Vanstone</a></li>
+                                </ul>
+                            </div>
+                        </div>     
+                        <div class="subnav">
+                            <button class="subnavbtn">DSS<i class="fa fa-caret-down"></i></button>
+                            <div class="subnav-content">
+                                <ul style="list-style-type:none">
+                                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/RSA-DSS">RSA DSS</a></li>
+                                    <li class="nav-item"><a class="nav-link" aria-current="page" href="/ElGamal-DSS">ElGamal DSS</a></li>
+                                    <!-- <li class="nav-item"><a class="nav-link" aria-current="page" href="/Menezes-Vanstone">Menezes-Vanstone DSS</a></li> -->
+                                </ul>
+                            </div>
+                        </div>                    
+                        <!-- <li class="nav-item"><a class="nav-link" href="https://github.com/pgonzalezb4/Cryptogy-Web-App-Django" target="_blank">Github Repository</a></li> -->
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Header-->
-        <header class="bg-dark py-5">
+        <header class="bg-with-im py-5">
             <div class="container px-5">
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-6">
                         <div class="text-center my-5">
                             <h1 class="display-5 fw-bolder text-white mb-2">{% block title-header %}Cryptogy 2.0{% endblock %}</h1>
-                            <p class="lead text-white-50 mb-4">{% block subtitle-header %}Cryptography made simple.{% endblock %}</p>
-                            <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-                                <a class="btn btn-primary btn-lg px-4 me-sm-3" href="/">Get Started</a>
-                                <a class="btn btn-outline-light btn-lg px-4" href="https://github.com/pgonzalezb4/Cryptogy-Web-App-Django" target="_blank">Github Repository</a>
-                            </div>
+                            <p class="lead text-white-50 mb-4">{% block subtitle-header %}Cryptography made simple.{% endblock %}</p>                            
                         </div>
                     </div>
                 </div>
@@ -58,7 +76,7 @@
     <!-- Footer-->
     <footer class="py-5 bg-dark">
         <div class="container px-5"><p class="m-0 text-center text-white">Todos los derechos reservados &copy; Cryptogy 2022</p></div>
-        <div class="container px-5"><p class="m-0 text-center text-white">Desarrollado por <a href="https://www.linkedin.com/in/pablo-gonzalez05/" class="text-white" target="_blank">Pablo Gonzalez B.</a> y <a href="https://www.linkedin.com/in/jgutierrezre/" class="text-white" target="_blank">Juan Pablo Gutierrez R.</a></p></div>
+        <div class="container px-5"><p class="m-0 text-center text-white">Desarrollado por <a href="https://www.linkedin.com/in/pablo-gonzalez05/" class="text-white" target="_blank">Pablo Gonzalez B.</a>, <a href="https://www.linkedin.com/in/jgutierrezre/" class="text-white" target="_blank">Juan Pablo Gutierrez R </a> y <a href="https://www.linkedin.com/in/jorge-castillo-orduz-0aa404163/" class="text-white" target="_blank">Jorge Luis Castillo O.</a></p></div>
     </footer>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

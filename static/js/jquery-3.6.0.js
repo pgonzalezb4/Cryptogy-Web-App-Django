@@ -11,6 +11,7 @@
  *
  * Date: 2021-03-02T17:08Z
  */
+
 ( function( global, factory ) {
 
 	"use strict";
@@ -73,6 +74,9 @@ var fnToString = hasOwn.toString;
 var ObjectFunctionString = fnToString.call( Object );
 
 var support = {};
+
+//FUNCIÓN PARA COPIAR 
+
 
 var isFunction = function isFunction( obj ) {
 
@@ -144,6 +148,7 @@ function toType( obj ) {
 		class2type[ toString.call( obj ) ] || "object" :
 		typeof obj;
 }
+
 /* global Symbol */
 // Defining this global in .eslintrc.json would create a danger of using the global
 // unguarded in another place, it seems safer to define global only for this module
