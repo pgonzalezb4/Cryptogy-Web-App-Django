@@ -11,7 +11,7 @@ from django.template import loader
 
 from django.shortcuts import render
 
-from .cryptosystems import rsa, rsadss, rabin, menezesvanstone, elgamal, elgamaldss
+from .cryptosystems import rsa, rsadss, rabin, menezesvanstone, elgamal, elgamaldss, vsss
 
 from .models import Cryptosystem
 from .forms import *
@@ -530,19 +530,23 @@ def imageEncryption(request):
         # check whether it's valid:
         if form.is_valid():
             # process the data in form.cleaned_data as required
-            form.save()
-
+            form.save()      
+            img_obj = form.instance         
+            vsss.normalize_image(settings.BASE_DIR + img_obj.clearImage.url)
             try:
-                img_obj = form.instance
+                img_obj = form.instance         
+                vsss.normalize_image(settings.BASE_DIR + img_obj.clearImage.url)
+                print(settings.BASE_DIR)
+                print("----------")
+                print(img_obj.clearImage.url)
                 img = Image.open(settings.BASE_DIR + img_obj.clearImage.url)
-
                 img_array = np.asarray(img)
                 print(img_array)
             except:
                 return render(request, 'imageencryption.html', {'form': form})
 
             
-            return render(request, 'imageencryption.html', {'form': form, 'img_obj': img_obj})
+            return render(request, 'imageencryption.html', {'form': form, 'img_obj': img_obj, 'img_t1': "/media/images/temp_img_t1.jpg", 'img_t2': "/media/images/temp_img_t2.jpg"})
         else:
             print("Invalid form.")
             print(form.errors)

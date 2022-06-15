@@ -28,26 +28,54 @@
         <div class="col-lg-5">
             <div class="form-floating mb-3">
                 {% if img_obj %}
-                    <img name="cipherImageT1" class="form-control" id="cipherimaget1area" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
+                    <img name="cipherImageT1" class="form-control" id="cipherimaget1area" src="{{img_t1}}" style="height: 25rem"></img> 
                 {% else %}
                     <img name="cipherImageT1" class="form-control" id="cipherimaget1area" style="height: 25rem"></img>
                 {% endif %}
                 <label name="T1">Encrypted Image (T1)</label>
             </div>
-            <input id="downloadbtn" class="btn btn-primary" value="Download" name="downloadinput"/>
+            {% if img_obj %}
+                <button id="downloadbtn" type="button" class="btn btn-primary" data-href="{{img_t1}}" download="img_t1" onclick='forceDownload(this)'>Download</button>
+            {% else %}
+                <button id="downloadbtn" type="button" class="btn btn-primary">Download</button>
+            {% endif %}            
         </div>
         <div class="col-lg-5">
             <div class="form-floating mb-3">
                 {% if img_obj %}
-                    <img name="cipherImageT2" class="form-control" id="cipherimaget2area" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
+                    <img name="cipherImageT2" class="form-control" id="cipherimaget2area" download="test" src="{{img_t2}}" style="height: 25rem"></img> 
                 {% else %}
                     <img name="cipherImageT2" class="form-control" id="cipherimaget2area" style="height: 25rem"></img>
                 {% endif %}
                 <label name="T2">Encrypted Image (T2)</label>
             </div>
-            <input id="downloadbtn" class="btn btn-primary" value="Download" name="downloadinput"/>
+            {% if img_obj %}
+                <button id="downloadbtn" type="button" class="btn btn-primary" data-href="{{img_t2}}" download="img_t2" onclick='forceDownload(this)'>Download</button>
+            {% else %}
+                <button id="downloadbtn" type="button" class="btn btn-primary">Download</button>
+            {% endif %}         
         </div>
         
     </div>
 </form>
+<script>
+    function forceDownload(link){
+        var url = link.getAttribute("data-href");
+        var fileName = link.getAttribute("download");
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.responseType = "blob";
+        xhr.onload = function(){
+            var urlCreator = window.URL || window.webkitURL;
+            var imageUrl = urlCreator.createObjectURL(this.response);
+            var tag = document.createElement('a');
+            tag.href = imageUrl;
+            tag.download = fileName;
+            document.body.appendChild(tag);
+            tag.click();
+            document.body.removeChild(tag);
+        }
+        xhr.send();
+}
+</script>
 {% endblock content %}
