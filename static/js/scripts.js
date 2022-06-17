@@ -322,7 +322,33 @@ function readImage(input) {
         var reader = new FileReader();
     
         reader.onload = function (e) {
-            $('#imageUploaded').attr('src', e.target.result);
+            $('#clearimageupload').attr('src', e.target.result);
+        };
+    
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// Mostrar la imagen una vez es cargada
+function readT1Image(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+    
+        reader.onload = function (e) {
+            $('#cipherimaget1area').attr('src', e.target.result);
+        };
+    
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// Mostrar la imagen una vez es cargada
+function readT2Image(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+    
+        reader.onload = function (e) {
+            $('#cipherimaget2area').attr('src', e.target.result);
         };
     
         reader.readAsDataURL(input.files[0]);
