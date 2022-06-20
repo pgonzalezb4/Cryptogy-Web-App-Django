@@ -9,15 +9,16 @@
         <div class="col-lg-6">
             <div class="form-floating mb-3">
                 {% if img_obj %}
-                    <img name="clearImage" class="form-control" id="imageUploaded" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
+                    <img name="clearImage" class="form-control" id="clearimageupload" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
                 {% else %}
-                    <img name="clearImage" class="form-control" id="imageUploaded" style="height: 25rem;"/>
+                    <img name="clearImage" class="form-control" id="clearimageupload" style="height: 25rem;"/>
                 {% endif %}
                 <label name="clearImage">Clear Image</label>
             </div>
+            <input id="encryptbtn" type="submit" class="btn btn-primary" value="Download Image"/>
             <input id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Encrypt Image" name="encryptinput"/>
-            <label class="btn btn-light" for="clearimagearea" class="custom-file-upload">
-                Select image to encrypt
+            <label style="background-color:#f1f1f1;" class="btn btn-light" for="clearimagearea" class="custom-file-upload">
+                Upload image to encrypt
             </label>
             <input style="display:none;" name="clearImage" class="btn btn-light" accept="image/*" id="clearimagearea" type="file" onchange="readImage(this);"/>
             {{ form.errors }}
@@ -35,10 +36,14 @@
                 <label name="T1">Encrypted Image (T1)</label>
             </div>
             {% if img_obj %}
-                <button id="downloadbtn" type="button" class="btn btn-primary" data-href="{{img_t1}}" download="img_t1" onclick='forceDownload(this)'>Download</button>
+                <button id="downloadbtn" type="button" class="btn btn-primary" data-href="{{img_t1}}" download="img_t1" onclick='forceDownload(this)'>Download Image</button>
             {% else %}
-                <button id="downloadbtn" type="button" class="btn btn-primary">Download</button>
-            {% endif %}            
+                <button id="downloadbtn" type="button" class="btn btn-primary">Download Image</button>
+            {% endif %}
+            <label style="background-color:#f1f1f1;" class="btn btn-light" for="ciphert1area" class="custom-file-upload">
+                Upload image (T1) to decrypt
+            </label>
+            <input style="display:none;" name="cipherImageT1" class="btn btn-light" accept="image/*" id="ciphert1area" type="file" onchange="readT1Image(this);"/>          
         </div>
         <div class="col-lg-5">
             <div class="form-floating mb-3">
@@ -50,12 +55,16 @@
                 <label name="T2">Encrypted Image (T2)</label>
             </div>
             {% if img_obj %}
-                <button id="downloadbtn" type="button" class="btn btn-primary" data-href="{{img_t2}}" download="img_t2" onclick='forceDownload(this)'>Download</button>
+                <button id="downloadbtn" type="button" class="btn btn-primary" data-href="{{img_t2}}" download="img_t2" onclick='forceDownload(this)'>Download Image</button>
             {% else %}
-                <button id="downloadbtn" type="button" class="btn btn-primary">Download</button>
-            {% endif %}         
+                <button id="downloadbtn" type="button" class="btn btn-primary">Download Image</button>
+            {% endif %}
+            <label style="background-color:#f1f1f1;" class="btn btn-light" for="ciphert2area" class="custom-file-upload">
+                Upload image (T2) to decrypt
+            </label>
+            <input style="display:none;" name="cipherImageT2" class="btn btn-light" accept="image/*" id="ciphert2area" type="file" onchange="readT2Image(this);"/> 
         </div>
-        
+        <input id="decryptbtn" style="width:400px;margin-top:40px;" type="submit" class="btn btn-aux-outline" value="Decrypt Image" name="decryptinput"/>
     </div>
 </form>
 <script>
