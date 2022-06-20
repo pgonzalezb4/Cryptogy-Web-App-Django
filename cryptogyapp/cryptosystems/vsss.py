@@ -23,8 +23,13 @@ def normalize_image(url):
             picture.putpixel( (x,y), new_color)
     print("ok")
     #Save the picture as T1 and T2. This will be modified later
-    picture.save(settings.BASE_DIR+"/media/images/"+"temp_img_t1.jpg")
-    picture.save(settings.BASE_DIR+"/media/images/"+"temp_img_t2.jpg")
+    picture.save(settings.BASE_DIR+"/media/images/"+"temp_img.jpg")
+    
+
+
+def encrypt_image(url):
+    normalize_image(url)
+    return None
 
 def convert(list):
     return tuple(i for i in list)

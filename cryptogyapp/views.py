@@ -535,7 +535,7 @@ def imageEncryption(request):
             vsss.normalize_image(settings.BASE_DIR + img_obj.clearImage.url)
             try:
                 img_obj = form.instance         
-                vsss.normalize_image(settings.BASE_DIR + img_obj.clearImage.url)
+                vsss.encrypt_image(settings.BASE_DIR + img_obj.clearImage.url)
                 print(settings.BASE_DIR)
                 print("----------")
                 print(img_obj.clearImage.url)
