@@ -8,19 +8,26 @@
     <div class="row gx-5 justify-content-center" style="padding:20px">
         <div class="col-lg-6">
             <div class="form-floating mb-3">
-                {% if img_obj %}
+                {% if img_obj and not clear_image %}
                     <img name="clearImage" class="form-control" id="clearimageupload" src="{{img_obj.clearImage.url}}" style="height: 25rem"></img> 
+                {% elif img_obj and clear_image %}
+                    <img name="clearImage" class="form-control" id="clearimageupload" src="{{clear_image}}" style="height: 25rem"></img> 
                 {% else %}
                     <img name="clearImage" class="form-control" id="clearimageupload" style="height: 25rem;"/>
                 {% endif %}
                 <label name="clearImage">Clear Image</label>
             </div>
-            <input id="encryptbtn" type="submit" class="btn btn-primary" value="Download Image"/>
+            {% if img_obj and clear_image %}
+                <button id="encryptbtn" type="button" class="btn btn-primary" data-href="{{clear_image}}" download="clear_image" onclick='forceDownload(this)'>Download Image</button>
+            {% else %}
+                <button id="encryptbtn" type="button" class="btn btn-primary" disabled>Download Image</button>
+            {% endif %}
             <input id="encryptbtn" type="submit" class="btn btn-aux-outline" value="Encrypt Image" name="encryptinput"/>
             <label style="background-color:#f1f1f1;" class="btn btn-light" for="clearimagearea" class="custom-file-upload">
                 Upload image to encrypt
             </label>
             <input style="display:none;" name="clearImage" class="btn btn-light" accept="image/*" id="clearimagearea" type="file" onchange="readImage(this);"/>
+            <button class="btn btn-danger" type="button" id="clearBtn" onclick="cleanImages()" style="float: right;">Clear Images</button>   
             {{ form.errors }}
             {{ form.non_field_errors }}
         </div>
@@ -28,36 +35,40 @@
     <div class="row gx-2 justify-content-center" style="padding:20px">
         <div class="col-lg-5">
             <div class="form-floating mb-3">
-                {% if img_obj %}
+                {% if img_obj and not clear_image %}
                     <img name="cipherImageT1" class="form-control" id="cipherimaget1area" src="{{img_t1}}" style="height: 25rem"></img> 
-                {% else %}
-                    <img name="cipherImageT1" class="form-control" id="cipherimaget1area" style="height: 25rem"></img>
+                {% elif img_obj and clear_image %}
+                    <img name="cipherImageT1" class="form-control" id="cipherimaget1area" src="{{img_obj.cipherImageT1.url}}" style="height: 25rem">
+                {% else%}
+                    <img name="cipherImageT1" class="form-control" id="cipherimaget1area" style="height: 25rem">
                 {% endif %}
                 <label name="T1">Encrypted Image (T1)</label>
             </div>
-            {% if img_obj %}
+            {% if img_obj and not clear_image%}
                 <button id="downloadbtn" type="button" class="btn btn-primary" data-href="{{img_t1}}" download="img_t1" onclick='forceDownload(this)'>Download Image</button>
             {% else %}
-                <button id="downloadbtn" type="button" class="btn btn-primary">Download Image</button>
+                <button id="downloadbtn" type="button" class="btn btn-primary" disabled>Download Image</button>
             {% endif %}
             <label style="background-color:#f1f1f1;" class="btn btn-light" for="ciphert1area" class="custom-file-upload">
                 Upload image (T1) to decrypt
             </label>
-            <input style="display:none;" name="cipherImageT1" class="btn btn-light" accept="image/*" id="ciphert1area" type="file" onchange="readT1Image(this);"/>          
+            <input style="display:none;" name="cipherImageT1" class="btn btn-light" accept="image/*" id="ciphert1area" type="file" onchange="readT1Image(this);"/> 
         </div>
         <div class="col-lg-5">
             <div class="form-floating mb-3">
-                {% if img_obj %}
+                {% if img_obj and not clear_image %}
                     <img name="cipherImageT2" class="form-control" id="cipherimaget2area" download="test" src="{{img_t2}}" style="height: 25rem"></img> 
+                {% elif img_obj and clear_image %}
+                    <img name="cipherImageT2" class="form-control" id="cipherimaget2area" src="{{img_obj.cipherImageT2.url}}" style="height: 25rem">
                 {% else %}
-                    <img name="cipherImageT2" class="form-control" id="cipherimaget2area" style="height: 25rem"></img>
+                    <img name="cipherImageT2" class="form-control" id="cipherimaget2area" style="height: 25rem">
                 {% endif %}
                 <label name="T2">Encrypted Image (T2)</label>
             </div>
-            {% if img_obj %}
+            {% if img_obj and not clear_image %}
                 <button id="downloadbtn" type="button" class="btn btn-primary" data-href="{{img_t2}}" download="img_t2" onclick='forceDownload(this)'>Download Image</button>
             {% else %}
-                <button id="downloadbtn" type="button" class="btn btn-primary">Download Image</button>
+                <button id="downloadbtn" type="button" class="btn btn-primary" disabled>Download Image</button>
             {% endif %}
             <label style="background-color:#f1f1f1;" class="btn btn-light" for="ciphert2area" class="custom-file-upload">
                 Upload image (T2) to decrypt
@@ -85,6 +96,15 @@
             document.body.removeChild(tag);
         }
         xhr.send();
+}
+function cleanImages(){
+    console.log('Entra a borrar imágenes');
+    image1 = document.getElementById('clearimageupload');
+    image2= document.getElementById('cipherimaget1area');
+    image3 = document.getElementById('cipherimaget2area');
+    image1.setAttribute('src', '');
+    image2.setAttribute('src', '');
+    image3.setAttribute('src', '');
 }
 </script>
 {% endblock content %}

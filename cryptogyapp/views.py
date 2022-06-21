@@ -528,25 +528,24 @@ def imageEncryption(request):
         # create a form instance and populate it with data from the request:
         form = ImageEncryptionForm(request.POST, request.FILES)
         # check whether it's valid:
-        if form.is_valid():
+        if form.is_valid():            
+            form.save()    
+            img_obj = form.instance  
+            print(form.cleaned_data)
             # process the data in form.cleaned_data as required
-            form.save()      
-            img_obj = form.instance         
-            vsss.normalize_image(settings.BASE_DIR + img_obj.clearImage.url)
-            try:
-                img_obj = form.instance         
+            if form.cleaned_data['clearImage']!=None and form.cleaned_data['cipherImageT1']==None and form.cleaned_data['cipherImageT2']==None:
+                # try:
                 vsss.encrypt_image(settings.BASE_DIR + img_obj.clearImage.url)
-                print(settings.BASE_DIR)
-                print("----------")
-                print(img_obj.clearImage.url)
-                img = Image.open(settings.BASE_DIR + img_obj.clearImage.url)
-                img_array = np.asarray(img)
-                print(img_array)
-            except:
-                return render(request, 'imageencryption.html', {'form': form})
-
-            
-            return render(request, 'imageencryption.html', {'form': form, 'img_obj': img_obj, 'img_t1': "/media/images/temp_img_t1.jpg", 'img_t2': "/media/images/temp_img_t2.jpg"})
+                print(settings.BASE_DIR + img_obj.clearImage.url)
+                return render(request, 'imageencryption.html', {'form': form, 'img_obj': img_obj, 'img_t1': "/media/images/temp_img_t1.png", 'img_t2': "/media/images/temp_img_t2.png"})
+                # except:
+                #     return render(request, 'imageencryption.html', {'form': form})
+            if form.cleaned_data['clearImage']==None and form.cleaned_data['cipherImageT1']!=None and form.cleaned_data['cipherImageT2']!=None:
+                # try:
+                vsss.decrypt_image(settings.BASE_DIR + img_obj.cipherImageT1.url,settings.BASE_DIR + img_obj.cipherImageT2.url)
+                # except:
+                #     return render(request, 'imageencryption.html', {'form': form})
+                return render(request, 'imageencryption.html', {'form': form, 'img_obj': img_obj, 'clear_image': "/media/images/clear_image.png"})
         else:
             print("Invalid form.")
             print(form.errors)

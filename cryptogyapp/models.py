@@ -49,3 +49,5 @@ class GammalDSSInput(models.Model):
 
 class ImageEncryptionInput(models.Model):
     clearImage = models.ImageField(upload_to='images', blank = True)
+    cipherImageT1 = models.ImageField(upload_to='images', blank = True)
+    cipherImageT2 = models.ImageField(upload_to='images', blank = True)
