@@ -561,3 +561,7 @@ def imageEncryption(request):
         'form': form,
     }
     return HttpResponse(template.render(context, request))
+
+def blockchainSimulation(request):
+    pass
+

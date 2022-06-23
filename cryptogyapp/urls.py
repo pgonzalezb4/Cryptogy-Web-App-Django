@@ -11,5 +11,6 @@ urlpatterns = [
     path('RSA-DSS/', views.rsaDSSView, name='rsadsscryptosystem'),
     path('ElGamal-DSS/', views.elgamalDSSView, name='elgamaldsscryptosystem'),
     path('Image-Encryption/', views.imageEncryption, name='imageencryption'),
+    path('Blockchain-Simulation/', views.blockchainSimulation, name='blockchainsimulation'),
 ]
 
