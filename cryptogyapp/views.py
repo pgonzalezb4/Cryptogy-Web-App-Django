@@ -11,7 +11,7 @@ from django.template import loader
 
 from django.shortcuts import render
 
-from .cryptosystems import rsa, rsadss, rabin, menezesvanstone, elgamal, elgamaldss, vsss
+from .cryptosystems import blockchainsimulation, rsa, rsadss, rabin, menezesvanstone, elgamal, elgamaldss, vsss
 
 from .models import Cryptosystem
 from .forms import *
@@ -563,5 +563,50 @@ def imageEncryption(request):
     return HttpResponse(template.render(context, request))
 
 def blockchainSimulation(request):
-    pass
+    ## Borramos los objetos antes para evitar duplicados en la prueba manual
+    try:
+        all_blocks = Block.objects.all().delete()
+    except:
+        pass
+
+    ### Prueba manual ###
+    blockchain = blockchainsimulation.Blockchain()
+    database = ["hello", "goodbye", "test", "DATA here"]
+    num = 0
+
+    for data in database:
+        num += 1
+        blockchain.mine(blockchainsimulation.Block(num, data=data))
+
+    for block in blockchain.chain:
+        block_obj = Block(number=block.number, hash = block.hash(), previous_hash = block.previous_hash, data = block.data, nonce = block.nonce)
+        block_obj.save()
+
+    all_blocks = Block.objects.all()
+    ### Prueba manual ###
+
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = TransactionForm(request.POST, request.FILES)
+        # check whether it's valid:
+        if form.is_valid():            
+            form.save()
+        else:
+            print("Invalid form.")
+            print(form.errors)
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = TransactionForm()
+
+    
+
+    thisCryptosystem = Cryptosystem.objects.get(name="Blockchain Simulation")
+    template = loader.get_template('cryptogyapp/blockchainsimulation.html')
+    context = {
+        'thisCryptosystem': thisCryptosystem,
+        'form': form,
+        'blocks' : all_blocks,
+    }
+    return HttpResponse(template.render(context, request))
 

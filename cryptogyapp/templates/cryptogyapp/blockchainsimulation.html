@@ -1,0 +1,63 @@
+{% extends "cryptogyapp/base.html" %}
+{% block title %}Cryptogy | {{ thisCryptosystem.name }}{% endblock %}
+{% block title-header %}{{ thisCryptosystem.name }}{% endblock %}
+{% block subtitle-header %}{{ thisCryptosystem.desc }}{% endblock %}
+{% block content %}
+<form id="transactionForm" action="" method="post">
+    {% csrf_token %}
+    <div class="row gx-2 justify-content-center" style="padding:20px">
+        <div class="col-lg-3">
+            <div class="form-floating mb-3">
+                <input name="{{form.sender.name}}" class="form-control" id="sender" type="text">
+                <label name="sender">Sender</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input name="{{form.receiver.name}}" class="form-control" id="receiver" type="text">
+                <label name="receiver">Receiver</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input name="{{form.amount.name}}" class="form-control" id="privkey" type="text">
+                <label name="amount">Amount</label>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea name="{{form.message.name}}" class="form-control" id="cleartextarea" type="text" style="height: 10rem"></textarea>
+                <label name="message">Message</label>
+            </div>
+            <input id="createtransactionbtn" type="submit" class="btn btn-primary" value="Create transaction" name="createtransaction"/>
+            {{ form.errors }}
+            {{ form.non_field_errors }}
+        </div>
+        <div class="col-lg-5">
+            <div class="table-wrapper">
+            <table>
+                <tr>
+                   <th>Transaction No.</th>
+                   <th>Hash</th>
+                   <th>Previous Hash</th>
+                   <th>Sender</th>
+                   <th>Receiver</th>
+                   <th>Amount</th>
+                   <th>Message</th>
+                   <th>Nonce</th>
+                </tr>
+                {% for block in blocks %}
+                    <tr>
+                        <td>{{ block.number }}</td>
+                        <td>{{ block.hash }}</td>
+                        <td>{{ block.previous_hash }}</td>
+                        <td>random sender</td>
+                        <td>random receiver</td>
+                        <td>random amount</td>
+                        <td>{{ block.data }}</td>
+                        <td>{{ block.nonce }}</td>
+                    </tr>
+                {% endfor %}
+             </table>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+
+</script>
+{% endblock content %}

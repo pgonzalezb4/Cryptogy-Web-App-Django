@@ -304,6 +304,7 @@ svg {
 table {
   caption-side: bottom;
   border-collapse: collapse;
+  white-space: nowrap;
 }
 
 caption {
@@ -11424,4 +11425,32 @@ textarea.form-control-lg {
 #cryptosystemBox {
   margin-bottom: 50px !important;
   text-align: center;
+}
+
+table{
+  width: 100%;
+  border: 1px solid #ced4da;
+  padding:12px;
+  border-radius: 10px;
+}
+
+th, td {
+  border: 1px solid #ced4da;
+  padding:8px;
+}
+
+th, td{
+  color:#626262;
+}
+
+.table-wrapper{
+  border-left: 1px solid #ced4da;
+  border-right: 1px solid #ced4da;
+  border-radius:5px;
+  max-height: 382px;
+  overflow: auto;
+}
+
+th {
+  font-weight:500;
 }

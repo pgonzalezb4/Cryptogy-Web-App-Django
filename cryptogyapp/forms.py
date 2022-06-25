@@ -36,3 +36,8 @@ class ImageEncryptionForm(forms.ModelForm):
     class Meta:
         model = ImageEncryptionInput
         fields = ("__all__")
+
+class TransactionForm(forms.ModelForm):
+    class Meta:
+        model = TransactionInput
+        fields = ("__all__")

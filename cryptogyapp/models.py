@@ -51,4 +51,22 @@ class ImageEncryptionInput(models.Model):
     clearImage = models.ImageField(upload_to='images', blank = True)
     cipherImageT1 = models.ImageField(upload_to='images', blank = True)
     cipherImageT2 = models.ImageField(upload_to='images', blank = True)
-    
+
+class Block(models.Model):
+    number = models.IntegerField(blank=False, null=False)
+    hash = models.CharField(max_length=4294967296, blank=False, default='-')
+    previous_hash = models.CharField(max_length=4294967296, blank=False, default='-')
+    data = models.CharField(max_length=4294967296, blank=False, default='-')
+    nonce = models.IntegerField(blank=False, null=False)
+
+class TransactionInput(models.Model):
+    sender = models.CharField(max_length=4294967296, blank=False, default='-')
+    receiver = models.CharField(max_length=4294967296, blank=False, default='-')
+    amount = models.DecimalField(max_digits=19, decimal_places = 10, blank=False, null=False, default=0.0)
+    message = models.CharField(max_length=4294967296, blank=False, default='-')
+
+class Transaction(models.Model):
+    sender = models.CharField(max_length=4294967296, blank=False, default='-')
+    receiver = models.CharField(max_length=4294967296, blank=False, default='-')
+    amount = models.DecimalField(max_digits=19, decimal_places = 10, blank=False, null=False, default=0.0)
+    block = models.ForeignKey(Block, on_delete=models.CASCADE)
