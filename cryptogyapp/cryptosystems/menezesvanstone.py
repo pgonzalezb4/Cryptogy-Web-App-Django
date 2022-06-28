@@ -101,7 +101,7 @@ def get_points(params: tuple):
         (x, y)
         for x in range(p)
         for y in range(p)
-        if (y ** 2 - (x ** 3 + (a * x) + b)) % p == 0
+        if (y**2 - (x**3 + (a * x) + b)) % p == 0
     ]
 
 
@@ -109,7 +109,7 @@ def check_params(a: int, b: int, p: int, generator: tuple):
 
     params = (a, b, p)
 
-    if 4 * a ** 3 + 27 * b ** 2 % p != 0:
+    if 4 * a**3 + 27 * b**2 % p != 0:
         points = get_points(params)
 
         if generator in points:
@@ -128,7 +128,7 @@ def generate_params():
     b = random.randint(0, 100)
     p = randprime(1, 1000)
 
-    while 4 * a ** 3 + 27 * b ** 2 % p == 0:
+    while 4 * a**3 + 27 * b**2 % p == 0:
         a = random.randint(0, 100)
         b = random.randint(0, 100)
         p = randprime(1, 1000)
@@ -141,7 +141,7 @@ def generate_params():
     return (params, generator)
 
 
-def generate_keys(params: tuple, generator: tuple, cleartext : str):
+def generate_keys(params: tuple, generator: tuple, cleartext: str):
     cycle = get_points(params)
 
     while True:
@@ -154,7 +154,7 @@ def generate_keys(params: tuple, generator: tuple, cleartext : str):
             break
         except:
             pass
-        
+
     return (alpha, k)
 
 
@@ -179,13 +179,13 @@ def add(p1: tuple, p2: tuple, params: tuple):
     else:
         h = ((p2[1] - p1[1]) % p * pow(p2[0] - p1[0], -1, p)) % p
 
-    x3 = (h ** 2 - p1[0] - p2[0]) % p
+    x3 = (h**2 - p1[0] - p2[0]) % p
     y3 = (h * (p1[0] - x3) - p1[1]) % p
 
     return (x3, y3)
 
 
-def key_gen(key: int, cycle: list, p : int):
+def key_gen(key: int, cycle: list, p: int):
     key = key % p
     if key == 0:
         return cycle[-1]

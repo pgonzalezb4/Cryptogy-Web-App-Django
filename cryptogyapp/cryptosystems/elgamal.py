@@ -27,7 +27,7 @@ def decrypt(params, b, cipher_text):
     p, q, g = params
 
     cleartext = list()
-    
+
     print(len(cipher_text), type(cipher_text))
     try:
         for c1, c2 in cipher_text:
@@ -52,6 +52,7 @@ def genKey(params):
 
     return (A, a)
 
+
 if __name__ == "__main__":
     # TODO genParams() https://www.di-mgt.com.au/public-key-crypto-discrete-logs-1-diffie-hellman.html
 
@@ -73,8 +74,8 @@ if __name__ == "__main__":
     B, b = genKey(params)
 
     encrypted_message = encrypt(params, B, plain_message)
-    print('Encrypted message:\n', encrypted_message)
+    print("Encrypted message:\n", encrypted_message)
 
     print(len(encrypted_message), type(encrypted_message))
     decrypted_message = decrypt(params, b, encrypted_message)
-    print('Decrypted message:\n', decrypted_message)
+    print("Decrypted message:\n", decrypted_message)

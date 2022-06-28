@@ -16,10 +16,12 @@ def generate_a_prime_number(num_of_bits):
         else:
             continue
 
+
 # Find SQROOT in Zp where p = 3 mod 4
 def sqrt_p_3_mod_4(a, p):
     r = pow(a, (p + 1) // 4, p)
     return r
+
 
 # Find SQROOT in Zp where p = 5 mod 8
 def sqrt_p_5_mod_8(a, p):
@@ -32,9 +34,11 @@ def sqrt_p_5_mod_8(a, p):
 
     return r
 
+
 # Legendre symbol
 def Legendre(a, p):
     return pow(a, (p - 1) / 2, p)
+
 
 #
 def egcd(a, b):
@@ -44,6 +48,7 @@ def egcd(a, b):
         gcd, y, x = egcd(b % a, a)
         return gcd, x - (b // a) * y, y
 
+
 # Additional functions
 def none_in_x_is_n(x, n):
     for i in x:
@@ -51,18 +56,21 @@ def none_in_x_is_n(x, n):
             return False
     return True
 
+
 # encryption function
 # plaintext is a 224-bit number
 def encryption(plaintext, n):
     # c = m^2 mod n
     plaintext = padding(plaintext)
-    return plaintext ** 2 % n
+    return plaintext**2 % n
+
 
 # padding 16 bits to the end of a number
 def padding(plaintext):
     binary_str = bin(plaintext)  # convert to a bit string
     output = binary_str + binary_str[-16:]  # pad the last 16 bits to the end
     return int(output, 2)  # convert back to integer
+
 
 # encryption function
 def decryption(a, p, q):
@@ -80,10 +88,17 @@ def decryption(a, p, q):
     elif q % 8 == 5:
         s = sqrt_p_5_mod_8(a, q)
 
-    gcd, c, d = egcd(p, q) # algoritmo extendido de euclides para hallar c, d tales que c*p + d*q = 1
+    gcd, c, d = egcd(
+        p, q
+    )  # algoritmo extendido de euclides para hallar c, d tales que c*p + d*q = 1
     x = (r * d * q + s * c * p) % n
     y = (r * d * q - s * c * p) % n
-    lst = [x, n - x, y, n - y] # 4 raices cuadradas de c modulo n usando el teorema chino del residuo
+    lst = [
+        x,
+        n - x,
+        y,
+        n - y,
+    ]  # 4 raices cuadradas de c modulo n usando el teorema chino del residuo
 
     plaintext = choose(lst)
     string = bin(plaintext)
@@ -91,6 +106,7 @@ def decryption(a, p, q):
     plaintext = int(string, 2)
 
     return plaintext
+
 
 # decide which answer to choose
 def choose(lst):
@@ -102,6 +118,7 @@ def choose(lst):
             return i
     return
 
+
 def delete_space(string):
     lst = string.split(" ")
     output = ""
@@ -109,10 +126,12 @@ def delete_space(string):
         output += i
     return output
 
+
 def add_space(string):
     string = string[::-1]
     string = " ".join(string[i : i + 8] for i in range(0, len(string), 8))
     return string[::-1]
+
 
 # main()
 if __name__ == "__main__":

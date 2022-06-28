@@ -15,6 +15,7 @@ def generate_a_prime_number(num_of_bits):
         else:
             continue
 
+
 # Additional functions
 class Key:
     def __init__(self, n, value):
@@ -30,6 +31,7 @@ def gcd(p, q):
         (p, q) = (q, p % q)
     return p
 
+
 def egcd(a, b):
     if a == 0:
         return (b, 0, 1)
@@ -37,12 +39,14 @@ def egcd(a, b):
         g, y, x = egcd(b % a, a)
         return (g, x - (b // a) * y, y)
 
+
 def modinv(a, m):
     g, x, y = egcd(a, m)
     if g != 1:
-        raise Exception('modular inverse does not exist')
+        raise Exception("modular inverse does not exist")
     else:
         return x % m
+
 
 def gen_keys(p, q):
     if not isprime(p) or not isprime(q):
@@ -61,16 +65,17 @@ def gen_keys(p, q):
     # if 1 >= e or e >= l or gcd(e, l) != 1:
     #    return False
 
-    #d = pow(e, -1, l)
+    # d = pow(e, -1, l)
     d = modinv(e, l)
 
     return (n, e), (n, d)
+
 
 def encrypt(clear_text, public_key):
     n, value = public_key.n, public_key.value
 
     ciphertext = list()
-    list_of_messages = [x + ' ' for x in textwrap.wrap(clear_text, 16)]
+    list_of_messages = [x + " " for x in textwrap.wrap(clear_text, 16)]
 
     for subtext in list_of_messages:
 
@@ -102,16 +107,16 @@ if __name__ == "__main__":
 
     pub, priv = gen_keys(p, q)
     print(pub, priv)
-    message = 'Message to sign'
+    message = "Message to sign"
     bytes_message = str.encode(message)
-    hash = int.from_bytes(sha512(bytes_message).digest(), byteorder='big')
+    hash = int.from_bytes(sha512(bytes_message).digest(), byteorder="big")
     signature = pow(hash, priv[1], priv[0])
-    print('Signature pre:', signature)
-    print('Signature:', hex(signature))
+    print("Signature pre:", signature)
+    print("Signature:", hex(signature))
 
     # Verificacion
-    msg = 'Message to sign tampered'
+    msg = "Message to sign tampered"
     bytes_msg = str.encode(msg)
-    hash = int.from_bytes(sha512(bytes_msg).digest(), byteorder='big')
+    hash = int.from_bytes(sha512(bytes_msg).digest(), byteorder="big")
     hashFromSignature = pow(signature, pub[1], pub[0])
     print("Signature valid:", hash == hashFromSignature)
