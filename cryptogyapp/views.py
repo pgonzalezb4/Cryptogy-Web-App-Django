@@ -563,11 +563,14 @@ def imageEncryption(request):
     return HttpResponse(template.render(context, request))
 
 blockchain = blockchainsimulation.Blockchain()
-initial_block = blockchainsimulation.Block(0, data='Initial Block')
-blockchain.mine(initial_block)
-initial_block_obj = Block(number=initial_block.number, hash = initial_block.hash(), previous_hash = initial_block.previous_hash, 
-                    data = initial_block.data, nonce = initial_block.nonce, numoftransactions=0)
-initial_block_obj.save()
+
+if len(Block.objects.all()) == 0:
+    initial_block = blockchainsimulation.Block(0, data='Initial Block')
+    blockchain.mine(initial_block)
+    initial_block_obj = Block(number=initial_block.number, hash = initial_block.hash(), previous_hash = initial_block.previous_hash, 
+                        data = initial_block.data, nonce = initial_block.nonce, numoftransactions=0)
+    initial_block_obj.save()
+
 
 def blockchainSimulation(request):
     if request.method == 'POST':
