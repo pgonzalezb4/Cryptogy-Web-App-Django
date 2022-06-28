@@ -563,9 +563,7 @@ def imageEncryption(request):
     return HttpResponse(template.render(context, request))
 
 
-if len(Block.objects.all()) == 0:
-    global blockchain
-    blockchain = blockchainsimulation.Blockchain()
+blockchain = blockchainsimulation.Blockchain()
 
 def blockchainSimulation(request):
     if request.method == 'POST':
