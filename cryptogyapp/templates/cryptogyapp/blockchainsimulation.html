@@ -25,8 +25,6 @@
                 <label name="message">Message</label>
             </div>
             <input id="createtransactionbtn" type="submit" class="btn btn-primary" value="Create transaction" name="createtransaction"/>
-            {{ form.errors }}
-            {{ form.non_field_errors }}
         </div>
         <div class="col-lg-5">
             <h1 style="font-size:28px;margin-bottom:20px;" class="display-6">Transactions</h1>
@@ -54,6 +52,9 @@
                 {% endfor %}
              </table>
             </div>
+            <br>
+            <input id="validateblockchainbtn" type="submit" class="btn btn-aux-outline" value="Validate Blockchain" name="validateblockchain"/>
+            <input id="corruptblockchainbtn" type="submit" class="btn btn-danger" value="Corrupt Blockchain" name="corruptblockchain"/>
         </div>
     </div>
 </form>
