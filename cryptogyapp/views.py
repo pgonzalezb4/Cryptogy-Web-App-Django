@@ -563,7 +563,11 @@ def imageEncryption(request):
     return HttpResponse(template.render(context, request))
 
 blockchain = blockchainsimulation.Blockchain()
-
+initial_block = blockchainsimulation.Block(0, data='Initial Block')
+blockchain.mine(initial_block)
+initial_block_obj = Block(number=initial_block.number, hash = initial_block.hash(), previous_hash = initial_block.previous_hash, 
+                    data = initial_block.data, nonce = initial_block.nonce, numoftransactions=0)
+initial_block_obj.save()
 
 def blockchainSimulation(request):
     if request.method == 'POST':
@@ -580,16 +584,23 @@ def blockchainSimulation(request):
 
             num = len(Block.objects.all())
             print(num)
-            if num == 0:
-                initial_block = blockchainsimulation.Block(0, data='Initial Block')
-                blockchain.mine(initial_block)
-                initial_block_obj = Block(number=initial_block.number, hash = initial_block.hash(), previous_hash = initial_block.previous_hash, 
-                                    data = initial_block.data, nonce = initial_block.nonce, numoftransactions=0)
-                initial_block_obj.save()
-                transaction_obj = Transaction(sender=sender, receiver=receiver, amount=amount, message=message, block=initial_block_obj)
-                transaction_obj.save()
-                initial_block_obj.numoftransactions += 1
-                initial_block_obj.save(update_fields=['numoftransactions'])
+
+            if num == 1:
+                if initial_block.numoftransactions < 2:
+                    transaction_obj = Transaction(sender=sender, receiver=receiver, amount=amount, message=message, block=initial_block_obj)
+                    transaction_obj.save()
+                    initial_block_obj.numoftransactions += 1
+                    initial_block_obj.save(update_fields=['numoftransactions'])
+                else:
+                    new_block = blockchainsimulation.Block(num, data=message)
+                    blockchain.mine(new_block)
+                    new_block_obj = Block(number=new_block.number, hash = new_block.hash(), previous_hash = new_block.previous_hash, data = new_block.data, 
+                                        nonce = new_block.nonce, numoftransactions=0)
+                    new_block_obj.save()
+                    transaction_obj = Transaction(sender=sender, receiver=receiver, amount=amount, message=message, block=new_block_obj)
+                    transaction_obj.save()
+                    new_block_obj.numoftransactions += 1
+                    new_block_obj.save(update_fields=['numoftransactions'])
 
             else:
                 last_block = Block.objects.get(number = num - 1)
