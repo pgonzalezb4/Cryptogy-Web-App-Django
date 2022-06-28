@@ -562,7 +562,10 @@ def imageEncryption(request):
     }
     return HttpResponse(template.render(context, request))
 
-blockchain = blockchainsimulation.Blockchain()
+
+if len(Block.objects.all()) == 0:
+    global blockchain
+    blockchain = blockchainsimulation.Blockchain()
 
 def blockchainSimulation(request):
     if request.method == 'POST':
@@ -600,7 +603,7 @@ def blockchainSimulation(request):
                 else:
                     new_block = blockchainsimulation.Block(num, data=message)
                     blockchain.mine(new_block)
-                    new_block_obj = Block(number=new_block.number, hash = new_block.hash(), previous_hash = last_block.hash(), data = new_block.data, 
+                    new_block_obj = Block(number=new_block.number, hash = new_block.hash(), previous_hash = new_block.previous_hash, data = new_block.data, 
                                         nonce = new_block.nonce, numoftransactions=0)
                     new_block_obj.save()
                     transaction_obj = Transaction(sender=sender, receiver=receiver, amount=amount, message=message, block=new_block_obj)
