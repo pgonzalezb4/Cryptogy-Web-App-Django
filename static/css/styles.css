@@ -11436,16 +11436,21 @@ table{
 
 th, td {
   border: 1px solid #ced4da;
-  padding:8px;
+  padding:12px;
 }
 
 th, td{
   color:#626262;
 }
 
+.col-lg-5 {
+  margin-left:60px;
+}
+
 .table-wrapper{
   border-left: 1px solid #ced4da;
   border-right: 1px solid #ced4da;
+  border-top:1px solid #ced4da;
   border-radius:5px;
   max-height: 382px;
   overflow: auto;

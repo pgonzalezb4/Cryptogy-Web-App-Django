@@ -562,35 +562,63 @@ def imageEncryption(request):
     }
     return HttpResponse(template.render(context, request))
 
+blockchain = blockchainsimulation.Blockchain()
+initial_block = blockchainsimulation.Block(0, data='Initial Block')
+blockchain.mine(initial_block)
+initial_block_obj = Block(number=initial_block.number, hash = initial_block.hash(), previous_hash = initial_block.previous_hash, 
+                    data = initial_block.data, nonce = initial_block.nonce, numoftransactions=0)
+initial_block_obj.save()
+
 def blockchainSimulation(request):
-    ## Borramos los objetos antes para evitar duplicados en la prueba manual
-    try:
-        all_blocks = Block.objects.all().delete()
-    except:
-        pass
-
-    ### Prueba manual ###
-    blockchain = blockchainsimulation.Blockchain()
-    database = ["hello", "goodbye", "test", "DATA here"]
-    num = 0
-
-    for data in database:
-        num += 1
-        blockchain.mine(blockchainsimulation.Block(num, data=data))
-
-    for block in blockchain.chain:
-        block_obj = Block(number=block.number, hash = block.hash(), previous_hash = block.previous_hash, data = block.data, nonce = block.nonce)
-        block_obj.save()
-
-    all_blocks = Block.objects.all()
-    ### Prueba manual ###
-
     if request.method == 'POST':
         # create a form instance and populate it with data from the request:
         form = TransactionForm(request.POST, request.FILES)
         # check whether it's valid:
         if form.is_valid():            
-            form.save()
+            sender = form.cleaned_data['sender']
+            receiver = form.cleaned_data['receiver']
+            amount = form.cleaned_data['amount']
+            message = form.cleaned_data['message']
+
+            print('Transaction Info:', sender, receiver, amount, message)
+
+            num = len(Block.objects.all())
+            print(num)
+
+            if num == 1:
+                if initial_block_obj.numoftransactions < 2:
+                    transaction_obj = Transaction(sender=sender, receiver=receiver, amount=amount, message=message, block=initial_block_obj)
+                    transaction_obj.save()
+                    initial_block_obj.numoftransactions += 1
+                    initial_block_obj.save(update_fields=['numoftransactions'])
+                else:
+                    new_block = blockchainsimulation.Block(num, data=message)
+                    blockchain.mine(new_block)
+                    new_block_obj = Block(number=new_block.number, hash = new_block.hash(), previous_hash = new_block.previous_hash, data = new_block.data, 
+                                        nonce = new_block.nonce, numoftransactions=0)
+                    new_block_obj.save()
+                    transaction_obj = Transaction(sender=sender, receiver=receiver, amount=amount, message=message, block=new_block_obj)
+                    transaction_obj.save()
+                    new_block_obj.numoftransactions += 1
+                    new_block_obj.save(update_fields=['numoftransactions'])
+            else:
+                last_block = Block.objects.get(number = num - 1)
+                if last_block.numoftransactions < 2:
+                    transaction_obj = Transaction(sender=sender, receiver=receiver, amount=amount, message=message, block=last_block)
+                    transaction_obj.save()
+                    last_block.numoftransactions += 1
+                    last_block.save(update_fields=['numoftransactions'])
+                else:
+                    new_block = blockchainsimulation.Block(num, data=message)
+                    blockchain.mine(new_block)
+                    new_block_obj = Block(number=new_block.number, hash = new_block.hash(), previous_hash = new_block.previous_hash, data = new_block.data, 
+                                        nonce = new_block.nonce, numoftransactions=0)
+                    new_block_obj.save()
+                    transaction_obj = Transaction(sender=sender, receiver=receiver, amount=amount, message=message, block=new_block_obj)
+                    transaction_obj.save()
+                    new_block_obj.numoftransactions += 1
+                    new_block_obj.save(update_fields=['numoftransactions'])
+            
         else:
             print("Invalid form.")
             print(form.errors)
@@ -599,14 +627,13 @@ def blockchainSimulation(request):
     else:
         form = TransactionForm()
 
-    
-
+    all_transactions = Transaction.objects.all()
     thisCryptosystem = Cryptosystem.objects.get(name="Blockchain Simulation")
     template = loader.get_template('cryptogyapp/blockchainsimulation.html')
     context = {
         'thisCryptosystem': thisCryptosystem,
         'form': form,
-        'blocks' : all_blocks,
+        'transactions' : all_transactions,
     }
     return HttpResponse(template.render(context, request))
 

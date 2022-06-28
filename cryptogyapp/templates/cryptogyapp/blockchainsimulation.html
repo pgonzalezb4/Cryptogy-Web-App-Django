@@ -7,6 +7,7 @@
     {% csrf_token %}
     <div class="row gx-2 justify-content-center" style="padding:20px">
         <div class="col-lg-3">
+            <h1 style="font-size:28px;margin-bottom:20px;" class="display-6">Create Transaction</h1>
             <div class="form-floating mb-3">
                 <input name="{{form.sender.name}}" class="form-control" id="sender" type="text">
                 <label name="sender">Sender</label>
@@ -28,10 +29,10 @@
             {{ form.non_field_errors }}
         </div>
         <div class="col-lg-5">
+            <h1 style="font-size:28px;margin-bottom:20px;" class="display-6">Transactions</h1>
             <div class="table-wrapper">
             <table>
                 <tr>
-                   <th>Transaction No.</th>
                    <th>Hash</th>
                    <th>Previous Hash</th>
                    <th>Sender</th>
@@ -40,16 +41,15 @@
                    <th>Message</th>
                    <th>Nonce</th>
                 </tr>
-                {% for block in blocks %}
+                {% for transaction in transactions %}
                     <tr>
-                        <td>{{ block.number }}</td>
-                        <td>{{ block.hash }}</td>
-                        <td>{{ block.previous_hash }}</td>
-                        <td>random sender</td>
-                        <td>random receiver</td>
-                        <td>random amount</td>
-                        <td>{{ block.data }}</td>
-                        <td>{{ block.nonce }}</td>
+                        <td>{{ transaction.block.hash }}</td>
+                        <td>{{ transaction.block.previous_hash }}</td>
+                        <td>{{ transaction.sender }}</td>
+                        <td>{{ transaction.receiver }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.message }}</td>
+                        <td>{{ transaction.block.nonce }}</td>
                     </tr>
                 {% endfor %}
              </table>
