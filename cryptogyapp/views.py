@@ -588,7 +588,7 @@ def blockchainSimulation(request):
             print(num)
 
             if num == 1:
-                if initial_block.numoftransactions < 2:
+                if initial_block_obj.numoftransactions < 2:
                     transaction_obj = Transaction(sender=sender, receiver=receiver, amount=amount, message=message, block=initial_block_obj)
                     transaction_obj.save()
                     initial_block_obj.numoftransactions += 1
