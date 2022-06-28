@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, shrink-to-fit=no">
+  <link href="assets/images/favicon.png" rel="icon">
+  <title>Manual | Cryptogy</title>
+  <meta name="Cryptogy User Manual" content="Cryptogy User Manual">
+  <meta name="author" content="cryptogy"><!-- Stylesheet -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap/css/bootstrap.min.css"><!-- Font Awesome Icon -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css"><!-- Magnific Popup -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/magnific-popup/magnific-popup.min.css"><!-- Highlight Syntax -->
+  <link rel="stylesheet" type="text/css" href="assets/vendor/highlight.js/styles/github.css"><!-- Custom Stylesheet -->
+  <link rel="stylesheet" type="text/css" href="assets/css/stylesheet.css">
+</head>
+<body class="box" data-spy="scroll" data-target=".idocs-navigation" data-offset="125">
+  <!-- Preloader -->
+  <div class="preloader">
+    <div class="lds-ellipsis"></div>
+  </div><!-- Preloader End -->
+  <!-- Document Wrapper -->
+  <div id="main-wrapper">
+    <!-- Header -->
+    <header id="header" class="sticky-top">
+      <!-- Navbar -->
+      <nav class="primary-menu navbar navbar-expand-lg navbar-dropdown-dark">
+        <div class="container-fluid">
+          <!-- Sidebar Toggler -->
+          <button id="sidebarCollapse" class="navbar-toggler d-block d-md-none" type="button"></button> <!-- Logo -->
+           <a class="logo ml-md-3" href="index.html" title="iDocs Template"><img src="assets/images/logo.png" alt="iDocs Template"></a> <!-- Logo End -->
+          <ul class="social-icons social-icons-sm ml-lg-2 mr-2">
+            <li>
+              <a data-toggle="tooltip" href="https://github.com/pgonzalezb4/Cryptogy-Web-App-Django" target="_blank" title="" data-original-title="GitHub"><i class="fab fa-github"></i></a>
+            </li>
+          </ul>
+        </div>
+      </nav><!-- Navbar End -->
+    </header><!-- Header End -->
+    <!-- Content -->
+    <div id="content" role="main">
+      <!-- Sidebar Navigation -->
+      <div class="idocs-navigation bg-light">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#idocs_introduction">Introduction</a>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_started">Getting Started</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_local">Local Execution</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#idocs_main">Landing Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#idocs_public">Public Key Cryptosystems</a>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_text">Text Encryption/Decryption</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_rsa">RSA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_rabin">Rabin</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_elgamal">ElGamal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_mv">Menezes-Vanstone</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_sign">Digital Signature Scheme</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_rsasign">RSA Signature</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#idocs_elgamalsign">ElGamal Signature</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#idocs_image">Image Encryption</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#idocs_blockchain">Blockchain Simulation</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#idocs_faq">FAQ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#idocs_changelog">Changelog</a>
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="#v1-3">v1.3</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#v1-2">v1.2</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#v1-1">v1.1</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#v1-0">v1.0</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- Docs Content -->
+      <div class="idocs-content">
+        <div class="container">
+          <!-- Introduction -->
+          <section id="idocs_introduction">
+            <h2>Introduction</h2>
+            <p class="lead mb-5">Cryptogy is an easy to use yet powerful and intuitive cryptography multi-tool. With features such as public key text encryption and decryption, digital signature schemes, and image encryption.</p>
+          </section><!-- Getting Started -->
+          <section id="idocs_started">
+            <h2>Getting Started</h2>
+            <p class="lead mb-5">Cryptogy is a web application developed in Python, with Django as the framework. Thanks to advances in web development, web applications have been adopted by all types of devices worldwide. Leading to apps that work on any device. This, coupled with responsive UI and UX, means that Cryptogy can be used on phones and personal computers alike. You can access Cryptogy from our server, if it is still up. Otherwise, you can clone the repository and run it yourself. It should not take much. Once the page is loaded, you will be presented with the home screen. Here you can choose what tool to use, as well as get some information about the app.</p>
+          </section><!-- Local Execution -->
+          <section id="idocs_local">
+            <h2>Local Execution</h2>
+            <p class="lead mb-5">After cloning the repository, you can input the following commands to run the application locally.</p>
+            <pre><code>
+# Unix
+virtualenv env
+source env/bin/activate
+
+# Windows
+virtualenv env
+.\env\Scripts\activate
+
+# Install required libraries
+pip3 install -r requirements.txt
+
+# Start the application
+python manage.py runserver # default port 8000
+                                                                </code></pre>
+          </section>
+          <hr class="divider">
+          <!-- Landing Page -->
+          <section id="idocs_main">
+            <h2>Landing Page</h2>
+            <p><img src="assets/images/main.jpeg" class="img-fluid" alt="Responsive image"></p>
+          </section>
+          <hr class="divider">
+          <!-- Public Key Cryptosystems -->
+          <section id="idocs_public">
+            <h2>Public Key Cryptosystems</h2>
+            <p class="lead mb-5">The first and second parts of the application are based on Public Key Cryptosystems.</p>
+          </section><!-- Text Encryption/Decryption -->
+          <section id="idocs_text">
+            <h2>Text Encryption/Decryption</h2>
+            <p class="lead mb-5">The first part of the application consists on encrypting and decrypting text using multiple cryptosystems. All of them work in a similar way, with a parameter and clear text input to output a cipher.</p>
+          </section>
+          <hr class="divider">
+          <!-- RSA -->
+          <section id="idocs_rsa">
+            <h2>RSA</h2>
+            <p class="lead mb-5">Two parameters are needed for this, primes p and q. If neither value is input, they will be generated automatically. To encrypt a message input it in the Cleartext box and press the Encrypt button. To decrypt a message input it in the Ciphertext box and press the Decrypt button.</p>
+            <p><img src="assets/images/rsa.jpeg" class="img-fluid" alt="Responsive image"></p>
+          </section>
+          <hr class="divider">
+          <!-- Rabin -->
+          <section id="idocs_rabin">
+            <h2>Rabin</h2>
+            <p class="lead mb-5">Two parameters are needed for this, primes p and q. If neither value is input, they will be generated automatically. To encrypt a message input it in the Cleartext box and press the Encrypt button. To decrypt a message input it in the Ciphertext box and press the Decrypt button.</p>
+            <p><img src="assets/images/rabin.jpeg" class="img-fluid" alt="Responsive image"></p>
+          </section>
+          <hr class="divider">
+          <!-- ElGamal -->
+          <section id="idocs_elgamal">
+            <h2>ElGamal</h2>
+            <p class="lead mb-5">Two parameters are needed for this, a public key and a private key. If neither value is input, they will be generated automatically. To encrypt a message input it in the Cleartext box and press the Encrypt button. To decrypt a message input it in the Ciphertext box and press the Decrypt button.</p>
+            <p><img src="assets/images/elgamal.jpeg" class="img-fluid" alt="Responsive image"></p>
+          </section>
+          <hr class="divider">
+          <!-- Menezes-Vanstone -->
+          <section id="idocs_mv">
+            <h2>Menezes-Vanstone</h2>
+            <p class="lead mb-5">Two parameters are needed for this, a public key and a private key. If neither value is input, they will be generated automatically. To encrypt a message input it in the Cleartext box and press the Encrypt button. To decrypt a message input it in the Ciphertext box and press the Decrypt button.</p>
+            <p><img src="assets/images/mv.jpeg" class="img-fluid" alt="Responsive image"></p>
+          </section>
+          <hr class="divider">
+          <!-- Digital Signature Scheme -->
+          <section id="idocs_sign">
+            <h2>Digital Signature Scheme</h2>
+            <p class="lead mb-5">The second part of the application consists on generating a signature and verifying it against a text or file using multiple cryptosystems. All of them work in a similar way, with a parameter and clear text input to output a signature.</p>
+          </section>
+          <hr class="divider">
+          <!-- RSA Signature -->
+          <section id="idocs_rsasign">
+            <h2>RSA Signature</h2>
+            <p class="lead mb-5">Two parameters are needed for this, primes p and q. If neither value is input, they will be generated automatically. To generate a signature, input the message or file in the top box and press the Sign button. To validate a signature, input the message or file in the top box and the signature in the bottom box and press the Validate signature button. If the signature is valid, "Validated" will be printed out, otherwise "Not validated" will be printed out.</p>
+            <p><img src="assets/images/rsasign.jpeg" class="img-fluid" alt="Responsive image"></p>
+          </section>
+          <hr class="divider">
+          <!-- ElGamal Signature -->
+          <section id="idocs_elgamalsign">
+            <h2>ElGamal Signature</h2>
+            <p class="lead mb-5">Two parameters are needed for this, a public key and a private key. If neither value is input, they will be generated automatically. To generate a signature, input the message or file in the top box and press the Sign button. To validate a signature, input the message or file in the top box and the signature in the bottom box and press the Validate signature button. If the signature is valid, "Validated" will be printed out, otherwise "Not validated" will be printed out.</p>
+            <p><img src="assets/images/elgamalsign.jpeg" class="img-fluid" alt="Responsive image"></p>
+            <hr class="divider">
+            <!-- Image Encryption -->
+            <section id="idocs_image">
+              <h2>Image Encryption</h2>
+              <p class="lead mb-5">If encrypting, a single image is needed. You need to upload an image on the Clear Image input. Press on Encrypt Image to output two images on the bottom. If decrypting, two images are needed. You need to upload both images on the bottom two inputs. Press on Decrypt Image to output an image on the top.</p>
+              <p><img src="assets/images/image.jpeg" class="img-fluid" alt="Responsive image"></p>
+            </section>
+            <hr class="divider">
+            <!-- Blockchain Simulation-->
+            <section id="idocs_blockchain">
+              <h2>Blockchain Simulation</h2>
+              <p class="lead mb-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec neque tellus. Curabitur vulputate, metus eget fringilla imperdiet, metus dolor vehicula est, et volutpat dui lectus id libero.</p>
+              <p><img src="assets/images/blockchain.jpeg" class="img-fluid" alt="Responsive image"></p>
+            </section>
+            <hr class="divider">
+            <!-- FAQ -->
+            <section id="idocs_faq">
+              <h2>FAQ</h2>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="accordion accordion-alterate arrow-right" id="popularTopics">
+                    <div class="card">
+                      <div class="card-header" id="heading1">
+                        <h5 class="mb-0"><a href="#" class="collapsed" data-toggle="collapse" data-target="#collapse1" aria-expanded="false" aria-controls="collapse1">Lorem ipsum dolor sit amet?</a></h5>
+                      </div>
+                      <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#popularTopics">
+                        <div class="card-body">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec neque tellus. Curabitur vulputate, metus eget fringilla imperdiet, metus dolor vehicula est, et volutpat dui lectus id libero.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <hr class="divider">
+            <!-- Changelog -->
+            <section id="idocs_changelog">
+              <h2>Changelog</h2>
+              <p class="alert alert-info mb-5">For Future Updates add our <a target="_blank" href="https://github.com/pgonzalezb4/Cryptogy-Web-App-Django">Repository</a> to your Watch List.</p>
+              <h3 id="v1-3">Version 1.3 <small class="text-muted">(28 June, 2022)</small></h3>
+              <ul class="changelog">
+                <li><span class="badge badge-success">Added</span> Blockchain Simulation</li>
+              </ul>
+              <hr class="divider">
+              <h3 id="v1-2">Version 1.2 <small class="text-muted">(21 June, 2022)</small></h3>
+              <ul class="changelog">
+                <li><span class="badge badge-success">Added</span> Image Encryption</li>
+                <li><span class="badge badge-info">Updated</span> UX improvements in all cryptosystems</li>
+              </ul>
+              <hr class="divider">
+              <h3 id="v1-1">Version 1.1 <small class="text-muted">(19 May, 2022)</small></h3>
+              <ul class="changelog">
+                <li><span class="badge badge-success">Added</span> Digital Signature Schemes</li>
+                <li><span class="badge badge-info">Updated</span> Improvements in CSS and JS</li>
+              </ul>
+              <hr class="divider">
+              <h3 id="v1-0">Version 1.0 <small class="text-muted">(21 April, 2022)</small></h3>
+              <p>Initial Release</p>
+              <ul class="changelog">
+                <li><span class="badge badge-success">Added</span> Public Key Cryptosystems</li>
+              </ul>
+            </section>
+          </section>
+        </div>
+      </div>
+    </div><!-- Content end -->
+    <!-- Footer -->
+    <footer id="footer" class="section bg-dark footer-text-light">
+      <div class="container px-5"></div>
+      <div class="container">
+        <ul class="social-icons social-icons-lg social-icons-muted justify-content-center mb-3">
+          <li>
+            <a data-toggle="tooltip" href="https://github.com/pgonzalezb4/Cryptogy-Web-App-Django" target="_blank" title="" data-original-title="GitHub"><i class="fab fa-github"></i></a>
+          </li>
+        </ul>
+        <p class="text-center">Copyright © 2022 Cryptogy. Todos los derechos reservados.</p>
+        <p class="text-2 text-center mb-0">Desarrollado por <a href="https://www.linkedin.com/in/pablo-gonzalez05/">Pablo Gonzalez B.</a>, <a href="https://www.linkedin.com/in/jgutierrezre/">Juan Pablo Gutierrez R.</a> y <a href="https://www.linkedin.com/in/jorge-castillo-orduz-0aa404163/">Jorge Luis Castillo O.</a></p>
+      </div>
+    </footer><!-- Footer end -->
+  </div><!-- Document Wrapper end -->
+  <!-- Back To Top -->
+  <a id="back-to-top" data-toggle="tooltip" title="Back to Top" href="javascript:void(0)"></a> <!-- JavaScript
+============================ -->
+   
+  <script src="assets/vendor/jquery/jquery.min.js"></script> 
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> <!-- Highlight JS -->
+   
+  <script src="assets/vendor/highlight.js/highlight.min.js"></script> <!-- Easing -->
+   
+  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script> <!-- Magnific Popup -->
+   
+  <script src="assets/vendor/magnific-popup/jquery.magnific-popup.min.js"></script> <!-- Custom Script -->
+   
+  <script src="assets/js/theme.js"></script>
+</body>
+</html>
